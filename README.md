@@ -1,5 +1,12 @@
 ![Java CI with Maven](https://github.com/Gubancs/leaflet4vaadin/workflows/Java%20CI%20with%20Maven/badge.svg)
 
+[![Published on vaadin.com/directory](https://img.shields.io/badge/Vaadin%20Directory-published-blue.svg?colorB=00b4f0)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Star on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Rating on vaadin.com/directory](https://img.shields.io/vaadin-directory/rating/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Rating count on vaadin.com/directory](https://img.shields.io/vaadin-directory/rc/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Latest version on vaadin.com/directory](https://img.shields.io/vaadin-directory/v/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Latest release date on vaadin.com/directory](https://img.shields.io/vaadin-directory/rd/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+
 # leaflet4vaadin
 
 - FRAMEWORK SUPPORT: **Polymer 3.0+Vaadin platform 10+**
