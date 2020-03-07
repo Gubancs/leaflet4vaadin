@@ -1,14 +1,25 @@
 # leaflet4vaadin
+
+Vaadin Add-on directory:
+https://vaadin.com/directory/component/leaflet4vaadin/
+
+Demo: Coming soon
+
+
 **Leaflet4Vaadin** provides a Java API for **Leaflet**, which is a popular map implementation, similar to Google Maps.  Leaflet is lightweight and shines on mobile devices. Also it has an extensive set of add-ons, of which many are available for Vaadin too.
 With this Vaadin add-on you can use LeafletJS with the server side Java you know best.
 
 ## Core Features:
-- Provides initial options
-- Handles map and layer events on server side such as ('click','zoom','move','resize' etc..)
-- Supports vector layers
-- Supports vaadin themes
-- Supports map methods
-- Supports tooltips and popups
+- map configuration
+- interactive layers
+- map and layer events
+- markers
+- tooltip and popup binding
+- layer groups
+- vector layers
+- dark theme
+- map controls
+- tile layers
 ## Example usage
 
 ```java
@@ -25,3 +36,10 @@ add(leafletMap);
 Starting the test/demo server:
 1. Run `mvn jetty:run`.
 2. Open http://localhost:8080 in the browser.
+
+
+## Contact
+
+Name: Gabor Kokeny
+
+Email: kokeny19@gmail.com
