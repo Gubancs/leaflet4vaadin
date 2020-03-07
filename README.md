@@ -41,7 +41,7 @@ With this Vaadin add-on you can use LeafletJS with the server side Java you know
 - design and performance improvements
 - bugfixes
 
-# Configure with maven
+# Using with maven
 
 ```xml
 <dependency>
