@@ -1,3 +1,5 @@
+![Java CI with Maven](https://github.com/Gubancs/leaflet4vaadin/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 # leaflet4vaadin
 
 - FRAMEWORK SUPPORT: **Polymer 3.0+Vaadin platform 10+**
