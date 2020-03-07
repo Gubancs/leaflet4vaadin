@@ -9,7 +9,11 @@
 	<version>0.2.2-beta</version>
 	<name>Leaflet4Vaadin</name>
 	<description>Integration of Leaflet map for Vaadin platform</description>
-
+	<scm>
+		<url>https://github.com/Gubancs/leaflet4vaadin</url>
+		<connection>scm:git:git://https://github.com/Gubancs/leaflet4vaadin.git</connection>
+		<developerConnection>scm:git:git@https://github.com/Gubancs/leaflet4vaadin.git</developerConnection>
+	</scm>
 	<properties>
 		<vaadin.version>14.2.0.alpha3</vaadin.version>
 		<vaadin-applayout-addon.version>4.0.0.rc4</vaadin-applayout-addon.version>
