@@ -1,9 +1,9 @@
 # leaflet4vaadin
 
-Vaadin Add-on directory:
+- FRAMEWORK SUPPORT: **Polymer 3.0+Vaadin platform 10+**
+- Vaadin Add-on directory:
 https://vaadin.com/directory/component/leaflet4vaadin/
-
-Demo: Coming soon
+- Demo: Coming soon
 
 
 **Leaflet4Vaadin** provides a Java API for **Leaflet**, which is a popular map implementation, similar to Google Maps.  Leaflet is lightweight and shines on mobile devices. Also it has an extensive set of add-ons, of which many are available for Vaadin too.
