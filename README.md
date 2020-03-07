@@ -30,6 +30,32 @@ With this Vaadin add-on you can use LeafletJS with the server side Java you know
 - dark theme
 - map controls
 - tile layers
+
+
+## Future improvements
+- supports layer method invocations from server side such as flyTo on map.
+- i18n supports
+- GeoJSON supports
+- supports leaflet plugins (for example: fullscreen plugin)
+- leaflet editable plugin integration
+- design and performance improvements
+- bugfixes
+
+# Configure with maven
+
+```xml
+<dependency>
+   <groupId>com.vaadin</groupId>
+   <artifactId>leafletf4vaadin</artifactId>
+   <version>0.2.2-beta</version>
+</dependency>
+
+<repository>
+   <id>vaadin-addons</id>
+   <url>https://maven.vaadin.com/vaadin-addons</url>
+</repository>
+```
+
 ## Example usage
 
 ```java
