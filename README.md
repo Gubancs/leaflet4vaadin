@@ -1,21 +1,30 @@
-# leaflet4vaadin
-**Leaflet4Vaadin** provides a Java API for **Leaflet**, which is a popular map implementation, similar to Google Maps.  Leaflet is lightweight and shines on mobile devices. Also it has an extensive set of add-ons, of which many are available for Vaadin too.
-With this Vaadin add-on you can use LeafletJS with the server side Java you know best.
+# Paper Slider
 
-## Core Features:
-- Provides initial options
-- Handles map and layer events on server side such as ('click','zoom','move','resize' etc..)
-- Supports vector layers
-- Supports vaadin themes
-- Supports map methods
-- Supports tooltips and popups
-## Example usage
+Vaadin 14 Java integration of @polymer/paper-slider
 
-```java
-MapOptions options = new DefaultMapOptions();
-options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-options.setZoom(7);
-LeafletMap leafletMap = new LeafletMap(options );
-leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-add(leafletMap);
+## Development instructions
+
+JavaScript modules can either be published as an NPM package or be kept as local 
+files in your project. The local JavaScript modules should be put in 
+`src/main/resources/META-INF/frontend` so that they are automatically found and 
+used in the using application.
+
+If the modules are published then the package should be noted in the component 
+using the `@NpmPackage` annotation in addition to using `@JsModule` annotation.
+
+
+Starting the test/demo server:
+1. Run `mvn jetty:run`.
+2. Open http://localhost:8080 in the browser.
+
+## Publishing to Vaadin Directory
+
+You can create the zip package needed for [Vaadin Directory](https://vaadin.com/directory/) using
 ```
+mvn versions:set -DnewVersion=1.0.0 # You cannot publish snapshot versions 
+mvn install -Pdirectory
+```
+
+The package is created as `target/paper-slider-1.0.0.zip`
+
+For more information or to upload the package, visit https://vaadin.com/directory/my-components?uploadNewComponent
