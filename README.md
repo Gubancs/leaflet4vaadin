@@ -1,3 +1,4 @@
+
 ![Java CI with Maven](https://github.com/Gubancs/leaflet4vaadin/workflows/Java%20CI%20with%20Maven/badge.svg)
 ![Vaadin Directory](https://github.com/Gubancs/leaflet4vaadin/workflows/Vaadin%20Directory/badge.svg)
 
@@ -11,10 +12,12 @@
 # leaflet4vaadin
 
 - FRAMEWORK SUPPORT: **Polymer 3.0+Vaadin platform 10+**
+- Leaflet: https://leafletjs.com/
 - Vaadin Add-on directory:
 https://vaadin.com/directory/component/leaflet4vaadin/
-- Demo: Coming soon
+- Live demo: Coming soon
 
+<img src="https://raw.githubusercontent.com/Gubancs/leaflet4vaadin/master/demo.png" alt="Lichess homepage" title="Lichess comes with light and dark theme, this screenshot shows both." />
 
 **Leaflet4Vaadin** provides a Java API for **Leaflet**, which is a popular map implementation, similar to Google Maps.  Leaflet is lightweight and shines on mobile devices. Also it has an extensive set of add-ons, of which many are available for Vaadin too.
 With this Vaadin add-on you can use LeafletJS with the server side Java you know best.
