@@ -21,6 +21,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
@@ -38,6 +39,12 @@ public class MapDarkThemeExample extends ExampleContainer {
 		final LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png");
 		leafletMap.addThemeVariants(LeafletMapVariant.LUMO_DARK);
+
+		Marker marker = new Marker(options.getCenter());
+		marker.bindTooltip("Example tooltip with dark theme");
+		marker.bindPopup("Example poup with dark theme");
+		marker.setName("Marker 1");
+		marker.addTo(leafletMap);
 		mapContainer.add(leafletMap);
 	}
 

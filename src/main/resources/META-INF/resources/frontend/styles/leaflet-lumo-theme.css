@@ -1,0 +1,64 @@
+/*
+// Copyright 2020 Gabor Kokeny and contributors
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//     http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+*/
+:host {
+  --leaflet-bg-color: var(--lumo-base-color);
+  --leaflet-color: var(--lumo-body-text-color);
+}
+
+/* General toolbar theme */
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background-color: var(--leaflet-bg-color);
+  color: var(--leaflet-color);
+}
+
+/* Popup theme */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: var(--leaflet-bg-color);
+  color: var(--leaflet-color);
+}
+
+/* Tooltip theme */
+.leaflet-tooltip {
+	border: 1px solid var(--leaflet-bg-color);
+  background-color: var(--leaflet-bg-color);
+  color: var(--leaflet-color);
+}
+.leaflet-tooltip-top:before {
+  border-top-color: var(--leaflet-bg-color);
+}
+.leaflet-tooltip-bottom:before {
+  border-bottom-color: var(--leaflet-bg-color);
+}
+.leaflet-tooltip-left:before {
+  border-left-color: var(--leaflet-bg-color);
+}
+.leaflet-tooltip-right:before {
+  border-right-color: var(--leaflet-bg-color);
+}
+
+/* Attribution control theme */
+.leaflet-container .leaflet-control-attribution {
+  background-color: var(--leaflet-bg-color);
+  color: var(--leaflet-color);
+}
+
+/* Layers control theme */
+.leaflet-control-layers {
+  background-color: var(--leaflet-bg-color);
+  color: var(--leaflet-color);
+}

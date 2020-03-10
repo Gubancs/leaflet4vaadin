@@ -61,8 +61,8 @@ import org.slf4j.LoggerFactory;
 
 @Tag("leaflet-map")
 @NpmPackage(value = "leaflet", version = "1.6.0")
+@JsModule("./leaflet-map.js")
 @JsModule("leaflet/dist/leaflet-src.js")
-@JsModule("./src/leaflet/leaflet-map.js")
 @CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
 public class LeafletMap extends PolymerTemplate<LeafletModel>

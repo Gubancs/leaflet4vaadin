@@ -84,6 +84,11 @@ class LeafletMap extends PolymerElement {
     // map.on("zoom", this.onZoomChanged, this);
 
     this.map = map;
+
+    this.map.whenReady(() => {
+      console.log("LeafletMap - whenReady() invalidate map size");
+      this.map.invalidateSize();
+    });
   }
 
   /**
@@ -215,54 +220,8 @@ class LeafletMap extends PolymerElement {
 
   registerEventListener(layer, event) {
     console.log("LeafletMap - try to register event listener for event type:", { event: event });
-    this.eventMap = [
-      {
-        events: ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "mousemove", "contextmenu", "preclick"],
-        handler: this.onMouseEventEventHandler
-      },
-      {
-        events: ["dragstart", "movestart", "moveend"],
-        handler: this.onBaseEventHandler
-      },
-      {
-        events: ["drag"],
-        handler: this.onDragEventHandler
-      },
-      {
-        events: ["resize"],
-        handler: this.onResizeEventHandler
-      },
-      {
-        events: ["dragend"],
-        handler: this.onDragEndEventHandler
-      },
-      {
-        events: ["add", "remove"],
-        handler: this.onBaseEventHandler
-      },
-      {
-        events: ["move"],
-        handler: this.onMoveEventHandler
-      },
-      {
-        events: ["zoomanim"],
-        handler: this.onZoomAnimEventHandler
-      },
-      {
-        events: ["popupclose", "popupopen"],
-        handler: this.onPopupEventHandler
-      },
-      {
-        events: ["tooltipclose", "tooltipopen"],
-        handler: this.onTooltipEventHandler
-      },
-      {
-        events: ["zoomlevelschange", "unload", "viewreset", "load", "zoom", "zoomend", "zoomstart", "movestart", "moveend"],
-        handler: this.onBaseEventHandler
-      }
-    ];
 
-    this.eventMap
+    this.getEventMap()
       .slice()
       .filter(e => e.events.indexOf(event) >= 0)
       .forEach(e => {
@@ -270,6 +229,59 @@ class LeafletMap extends PolymerElement {
         layer.on(event, e.handler, this);
       });
   }
+
+  getEventMap() {
+    if (!this.eventMap) {
+      this.eventMap = [
+        {
+          events: ["click", "dblclick", "mousedown", "mouseup", "mouseover", "mouseout", "mousemove", "contextmenu", "preclick"],
+          handler: this.onMouseEventEventHandler
+        },
+        {
+          events: ["dragstart", "movestart", "moveend"],
+          handler: this.onBaseEventHandler
+        },
+        {
+          events: ["drag"],
+          handler: this.onDragEventHandler
+        },
+        {
+          events: ["resize"],
+          handler: this.onResizeEventHandler
+        },
+        {
+          events: ["dragend"],
+          handler: this.onDragEndEventHandler
+        },
+        {
+          events: ["add", "remove"],
+          handler: this.onBaseEventHandler
+        },
+        {
+          events: ["move"],
+          handler: this.onMoveEventHandler
+        },
+        {
+          events: ["zoomanim"],
+          handler: this.onZoomAnimEventHandler
+        },
+        {
+          events: ["popupclose", "popupopen"],
+          handler: this.onPopupEventHandler
+        },
+        {
+          events: ["tooltipclose", "tooltipopen"],
+          handler: this.onTooltipEventHandler
+        },
+        {
+          events: ["zoomlevelschange", "unload", "viewreset", "load", "zoom", "zoomend", "zoomstart", "movestart", "moveend"],
+          handler: this.onBaseEventHandler
+        }
+      ];
+    }
+    return this.eventMap;
+  }
+
   onDragEventHandler(e) {
     console.warn("LeafletMap - onDragEventHandler()", e);
   }
