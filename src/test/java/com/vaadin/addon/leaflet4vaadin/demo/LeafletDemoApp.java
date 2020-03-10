@@ -26,6 +26,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.RemoveDefaultControlsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
@@ -88,6 +89,7 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 						.add(LeftSubMenuBuilder.get("Layers", new Icon(VaadinIcon.GRID_BIG))
 								.add(menuItem(TileLayerExample.class))
 								.add(menuItem(MultipleBaseLayersExample.class))
+								.add(menuItem(GeoJSONLayerExample.class))
 								.build())
 						.add(LeftSubMenuBuilder.get("Mixin", new Icon(VaadinIcon.EYE))
 								.add(menuItem(WorldMapFlagsExample.class)).build())

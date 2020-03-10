@@ -17,9 +17,6 @@ package com.vaadin.addon.leaflet4vaadin.layer.events;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 /**
  * The base event object. All other event objects contain these properties too.
  */
@@ -53,8 +50,4 @@ public class LeafletEvent {
 		return type;
 	}
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
 }

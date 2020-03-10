@@ -16,7 +16,6 @@ package com.vaadin.addon.leaflet4vaadin.layer;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -73,6 +72,10 @@ public abstract class Layer implements Evented, Serializable {
 
 	protected Layer() {
 		this.uuid = UUID.randomUUID().toString();
+		configureObjectMapper(objectMapper);
+	}
+
+	protected void configureObjectMapper(final ObjectMapper objectMapper) {
 	}
 
 	/**
@@ -231,9 +234,8 @@ public abstract class Layer implements Evented, Serializable {
 	public String getJson() {
 		if (this.json == null) {
 			try {
-				StringWriter json = new StringWriter();
-				objectMapper.writeValue(json, this);
-				return json.toString();
+				this.json = objectMapper.writeValueAsString(this);
+				return this.json;
 			} catch (IOException e) {
 				throw new RuntimeException("Unable to convert Layer into JSON type", e);
 			}
