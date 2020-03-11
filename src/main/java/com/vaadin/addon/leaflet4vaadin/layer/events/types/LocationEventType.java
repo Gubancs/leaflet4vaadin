@@ -12,27 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.vectors;
-
-import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+package com.vaadin.addon.leaflet4vaadin.layer.events.types;
 
 /**
- * A class for drawing circle overlays on a map. Extends CircleMarker. It's an
- * approximation and starts to diverge from a real circle closer to poles (due
- * to projection distortion).
+ * Location events
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * 
+ * @since 2020-03-11
+ * @version 1.0
  */
-public class Circle extends CircleMarker {
+public enum LocationEventType implements LeafletEventType {
+
     /**
-     *
+     * Fired when geolocation (using the locate method) failed.
      */
-    private static final long serialVersionUID = -9214599807982996954L;
+    locationerror,
 
-    public Circle(LatLng latlng) {
-        super(latlng);
-    }
-
-    public Circle(LatLng latlng, double radius) {
-        super(latlng, radius);
-    }
-
+    /**
+     * Fired when geolocation (using the locate method) went successfully.
+     */
+    locationfound;
 }

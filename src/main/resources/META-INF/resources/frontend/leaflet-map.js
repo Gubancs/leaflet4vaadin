@@ -195,7 +195,7 @@ class LeafletMap extends PolymerElement {
    * Called when any fucntion operation created on server-side
    */
   handleOperations(changeRecord) {
-    console.log("LeafletMap - handleOperations() operations property changed", this.operations);
+    console.log("LeafletMap - handleOperations() operations property changed", changeRecord);
     if (changeRecord) {
       changeRecord.indexSplices.forEach(function(indexSplice) {
         for (var i = 0; i < indexSplice.addedCount; i++) {
@@ -316,6 +316,14 @@ class LeafletMap extends PolymerElement {
         {
           events: ["tooltipclose", "tooltipopen"],
           handler: this.onTooltipEventHandler
+        },
+        {
+          events: ["locationfound"],
+          handler: this.onLocationEventHandler
+        },
+        {
+          events: ["locationerror"],
+          handler: this.onErrorEventHandler
         },
         {
           events: ["zoomlevelschange", "unload", "viewreset", "load", "zoom", "zoomend", "zoomstart", "movestart", "moveend"],

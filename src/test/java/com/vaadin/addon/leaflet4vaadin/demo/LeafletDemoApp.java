@@ -32,6 +32,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapGeolocationExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersAddAndRemoveExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersChangingIconExample;
@@ -75,6 +76,7 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 								.add(menuItem(MapEventsExample.class)).add(menuItem(MapDarkThemeExample.class))
 								.add(menuItem(MapPollListenerExample.class))
 								.add(menuItem(MapFunctionsExample.class))
+								.add(menuItem(MapGeolocationExample.class))
 								.build())
 						.add(LeftSubMenuBuilder.get("Markers", new Icon(VaadinIcon.MAP_MARKER))
 								.add(menuItem(MarkersSimpleExample.class)).add(menuItem(MarkersWithEventsExample.class))

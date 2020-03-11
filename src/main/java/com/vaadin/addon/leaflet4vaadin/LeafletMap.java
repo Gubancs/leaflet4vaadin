@@ -23,26 +23,31 @@ import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.DragEndEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.DragEvent;
+import com.vaadin.addon.leaflet4vaadin.layer.events.ErrorEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
+import com.vaadin.addon.leaflet4vaadin.layer.events.LocationEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.MouseEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.MoveEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.PopupEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.TooltipEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.ZoomAnimEvent;
+import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsLocationEvents;
 import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsMapEvents;
 import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsMouseEvents;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.EventTypeRegistry;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.LocationEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.MapEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.PopupEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.TooltipEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.map.DefaultMapOptions;
-import com.vaadin.addon.leaflet4vaadin.layer.map.MapFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.map.functions.GeolocationFunctions;
+import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapFunctions;
 import com.vaadin.addon.leaflet4vaadin.operations.LeafletOperation;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
@@ -67,14 +72,15 @@ import org.slf4j.LoggerFactory;
 @JsModule("leaflet/dist/leaflet-src.js")
 @CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
-public class LeafletMap extends PolymerTemplate<LeafletModel>
-		implements MapFunctions, SupportsMouseEvents, SupportsMapEvents, HasSize, HasTheme {
+public class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunctions, GeolocationFunctions,
+		SupportsMouseEvents, SupportsMapEvents, SupportsLocationEvents, HasSize, HasTheme {
 
 	private static final long serialVersionUID = 3789693345308589828L;
 
 	private final Logger logger = LoggerFactory.getLogger(LeafletMap.class);
 
-	private static class MapLayer extends LayerGroup implements SupportsMouseEvents, SupportsMapEvents {
+	private static class MapLayer extends LayerGroup
+			implements SupportsMouseEvents, SupportsMapEvents, SupportsLocationEvents {
 	}
 
 	private final MapLayer mapLayer = new MapLayer();
@@ -167,17 +173,47 @@ public class LeafletMap extends PolymerTemplate<LeafletModel>
 	 */
 	@EventHandler
 	private void onLocationEventHandler(@ModelItem("target.options.uuid") String layerId,
-			@EventData("event.type") String eventType) {
-		logger.info("LocationEvent fired on client side: {} - {}", eventType, layerId);
+			@EventData("event.type") String eventType, @EventData("event.latlng.lat") Double latitude,
+			@EventData("event.latlng.lng") Double longitude, @EventData("event.accuracy") Double accuracy,
+			@EventData("event.altitude") Double altitude, @EventData("event.altitudeAccuracy") Double altitudeAccuracy,
+			@EventData("event.heading") Double heading, @EventData("event.speed") Double speed,
+			@EventData("event.timestamp") Double timestamp) {
+
+		LatLng latlng = new LatLng(latitude, longitude);
+		if (logger.isInfoEnabled()) {
+			logger.info("LocationEvent fired on client side:");
+			logger.info(" -- type: {}", eventType);
+			logger.info(" -- uuid: {}", layerId);
+			logger.info(" -- latlng.latitude: {}", latlng.getLat());
+			logger.info(" -- latlng.longitude: {}", latlng.getLon());
+			logger.info(" -- accuracy: {}", accuracy);
+			logger.info(" -- altitude: {}", altitude);
+			logger.info(" -- altitudeAccuracy: {}", altitudeAccuracy);
+			logger.info(" -- heading: {}", heading);
+			logger.info(" -- speed: {}", speed);
+			logger.info(" -- timestamp: {}", timestamp);
+		}
+		Layer layer = this.mapLayer.findLayer(layerId).orElse(this.mapLayer);
+		LocationEvent event = new LocationEvent(layer, LocationEventType.valueOf(eventType), latlng, null, accuracy,
+				altitude, altitudeAccuracy, heading, speed, timestamp);
+		layer.fireEvent(event);
 	}
 
-	/**
-	 * The layer that was added or removed.
-	 */
 	@EventHandler
 	private void onErrorEventHandler(@ModelItem("target.options.uuid") String layerId,
-			@EventData("event.type") String eventType) {
-		logger.info("ErrorEvent fired on client side: {} - {}", eventType, layerId);
+			@EventData("event.type") String event, @EventData("event.message") String message,
+			@EventData("event.code") int code) {
+		LeafletEventType eventType = EventTypeRegistry.valueOf(event);
+		if (logger.isInfoEnabled()) {
+			logger.info("ErrorEvent fired on client side:");
+			logger.info(" -- eventType: {}", eventType);
+			logger.info(" -- uuid: {}", layerId);
+			logger.info(" -- message: {}", message);
+			logger.info(" -- code: {}", code);
+		}
+		Layer layer = this.mapLayer.findLayer(layerId).orElse(this.mapLayer);
+		ErrorEvent errorEvent = new ErrorEvent(layer, eventType, message, code);
+		layer.fireEvent(errorEvent);
 	}
 
 	/**
@@ -415,6 +451,7 @@ public class LeafletMap extends PolymerTemplate<LeafletModel>
 
 	@Override
 	public void execute(String functionName, Serializable... arguments) {
+		logger.info("Execute leaflet function: {}", functionName);
 		getModel().getOperations().add(new LeafletOperation(this.mapLayer, functionName, arguments));
 	}
 

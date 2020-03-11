@@ -12,27 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.vectors;
+package com.vaadin.addon.leaflet4vaadin.layer.map.functions;
 
-import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+import java.io.Serializable;
 
-/**
- * A class for drawing circle overlays on a map. Extends CircleMarker. It's an
- * approximation and starts to diverge from a real circle closer to poles (due
- * to projection distortion).
- */
-public class Circle extends CircleMarker {
-    /**
-     *
-     */
-    private static final long serialVersionUID = -9214599807982996954L;
+public interface ExecutableFunctions {
 
-    public Circle(LatLng latlng) {
-        super(latlng);
-    }
-
-    public Circle(LatLng latlng, double radius) {
-        super(latlng, radius);
-    }
-
+    void execute(String functionName, Serializable... arguments);
 }

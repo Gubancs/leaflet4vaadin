@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.map;
+package com.vaadin.addon.leaflet4vaadin.layer.map.functions;
 
 import java.io.Serializable;
 
@@ -24,7 +24,7 @@ import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
 
-public interface MapFunctions {
+public interface MapFunctions extends ExecutableFunctions {
 
     /**
      * Sets the view of the map (geographical center and zoom) performing a smooth

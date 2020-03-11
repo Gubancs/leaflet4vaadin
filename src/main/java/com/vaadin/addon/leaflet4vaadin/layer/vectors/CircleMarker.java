@@ -26,7 +26,7 @@ public class CircleMarker extends Path {
      */
     private static final long serialVersionUID = 8294051897899342825L;
     private final LatLng latlng;
-    private final int radius;
+    private final double radius;
 
     /**
      * Instantiates a circle marker object given a geographical point
@@ -44,7 +44,7 @@ public class CircleMarker extends Path {
      * @param latlng geographical point
      * @param radius radius in pixels
      */
-    public CircleMarker(LatLng latlng, int radius) {
+    public CircleMarker(LatLng latlng, double radius) {
         this.latlng = latlng;
         this.radius = radius;
     }
@@ -61,7 +61,7 @@ public class CircleMarker extends Path {
      * 
      * @return the radius in pixels
      */
-    public int getRadius() {
+    public double getRadius() {
         return radius;
     }
 }

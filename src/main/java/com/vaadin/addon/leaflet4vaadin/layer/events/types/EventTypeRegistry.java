@@ -31,6 +31,7 @@ public class EventTypeRegistry {
         register(MouseEventType.class);
         register(PopupEventType.class);
         register(TooltipEventType.class);
+        register(LocationEventType.class);
     }
 
     static <T extends Enum<T> & LeafletEventType> void register(Class<T> eventType) {
