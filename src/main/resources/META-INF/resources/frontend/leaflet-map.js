@@ -85,10 +85,6 @@ class LeafletMap extends PolymerElement {
 
     this.map = map;
 
-    this.map.whenReady(() => {
-      console.log("LeafletMap - whenReady() invalidate map size");
-      this.map.invalidateSize();
-    });
   }
 
   /**
@@ -119,6 +115,11 @@ class LeafletMap extends PolymerElement {
       this.controls.forEach(control => {
         console.log("LeafletMap --- add control to map: {}", control);
         this.leafletConverter.toLeafletControl(control).addTo(this.map);
+      });
+      
+      this.map.whenReady(() => {
+        console.log("LeafletMap - whenReady() invalidate map size");
+        this.map.invalidateSize();
       });
 
       this.mapInitialized = true;
