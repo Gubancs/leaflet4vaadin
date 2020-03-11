@@ -14,8 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.types;
 
-import java.io.Serializable;
-
 /**
  * Represents a point with x and y coordinates in pixels.
  * 
@@ -24,7 +22,7 @@ import java.io.Serializable;
  * @since 2020-03-07
  * @version 1.0
  */
-public class Point implements Serializable {
+public class Point implements LeafletClass {
 
 	private static final long serialVersionUID = -4978055088391693282L;
 	private Double x;

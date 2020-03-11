@@ -31,6 +31,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExampl
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersAddAndRemoveExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersChangingIconExample;
@@ -40,6 +41,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersRemoveOnClickExam
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersSimpleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersWithEventsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.mixed.WorldMapFlagsExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.path.FlyToPolygonBoundsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathSimpleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.Paths3000Example;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsEventPropagationExample;
@@ -71,7 +73,9 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 				.withAppMenu(LeftAppMenuBuilder.get()
 						.add(LeftSubMenuBuilder.get("Map", new Icon(VaadinIcon.GLOBE))
 								.add(menuItem(MapEventsExample.class)).add(menuItem(MapDarkThemeExample.class))
-								.add(menuItem(MapPollListenerExample.class)).build())
+								.add(menuItem(MapPollListenerExample.class))
+								.add(menuItem(MapFunctionsExample.class))
+								.build())
 						.add(LeftSubMenuBuilder.get("Markers", new Icon(VaadinIcon.MAP_MARKER))
 								.add(menuItem(MarkersSimpleExample.class)).add(menuItem(MarkersWithEventsExample.class))
 								.add(menuItem(MarkersAddAndRemoveExample.class))
@@ -80,7 +84,9 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 								.add(menuItem(MarkersRemoveOnClickExample.class)).build())
 						.add(LeftSubMenuBuilder.get("Paths", new Icon(VaadinIcon.PUZZLE_PIECE))
 								.add(menuItem(PathSimpleExample.class)).add(menuItem(TypeOfPathsExample.class))
-								.add(menuItem(Paths3000Example.class)).add(menuItem(PathsEventPropagationExample.class))
+								.add(menuItem(Paths3000Example.class))
+								.add(menuItem(PathsEventPropagationExample.class))
+								.add(menuItem(FlyToPolygonBoundsExample.class))
 								.build())
 						.add(LeftSubMenuBuilder.get("Controls", new Icon(VaadinIcon.CROSSHAIRS))
 								.add(menuItem(RemoveDefaultControlsExample.class))

@@ -14,44 +14,12 @@
 
 package com.vaadin.addon.leaflet4vaadin.types;
 
-public class LatLng implements LeafletClass {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 8519525431224154852L;
-	private double lon;
-	private double lat;
+import java.io.Serializable;
 
-	public LatLng() {
-	}
+public interface LeafletClass extends Serializable {
 
-	public LatLng(double lat, double lon) {
-		this.lon = lon;
-		this.lat = lat;
-	}
+    default String getLeafletType() {
+        return getClass().getSimpleName();
+    }
 
-	public Double getLon() {
-		return lon;
-	}
-
-	public void setLon(Double lon) {
-		this.lon = lon;
-	}
-
-	public Double getLat() {
-		return lat;
-	}
-
-	public void setLat(Double lat) {
-		this.lat = lat;
-	}
-
-	@Override
-	public String toString() {
-		return lat + "," + lon;
-	}
-
-	public static LatLng latlng(double lat, double lon) {
-		return new LatLng(lat, lon);
-	}
 }

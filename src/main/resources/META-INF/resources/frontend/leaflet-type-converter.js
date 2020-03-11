@@ -21,7 +21,7 @@ export class LeafletTypeConverter {
   toLeafletLayer(layer) {
     let leafletLayer;
     if (layer.leafletType === "Marker") {
-      layer.icon = this.toLeafletIcon(layer.icon);
+      layer.icon = this.convert(layer.icon);
       leafletLayer = L.marker(layer.latLng, layer);
     } else if (layer.leafletType === "LayerGroup") {
       let layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
@@ -63,25 +63,61 @@ export class LeafletTypeConverter {
     return leafletControl;
   }
 
+  convert(object) {
+    console.log("LeafletTypeConverter --- convert()", object);
+    let converted = object;
+    if (object) {
+      if (object.leafletType === "Point") {
+        converted = this.toPoint(object);
+      } else if (object.leafletType === "Bounds") {
+        converted = this.toBounds(object);
+      } else if (object.leafletType === "LatLng") {
+        converted = this.toLatLng(object);
+      } else if (object.leafletType === "LatLngBounds") {
+        converted = this.toLatLngBounds(object);
+      } else if (object.leafletType === "Icon") {
+        converted = this.toIcon(object);
+      }
+    }
+    console.log("LeafletTypeConverter --- convert() result", converted);
+    return converted;
+  }
+
   /**
    * Convert the given JsonObject to Leaflet Icon
    */
-  toLeafletIcon(iconOptions) {
+  toIcon(iconOptions) {
     let icon = L.icon(iconOptions);
-    icon.popupAnchor = this.toLeafletPoint(iconOptions.popupAnchor);
-    icon.tooltipAnchor = this.toLeafletPoint(iconOptions.tooltipAnchor);
-    icon.shadowAnchor = this.toLeafletPoint(iconOptions.shadowAnchor);
-    icon.iconAnchor = this.toLeafletPoint(iconOptions.iconAnchor);
-    icon.iconSize = this.toLeafletPoint(iconOptions.iconSize);
-    icon.shadowSize = this.toLeafletPoint(iconOptions.shadowSize);
+    icon.popupAnchor = this.convert(iconOptions.popupAnchor);
+    icon.tooltipAnchor = this.convert(iconOptions.tooltipAnchor);
+    icon.shadowAnchor = this.convert(iconOptions.shadowAnchor);
+    icon.iconAnchor = this.convert(iconOptions.iconAnchor);
+    icon.iconSize = this.convert(iconOptions.iconSize);
+    icon.shadowSize = this.convert(iconOptions.shadowSize);
     return icon;
   }
 
   /**
    * Convert the given JsonObject to Leaflet Point
    */
-  toLeafletPoint(point) {
+  toPoint(point) {
     return point ? L.point(point.x, point.y) : point;
+  }
+
+  /**
+   * Convert the given JsonObject to Leaflet LatLng
+   */
+  toLatLng(latLng) {
+    return latLng ? L.latLng(latLng.lat, latLng.lon) : latLng;
+  }
+
+  /**
+   * Convert the given JsonObject to Leaflet Bounds
+   */
+  toBounds(bounds) {
+    let corner1 = L.point(bounds.northEastLat, bounds.northEastLon);
+    let corner2 = L.point(bounds.southWestLat, bounds.southWestLon);
+    return L.bounds(corner1, corner2);
   }
 
   /**

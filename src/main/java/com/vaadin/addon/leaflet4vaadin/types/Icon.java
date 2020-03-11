@@ -14,9 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.types;
 
-import java.io.Serializable;
-
-public class Icon implements Serializable {
+public class Icon implements LeafletClass {
 
 	/**
 	 *

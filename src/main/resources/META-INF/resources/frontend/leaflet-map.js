@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import * as L from "leaflet/dist/leaflet-src.js";
 import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
+import * as L from "leaflet/dist/leaflet-src.js";
 import { LeafletTypeConverter } from "./leaflet-type-converter.js";
 
 class LeafletMap extends PolymerElement {
@@ -37,7 +37,7 @@ class LeafletMap extends PolymerElement {
    * a comma-separated list of one or more dependencies.
    */
   static get observers() {
-    return ["updateZoom(mapOptions.zoom)", "updateBounds(mapOptions.bounds)", "updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
+    return ["updateZoom(mapOptions.zoom)", "updateBounds(mapOptions.bounds)", "handleOperations(operations.splices)", "updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
   }
 
   /**
@@ -84,7 +84,6 @@ class LeafletMap extends PolymerElement {
     // map.on("zoom", this.onZoomChanged, this);
 
     this.map = map;
-
   }
 
   /**
@@ -116,7 +115,7 @@ class LeafletMap extends PolymerElement {
         console.log("LeafletMap --- add control to map: {}", control);
         this.leafletConverter.toLeafletControl(control).addTo(this.map);
       });
-      
+
       this.map.whenReady(() => {
         console.log("LeafletMap - whenReady() invalidate map size");
         this.map.invalidateSize();
@@ -190,6 +189,50 @@ class LeafletMap extends PolymerElement {
         }
       }, this);
     }
+  }
+
+  /**
+   * Called when any fucntion operation created on server-side
+   */
+  handleOperations(changeRecord) {
+    console.log("LeafletMap - handleOperations() operations property changed", this.operations);
+    if (changeRecord) {
+      changeRecord.indexSplices.forEach(function(indexSplice) {
+        for (var i = 0; i < indexSplice.addedCount; i++) {
+          let operation = indexSplice.object[i];
+          let layer = this.findLayer(this.map, operation.laryerId);
+          let fn = layer[operation.functionName];
+          let args = JSON.parse(operation.arguments);
+          args = args.map(argument => this.leafletConverter.convert(argument));
+          console.log("LeafletMap handleOperations()", operation);
+          console.log("LeafletMap handleOperations() - layerID", operation.layerId);
+          console.log("LeafletMap handleOperations() - layer", layer);
+          console.log("LeafletMap handleOperations() - function", fn);
+          console.log("LeafletMap handleOperations() - arguments", args);
+          let result = fn.apply(layer, args);
+          console.log("LeafletMap handleOperations() - result", result);
+          this.operations.splice(i, 1);
+        }
+      }, this);
+    }
+  }
+
+  findLayer(head, uuid) {
+    console.log("LeafletMap findLayer() ", { head: head, uuid: uuid });
+    if (head.options.uuid == uuid) {
+      console.log("LeafletMap findLayer()  found", head);
+      return head;
+    }
+    head.eachLayer(child => {
+      if (child.options.uuid === uuid) {
+        console.log("LeafletMap findLayer()  found", head);
+        return child;
+      }
+      if (child.eachLayer) {
+        return findLayerByUUID(child, uuid);
+      }
+    });
+    return head;
   }
 
   /**

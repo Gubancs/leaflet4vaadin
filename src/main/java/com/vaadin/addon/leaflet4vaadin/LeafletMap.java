@@ -14,6 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin;
 
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -42,6 +43,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.map.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.MapFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.operations.LeafletOperation;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
@@ -409,6 +411,11 @@ public class LeafletMap extends PolymerTemplate<LeafletModel>
 	 */
 	public void addThemeVariants(LeafletMapVariant... variants) {
 		getThemeNames().addAll(Stream.of(variants).map(LeafletMapVariant::getVariantName).collect(Collectors.toList()));
+	}
+
+	@Override
+	public void execute(String functionName, Serializable... arguments) {
+		getModel().getOperations().add(new LeafletOperation(this.mapLayer, functionName, arguments));
 	}
 
 }

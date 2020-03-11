@@ -14,13 +14,12 @@
 
 package com.vaadin.addon.leaflet4vaadin.types;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class LatLngBounds implements Serializable {
+public class LatLngBounds implements LeafletClass {
 	/**
 	 *
 	 */

@@ -21,6 +21,7 @@ import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.map.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.operations.LeafletOperation;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 public interface LeafletModel extends TemplateModel {
@@ -42,6 +43,10 @@ public interface LeafletModel extends TemplateModel {
 	}
 
 	default List<LeafletEventType> getEvents() {
+		return new ArrayList<>();
+	}
+
+	default List<LeafletOperation> getOperations() {
 		return new ArrayList<>();
 	}
 }

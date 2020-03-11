@@ -25,4 +25,5 @@ public interface MapOptions extends MapStateOptions, AnimationOptions, ControlOp
      * @param preferCanvas whether Paths should be rendered on a Canvas renderer
      */
     void setPreferCanvas(boolean preferCanvas);
+
 }

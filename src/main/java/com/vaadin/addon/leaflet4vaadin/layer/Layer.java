@@ -15,7 +15,6 @@
 package com.vaadin.addon.leaflet4vaadin.layer;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +36,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.popup.Popup;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.tooltip.Tooltip;
+import com.vaadin.addon.leaflet4vaadin.types.LeafletClass;
 
 /**
  * A set of methods from the Layer base class that all Leaflet layers use.
@@ -48,7 +48,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.ui.tooltip.Tooltip;
  * @version 1.0
  */
 @JsonIgnoreProperties(value = { "json" })
-public abstract class Layer implements Evented, Serializable {
+public abstract class Layer implements Evented, LeafletClass {
 
 	private static final long serialVersionUID = -1803411573095089760L;
 
@@ -169,10 +169,6 @@ public abstract class Layer implements Evented, Serializable {
 
 	private boolean itsMe(String layerId) {
 		return this.getUuid().equals(layerId);
-	}
-
-	public String getLeafletType() {
-		return getClass().getSimpleName();
 	}
 
 	public List<String> getEvents() {
