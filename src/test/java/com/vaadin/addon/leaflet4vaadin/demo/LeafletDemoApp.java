@@ -52,8 +52,10 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
@@ -65,43 +67,47 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 	private static final long serialVersionUID = -9119767347112138141L;
 
 	public LeafletDemoApp() {
+		HorizontalLayout actions = new HorizontalLayout();
+		Button directoryButton = new Button("Vaddin directory", new Icon(VaadinIcon.VAADIN_H));
+		directoryButton.addClickListener(
+				(e) -> UI.getCurrent().getPage().setLocation("https://vaadin.com/directory/component/leaflet4vaadin"));
+		directoryButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY, ButtonVariant.LUMO_ERROR);
 		Button githubButton = new Button("Github");
 		githubButton.addClickListener(
 				(e) -> UI.getCurrent().getPage().setLocation("https://github.com/Gubancs/leaflet4vaadin"));
 		githubButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+		actions.add(directoryButton, githubButton);
+
+		Image image = new Image("https://leafletjs.com/docs/images/logo.png", "icon");
+		image.setHeight("var(--app-layout-menu-button-height)");
+		image.getStyle().set("margin", "var(--app-layout-space-s)");
+		image.addClickListener((e) -> UI.getCurrent().getPage().setLocation("https://leafletjs.com/"));
+
 		init(AppLayoutBuilder.get(LeftResponsiveHybrid.class).withTitle("Vaadin 14 - Leaflet examples")
-				.withAppBar(AppBarBuilder.get().add(githubButton).build())
-				.withIcon("https://leafletjs.com/docs/images/logo.png")
+				.withAppBar(AppBarBuilder.get().add(actions).build()).withIconComponent(image)
 				.withAppMenu(LeftAppMenuBuilder.get()
 						.add(LeftSubMenuBuilder.get("Map", new Icon(VaadinIcon.GLOBE))
 								.add(menuItem(MapEventsExample.class)).add(menuItem(MapDarkThemeExample.class))
-								.add(menuItem(MapPollListenerExample.class))
-								.add(menuItem(MapFunctionsExample.class))
-								.add(menuItem(MapGeolocationExample.class))
-								.build())
+								.add(menuItem(MapPollListenerExample.class)).add(menuItem(MapFunctionsExample.class))
+								.add(menuItem(MapGeolocationExample.class)).build())
 						.add(LeftSubMenuBuilder.get("Markers", new Icon(VaadinIcon.MAP_MARKER))
 								.add(menuItem(MarkersSimpleExample.class)).add(menuItem(MarkersWithEventsExample.class))
 								.add(menuItem(MarkersAddAndRemoveExample.class))
 								.add(menuItem(MarkersChangingIconExample.class))
 								.add(menuItem(MarkersGroupExample.class)).add(menuItem(MarkersEventsExample.class))
 								.add(menuItem(MarkersRemoveOnClickExample.class))
-								.add(menuItem(MarkerMethodCallExample.class))
-								.build())
+								.add(menuItem(MarkerMethodCallExample.class)).build())
 						.add(LeftSubMenuBuilder.get("Paths", new Icon(VaadinIcon.PUZZLE_PIECE))
 								.add(menuItem(PathSimpleExample.class)).add(menuItem(TypeOfPathsExample.class))
-								.add(menuItem(Paths3000Example.class))
-								.add(menuItem(PathsEventPropagationExample.class))
-								.add(menuItem(FlyToPolygonBoundsExample.class))
-								.build())
+								.add(menuItem(Paths3000Example.class)).add(menuItem(PathsEventPropagationExample.class))
+								.add(menuItem(FlyToPolygonBoundsExample.class)).build())
 						.add(LeftSubMenuBuilder.get("Controls", new Icon(VaadinIcon.CROSSHAIRS))
 								.add(menuItem(RemoveDefaultControlsExample.class))
 								.add(menuItem(ControlPositionExample.class)).add(menuItem(ScaleControlExample.class))
 								.build())
 						.add(LeftSubMenuBuilder.get("Layers", new Icon(VaadinIcon.GRID_BIG))
-								.add(menuItem(TileLayerExample.class))
-								.add(menuItem(MultipleBaseLayersExample.class))
-								.add(menuItem(GeoJSONLayerExample.class))
-								.build())
+								.add(menuItem(TileLayerExample.class)).add(menuItem(MultipleBaseLayersExample.class))
+								.add(menuItem(GeoJSONLayerExample.class)).build())
 						.add(LeftSubMenuBuilder.get("Mixin", new Icon(VaadinIcon.EYE))
 								.add(menuItem(WorldMapFlagsExample.class)).build())
 						.add(LeftSubMenuBuilder.get("Plugins", new Icon(VaadinIcon.PLUG))
