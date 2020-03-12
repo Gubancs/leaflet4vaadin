@@ -469,6 +469,9 @@
 							<supportedPackagings>
 								<supportedPackaging>jar</supportedPackaging>
 							</supportedPackagings>
+							<httpConnector>
+								<port>${env.PORT}</port>
+							</httpConnector>
 						</configuration>
 						<executions>
 							<execution>
