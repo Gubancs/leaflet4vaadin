@@ -34,6 +34,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapGeolocationExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerMethodCallExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersAddAndRemoveExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersChangingIconExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersEventsExample;
@@ -83,7 +84,9 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 								.add(menuItem(MarkersAddAndRemoveExample.class))
 								.add(menuItem(MarkersChangingIconExample.class))
 								.add(menuItem(MarkersGroupExample.class)).add(menuItem(MarkersEventsExample.class))
-								.add(menuItem(MarkersRemoveOnClickExample.class)).build())
+								.add(menuItem(MarkersRemoveOnClickExample.class))
+								.add(menuItem(MarkerMethodCallExample.class))
+								.build())
 						.add(LeftSubMenuBuilder.get("Paths", new Icon(VaadinIcon.PUZZLE_PIECE))
 								.add(menuItem(PathSimpleExample.class)).add(menuItem(TypeOfPathsExample.class))
 								.add(menuItem(Paths3000Example.class))

@@ -16,7 +16,20 @@ package com.vaadin.addon.leaflet4vaadin.layer.map.functions;
 
 import java.io.Serializable;
 
-public interface ExecutableFunctions {
+import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 
-    void execute(String functionName, Serializable... arguments);
+public interface ExecutableFunctions extends Identifiable {
+
+    default void execute(String functionName, Serializable... arguments) {
+        execute(this, functionName, arguments);
+    }
+
+    void execute(Identifiable target, String functionName, Serializable... arguments);
+
+    default <T extends Serializable> T call(String functionName, Class<T> resultType, Serializable... arguments) {
+        return call(this, functionName, resultType, arguments);
+    }
+
+    <T extends Serializable> T call(Identifiable target, String functionName, Class<T> resultType,
+            Serializable... arguments);
 }

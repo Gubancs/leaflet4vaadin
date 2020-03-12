@@ -42,6 +42,8 @@ public class MapGeolocationExample extends ExampleContainer {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSizeFull();
 
+		Button locateButton = new Button("Find my location");
+
 		// leaflet map
 		final MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
@@ -51,6 +53,7 @@ public class MapGeolocationExample extends ExampleContainer {
 
 		leafletMap.onLocationError((event) -> {
 			Notification.show("Unable to locate your location: " + event.getMessage(), 2000, Position.TOP_CENTER);
+			locateButton.setEnabled(true);
 		});
 		leafletMap.onLocationFound((event) -> {
 			Marker userLocation = new Marker(event.getLatlng());
@@ -58,16 +61,16 @@ public class MapGeolocationExample extends ExampleContainer {
 			userLocation.addTo(leafletMap);
 			Circle circle = new Circle(event.getLatlng(), event.getAccuracy());
 			circle.addTo(leafletMap);
+			locateButton.setEnabled(true);
 		});
 
 		// toolbar
 		HorizontalLayout toolbar = new HorizontalLayout();
 		toolbar.setWidthFull();
-		Button locateButton = new Button("Find my location");
 		locateButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		locateButton.addClickListener((event) -> {
 			leafletMap.removeAllLayers();
-
+			locateButton.setEnabled(false);
 			LocateOptions locateOptions = new LocateOptions();
 			locateOptions.setSetView(true);
 			locateOptions.setEnableHighAccuracy(true);

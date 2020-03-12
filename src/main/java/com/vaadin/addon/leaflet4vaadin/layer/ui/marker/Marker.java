@@ -30,7 +30,7 @@ import com.vaadin.addon.leaflet4vaadin.types.Point;
  * @since 2020-02-06
  * @version 1.0
  */
-public class Marker extends InteractiveLayer implements SupportsDragEvents {
+public class Marker extends InteractiveLayer implements SupportsDragEvents, MarkerFunctions {
 
 	private static final long serialVersionUID = 5997712572773708479L;
 	private Icon icon = Icon.DEFAULT_ICON;
@@ -68,7 +68,9 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents {
 		return latLng;
 	}
 
+	@Override
 	public void setLatLng(LatLng latLng) {
+		MarkerFunctions.super.setLatLng(latLng);
 		this.latLng = latLng;
 	}
 

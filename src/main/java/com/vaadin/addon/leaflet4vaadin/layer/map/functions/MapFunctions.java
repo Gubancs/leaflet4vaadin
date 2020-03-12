@@ -14,8 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.map.functions;
 
-import java.io.Serializable;
-
 import com.vaadin.addon.leaflet4vaadin.options.FitBoundsOptions;
 import com.vaadin.addon.leaflet4vaadin.options.PanOptions;
 import com.vaadin.addon.leaflet4vaadin.options.ZoomOptions;
@@ -248,6 +246,4 @@ public interface MapFunctions extends ExecutableFunctions {
     default void stop() {
         execute("stop");
     }
-
-    void execute(String functionName, Serializable... arguments);
 }

@@ -37,7 +37,7 @@ class LeafletMap extends PolymerElement {
    * a comma-separated list of one or more dependencies.
    */
   static get observers() {
-    return ["updateZoom(mapOptions.zoom)", "updateBounds(mapOptions.bounds)", "handleOperations(operations.splices)", "updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
+    return ["updateZoom(mapOptions.zoom)", "updateBounds(mapOptions.bounds)", "updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
   }
 
   /**
@@ -191,55 +191,47 @@ class LeafletMap extends PolymerElement {
     }
   }
 
-  /**
-   * Called when any fucntion operation created on server-side
-   */
-  handleOperations(changeRecord) {
-    console.log("LeafletMap - handleOperations() operations property changed", changeRecord);
-    if (changeRecord) {
-      changeRecord.indexSplices.forEach(function(indexSplice) {
-        for (var i = 0; i < indexSplice.addedCount; i++) {
-          let operation = indexSplice.object[i];
-          let layer = this.findLayer(this.map, operation.laryerId);
-          let fn = layer[operation.functionName];
-          let args = JSON.parse(operation.arguments);
-          args = args.map(argument => this.leafletConverter.convert(argument));
-          console.log("LeafletMap handleOperations()", operation);
-          console.log("LeafletMap handleOperations() - layerID", operation.layerId);
-          console.log("LeafletMap handleOperations() - layer", layer);
-          console.log("LeafletMap handleOperations() - function", fn);
-          console.log("LeafletMap handleOperations() - arguments", args);
-          let result = fn.apply(layer, args);
-          console.log("LeafletMap handleOperations() - result", result);
-          this.operations.splice(i, 1);
-        }
-      }, this);
-    }
+  callLeafletFunction(operation) {
+    console.log("LeafletMap - callLeafletFunction() ", operation);
+
+    console.log("LeafletMap - callLeafletFunction() - layerID", operation.layerId);
+    console.log("LeafletMap - callLeafletFunction() - functionName", operation.functionName);
+    console.log("LeafletMap - callLeafletFunction() - arguments", operation.arguments);
+
+    let layer = this.findLayer(this.map, operation.layerId);
+    let leafletArgs = JSON.parse(operation.arguments);
+    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));
+    let result = layer[operation.functionName].apply(layer, leafletArgs);
+
+    console.log("LeafletMap - callLeafletFunction() - result", result);
+    return result;
   }
 
   findLayer(head, uuid) {
-    console.log("LeafletMap findLayer() ", { head: head, uuid: uuid });
-    if (head.options.uuid == uuid) {
-      console.log("LeafletMap findLayer()  found", head);
-      return head;
+    console.log("LeafletMap - findLayer() ", { head: head, uuid: uuid });
+    let found;
+    if (head.options.uuid === uuid) {
+      found = head;
+    } else {
+      head.eachLayer(child => {
+        if (child.options.uuid === uuid) {
+          found = child;
+          return;
+        }
+        if (child.eachLayer) {
+          found = findLayer(child, uuid);
+        }
+      });
     }
-    head.eachLayer(child => {
-      if (child.options.uuid === uuid) {
-        console.log("LeafletMap findLayer()  found", head);
-        return child;
-      }
-      if (child.eachLayer) {
-        return findLayerByUUID(child, uuid);
-      }
-    });
-    return head;
+    console.log("LeafletMap - findLayer() result", found);
+    return found;
   }
 
   /**
    * Sets a map view that contains the given geographical bounds with the maximum zoom level possible.
    */
   fitBounds(bounds) {
-    console.log("LeafletMap -  fitBounds()", bounds);
+    console.log("LeafletMap - fitBounds()", bounds);
     if (this.map && bounds) {
       let leafletBounds = this.leafletConverter.toLatLngBounds(bounds);
       this.map.fitBounds(leafletBounds);
@@ -332,26 +324,6 @@ class LeafletMap extends PolymerElement {
       ];
     }
     return this.eventMap;
-  }
-
-  onDragEventHandler(e) {
-    console.warn("LeafletMap - onDragEventHandler()", e);
-  }
-
-  onMoveEventHandler(e) {
-    console.warn("LeafletMap - onMoveEventHandler()", e);
-  }
-
-  onDragEndEventHandler(e) {
-    console.warn("LeafletMap - onDragEndEventHandler()", e);
-  }
-
-  onBaseEventHandler(e) {
-    console.warn("LeafletMap - onBaseEventHandler()", e);
-  }
-
-  onZoomAnimEventHandler(e) {
-    console.warn("LeafletMap - onZoomAnimEventHandler()", e);
   }
 }
 

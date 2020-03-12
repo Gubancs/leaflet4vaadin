@@ -15,6 +15,7 @@
 package com.vaadin.addon.leaflet4vaadin.layer;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.PopupEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.TooltipEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
+import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.popup.Popup;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.tooltip.Tooltip;
 import com.vaadin.addon.leaflet4vaadin.types.LeafletClass;
@@ -48,7 +50,7 @@ import com.vaadin.addon.leaflet4vaadin.types.LeafletClass;
  * @version 1.0
  */
 @JsonIgnoreProperties(value = { "json" })
-public abstract class Layer implements Evented, LeafletClass {
+public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 
 	private static final long serialVersionUID = -1803411573095089760L;
 
@@ -69,6 +71,7 @@ public abstract class Layer implements Evented, LeafletClass {
 	private Popup popup;
 	private Tooltip tooltip;
 	private List<String> events = new ArrayList<>();
+	private ExecutableFunctions functionDelegate;
 
 	protected Layer() {
 		this.uuid = UUID.randomUUID().toString();
@@ -76,6 +79,18 @@ public abstract class Layer implements Evented, LeafletClass {
 	}
 
 	protected void configureObjectMapper(final ObjectMapper objectMapper) {
+	}
+
+	@Override
+	public void unbindTooltip() {
+		LayerFunctions.super.unbindTooltip();
+		this.tooltip = null;
+	}
+
+	@Override
+	public void unbindPopup() {
+		LayerFunctions.super.unbindPopup();
+		this.popup = null;
 	}
 
 	/**
@@ -155,11 +170,23 @@ public abstract class Layer implements Evented, LeafletClass {
 		}
 	}
 
+	/**
+	 * Adds the layer to the given layer group
+	 * 
+	 * @param layerGroup the layer group
+	 */
 	public void addTo(LayerGroup layerGroup) {
+		this.functionDelegate = layerGroup;
 		layerGroup.addLayer(this);
 	}
 
+	/**
+	 * Adds the layer to the given map
+	 * 
+	 * @param leafletMap the leaflet map
+	 */
 	public void addTo(LeafletMap leafletMap) {
+		this.functionDelegate = leafletMap;
 		leafletMap.addLayer(this);
 	}
 
@@ -246,4 +273,20 @@ public abstract class Layer implements Evented, LeafletClass {
 		this.json = json;
 	}
 
+	@Override
+	public void execute(Identifiable target, String functionName, Serializable... arguments) {
+		if (functionDelegate instanceof ExecutableFunctions) {
+			functionDelegate.execute(target, functionName, arguments);
+		}
+	}
+
+	@Override
+	public <T extends Serializable> T call(Identifiable target, String functionName, Class<T> resultType,
+			Serializable... arguments) {
+		if (functionDelegate instanceof ExecutableFunctions) {
+			return functionDelegate.call(target, functionName, resultType, arguments);
+		} else {
+			throw new RuntimeException("Failed to execute leaflet function " + functionName);
+		}
+	}
 }

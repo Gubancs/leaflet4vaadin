@@ -16,10 +16,13 @@ package com.vaadin.addon.leaflet4vaadin;
 
 import java.io.Serializable;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
+import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.DragEndEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.DragEvent;
@@ -59,9 +62,11 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.component.page.PendingJavaScriptResult;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.ModelItem;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
+import com.vaadin.flow.internal.JsonSerializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -450,9 +455,36 @@ public class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunc
 	}
 
 	@Override
-	public void execute(String functionName, Serializable... arguments) {
+	public void execute(Identifiable target, String functionName, Serializable... arguments) {
+		logger.info("Execute leaflet function");
+		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
+		getElement().callJsFunction("callLeafletFunction", JsonSerializer.toJson(leafletOperation));
+	}
+
+	@Override
+	public <T extends Serializable> T call(Identifiable target, String functionName, Class<T> resultType,
+			Serializable... arguments) {
 		logger.info("Execute leaflet function: {}", functionName);
-		getModel().getOperations().add(new LeafletOperation(this.mapLayer, functionName, arguments));
+		long took = System.currentTimeMillis();
+		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
+		PendingJavaScriptResult javascriptResult = getElement().callJsFunction("callLeafletFunction",
+				JsonSerializer.toJson(leafletOperation));
+
+		CompletableFuture<T> completableFuture = javascriptResult.toCompletableFuture(resultType);
+
+		try {
+			T result = completableFuture.get();
+			logger.info(" -- result: {}", result);
+			logger.info(" -- took: {}", (System.currentTimeMillis() - took) + " ms");
+			return result;
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException("Failed to handle javascript result", e);
+		}
+	}
+
+	@Override
+	public String getUuid() {
+		return this.mapLayer.getUuid();
 	}
 
 }
