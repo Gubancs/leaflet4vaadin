@@ -424,5 +424,64 @@
 				</plugins>
 			</build>
 		</profile>
+
+		<profile>
+			<id>heroku</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-jar-plugin</artifactId>
+						<version>3.1.0</version>
+						<configuration>
+							<archive>
+								<index>true</index>
+								<manifest>
+									<addClasspath>false</addClasspath>
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								</manifest>
+								<manifestEntries>
+									<Vaadin-Package-Version>1</Vaadin-Package-Version>
+								</manifestEntries>
+							</archive>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>com.vaadin</groupId>
+						<artifactId>vaadin-maven-plugin</artifactId>
+						<version>${vaadin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>prepare-frontend</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>${jetty.version}</version>
+						<configuration>
+							<scanIntervalSeconds>3</scanIntervalSeconds>
+							<!-- Use test scope because the UI/demo classes are in the test package. -->
+							<useTestScope>true</useTestScope>
+							<supportedPackagings>
+								<supportedPackaging>jar</supportedPackaging>
+							</supportedPackagings>
+						</configuration>
+						<executions>
+							<execution>
+								<id>start-jetty</id>
+								<phase>install</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
 	</profiles>
 </project>
