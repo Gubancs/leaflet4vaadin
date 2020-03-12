@@ -14,6 +14,8 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.map;
 
+import java.util.UUID;
+
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
@@ -30,6 +32,11 @@ public class DefaultMapOptions implements MapOptions {
 
     private boolean attributionControl = true;
     private boolean zoomControl = true;
+    private final String uuid;
+
+    public DefaultMapOptions() {
+        uuid = UUID.randomUUID().toString();
+    }
 
     public LatLng getCenter() {
         return center;
@@ -104,4 +111,8 @@ public class DefaultMapOptions implements MapOptions {
         this.zoomControl = zoomControl;
     }
 
+    @Override
+    public String getUuid() {
+        return this.uuid;
+    }
 }

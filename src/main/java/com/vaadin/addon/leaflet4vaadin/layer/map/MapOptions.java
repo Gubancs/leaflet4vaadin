@@ -14,7 +14,9 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.map;
 
-public interface MapOptions extends MapStateOptions, AnimationOptions, ControlOptions {
+import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
+
+public interface MapOptions extends MapStateOptions, AnimationOptions, ControlOptions, Identifiable {
 
     boolean isPreferCanvas();
 

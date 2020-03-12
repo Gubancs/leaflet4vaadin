@@ -456,7 +456,7 @@ public class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunc
 
 	@Override
 	public void execute(Identifiable target, String functionName, Serializable... arguments) {
-		logger.info("Execute leaflet function");
+		logger.info("Execute leaflet function: {}", functionName);
 		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
 		getElement().callJsFunction("callLeafletFunction", JsonSerializer.toJson(leafletOperation));
 	}
@@ -464,7 +464,7 @@ public class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunc
 	@Override
 	public <T extends Serializable> T call(Identifiable target, String functionName, Class<T> resultType,
 			Serializable... arguments) {
-		logger.info("Execute leaflet function: {}", functionName);
+		logger.info("Call leaflet function: {}", functionName);
 		long took = System.currentTimeMillis();
 		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
 		PendingJavaScriptResult javascriptResult = getElement().callJsFunction("callLeafletFunction",
@@ -484,7 +484,7 @@ public class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunc
 
 	@Override
 	public String getUuid() {
-		return this.mapLayer.getUuid();
+		return getModel().getMapOptions().getUuid();
 	}
 
 }

@@ -192,15 +192,16 @@ class LeafletMap extends PolymerElement {
   }
 
   callLeafletFunction(operation) {
-    console.log("LeafletMap - callLeafletFunction() ", operation);
+    console.log("LeafletMap - callLeafletFunction()");
 
-    console.log("LeafletMap - callLeafletFunction() - layerID", operation.layerId);
-    console.log("LeafletMap - callLeafletFunction() - functionName", operation.functionName);
-    console.log("LeafletMap - callLeafletFunction() - arguments", operation.arguments);
+    console.log("LeafletMap - callLeafletFunction() - layerID", { layerId: operation.layerId });
+    console.log("LeafletMap - callLeafletFunction() - functionName", { functionName: operation.functionName });
+    console.log("LeafletMap - callLeafletFunction() - arguments", { arguments: operation.arguments });
 
     let layer = this.findLayer(this.map, operation.layerId);
     let leafletArgs = JSON.parse(operation.arguments);
-    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));
+    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));;
+    console.log("LeafletMap - callLeafletFunction() - leafletArgs", leafletArgs);
     let result = layer[operation.functionName].apply(layer, leafletArgs);
 
     console.log("LeafletMap - callLeafletFunction() - result", result);
