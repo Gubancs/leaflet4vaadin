@@ -50,7 +50,8 @@
     "@vaadin/vaadin-lumo-styles": "1.5.0",
     "@vaadin/vaadin-material-styles": "1.2.3",
     "@vaadin/vaadin-rich-text-editor": "1.1.1",
-    "leaflet": "1.6.0"
+    "leaflet": "1.6.0",
+    "@vaadin/flow-deps": "./target/frontend"
   },
   "devDependencies": {
     "webpack": "4.30.0",
@@ -62,7 +63,7 @@
     "raw-loader": "3.0.0",
     "compression-webpack-plugin": "3.0.1"
   },
-  "vaadinAppPackageHash": "e448158f2ab2af912da772d8d735b5ff658340fe1981b5245a3287d6d3314330",
+  "vaadinAppPackageHash": "9bf72c67021da0546252417590512e96768ca3f0be4fd69ab666e59a5999eac8",
   "vaadin": {
     "dependencies": {
       "@polymer/polymer": "3.2.0",

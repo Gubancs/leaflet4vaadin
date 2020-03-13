@@ -14,7 +14,7 @@
 		<developerConnection>scm:git:git@https://github.com/Gubancs/leaflet4vaadin.git</developerConnection>
 	</scm>
 	<properties>
-		<vaadin.version>14.2.0.alpha3</vaadin.version>
+		<vaadin.version>14.1.5</vaadin.version>
 		<vaadin-applayout-addon.version>4.0.0.rc4</vaadin-applayout-addon.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
@@ -168,6 +168,18 @@
 		<defaultGoal>jetty:run</defaultGoal>
 		<plugins>
 			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>node_modules</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.1.0</version>
@@ -209,6 +221,7 @@
 					</supportedPackagings>
 				</configuration>
 			</plugin>
+
 		</plugins>
 	</build>
 
@@ -430,35 +443,6 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-jar-plugin</artifactId>
-						<version>3.1.0</version>
-						<configuration>
-							<archive>
-								<index>true</index>
-								<manifest>
-									<addClasspath>false</addClasspath>
-									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-								</manifest>
-								<manifestEntries>
-									<Vaadin-Package-Version>1</Vaadin-Package-Version>
-								</manifestEntries>
-							</archive>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>com.vaadin</groupId>
-						<artifactId>vaadin-maven-plugin</artifactId>
-						<version>${vaadin.version}</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>prepare-frontend</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
 						<groupId>org.eclipse.jetty</groupId>
 						<artifactId>jetty-maven-plugin</artifactId>
 						<version>${jetty.version}</version>
@@ -469,13 +453,10 @@
 							<supportedPackagings>
 								<supportedPackaging>jar</supportedPackaging>
 							</supportedPackagings>
-							<httpConnector>
-								<port>${env.PORT}</port>
-							</httpConnector>
 						</configuration>
 						<executions>
 							<execution>
-								<id>start-jetty</id>
+								<id>run-jetty</id>
 								<phase>install</phase>
 								<goals>
 									<goal>run</goal>
@@ -486,5 +467,6 @@
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
 </project>
