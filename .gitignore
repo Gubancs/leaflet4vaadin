@@ -1,2 +1,4 @@
 .classpath
 .project
+node_modules
+target
