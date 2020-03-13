@@ -1,4 +1,7 @@
 .classpath
 .project
+.pnpm-lock.yaml
+pnpmfile.js
 node_modules
 target
+webpack.generated.js
