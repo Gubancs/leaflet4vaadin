@@ -41,8 +41,6 @@ if (watchDogPort){
     watchDogPort = watchDogPort.substr(watchDogPrefix.length);
 }
 
-const transpile = !devMode || process.argv.find(v => v.indexOf('--transpile-es5') >= 0);
-
 const net = require('net');
 
 function setupWatchDog(){
@@ -114,10 +112,10 @@ module.exports = {
 
   module: {
     rules: [
-      ...(transpile ? [{ // Files that Babel has to transpile
+      { // Files that Babel has to transpile
         test: /\.js$/,
         use: [BabelMultiTargetPlugin.loader()]
-      }] : []),
+      },
       {
         test: /\.css$/i,
         use: ['raw-loader']
@@ -129,19 +127,14 @@ module.exports = {
     maxAssetSize: 2097152 // 2MB
   },
   plugins: [
-    // Generate compressed bundles when not devMode
-    ...(devMode ? [] : [new CompressionPlugin()]),
+    // Generate compressed bundles
+    new CompressionPlugin(),
 
     // Transpile with babel, and produce different bundles per browser
-    ...(transpile ? [new BabelMultiTargetPlugin({
+    new BabelMultiTargetPlugin({
       babel: {
-        plugins: [
-          // workaround for Safari 10 scope issue (https://bugs.webkit.org/show_bug.cgi?id=159270)
-          "@babel/plugin-transform-block-scoping",
-
-          // Edge does not support spread '...' syntax in object literals (#7321)
-          "@babel/plugin-proposal-object-rest-spread"
-        ],
+        // workaround for Safari 10 scope issue (https://bugs.webkit.org/show_bug.cgi?id=159270)
+        plugins: ["@babel/plugin-transform-block-scoping"],
 
         presetOptions: {
           useBuiltIns: false // polyfills are provided from webcomponents-loader.js
@@ -163,7 +156,7 @@ module.exports = {
           tagAssetsWithKey: true, // append a suffix to the file name
         }
       }
-    })] : []),
+    }),
 
     // Generates the stats file for flow `@Id` binding.
     function (compiler) {
