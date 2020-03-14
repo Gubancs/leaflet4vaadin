@@ -12,16 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.map;
+package com.vaadin.addon.leaflet4vaadin.layer.map.options;
 
 /**
- * Touch interaction options
+ * Leaflet map touch interaction options
+ * 
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * 
+ * @since 2020-03-06
+ * @version 1.0
  */
 public interface TouchInteractionOptions {
 
-    default boolean isTap() {
-        return true;
-    }
+    boolean isTap();
 
     /**
      * Enables mobile hacks for supporting instant taps (fixing 200ms click delay on
@@ -31,9 +36,7 @@ public interface TouchInteractionOptions {
      */
     void setTap(boolean tap);
 
-    default int getTapTolerance() {
-        return 15;
-    }
+    int getTapTolerance();
 
     /**
      * The max number of pixels a user can shift his finger during touch for it to
@@ -57,9 +60,7 @@ public interface TouchInteractionOptions {
      */
     void setTouchZoom(String touchZoom);
 
-    default boolean isBounceAtZoomLimits() {
-        return true;
-    }
+    boolean isBounceAtZoomLimits();
 
     /**
      * Set it to false if you don't want the map to zoom beyond min/max zoom and

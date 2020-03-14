@@ -12,10 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.map;
+package com.vaadin.addon.leaflet4vaadin.layer.map.options;
 
 import java.io.Serializable;
 
+/**
+ * Leaflet map control options
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * 
+ * @since 2020-03-06
+ * @version 1.0
+ */
 public interface ControlOptions extends Serializable {
 
 	boolean isAttributionControl();

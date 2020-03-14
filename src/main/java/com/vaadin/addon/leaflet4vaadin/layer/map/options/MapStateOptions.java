@@ -12,13 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.map;
+package com.vaadin.addon.leaflet4vaadin.layer.map.options;
 
 import java.io.Serializable;
 
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
+/**
+ * Leaflet map state options
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * 
+ * @since 2020-03-06
+ * @version 1.0
+ */
 public interface MapStateOptions extends Serializable {
 
     LatLng getCenter();
@@ -30,14 +39,14 @@ public interface MapStateOptions extends Serializable {
      */
     void setCenter(LatLng center);
 
-    int getZoom();
+    Integer getZoom();
 
     /**
      * Initial map zoom level
      * 
      * @param zoom the initial map zoom level
      */
-    void setZoom(int zoom);
+    void setZoom(Integer zoom);
 
     /**
      * Sets a map view that contains the given geographical bounds with the maximum
@@ -75,4 +84,15 @@ public interface MapStateOptions extends Serializable {
      * @param maxZoom the maximum zoom level of the map
      */
     void setMaxZoom(Integer maxZoom);
+
+    LatLngBounds getMaxBounds();
+
+    /**
+     * When this option is set, the map restricts the view to the given geographical
+     * bounds, bouncing the user back if the user tries to pan outside the view. To
+     * set the restriction dynamically, use setMaxBounds method.
+     * 
+     * @param maxBounds
+     */
+    void setMaxBounds(LatLngBounds maxBounds);
 }

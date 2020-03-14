@@ -20,7 +20,7 @@ import java.util.List;
 import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
-import com.vaadin.addon.leaflet4vaadin.layer.map.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.flow.templatemodel.TemplateModel;
 
 public interface LeafletModel extends TemplateModel {

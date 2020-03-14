@@ -47,10 +47,10 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.PopupEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.TooltipEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
-import com.vaadin.addon.leaflet4vaadin.layer.map.DefaultMapOptions;
-import com.vaadin.addon.leaflet4vaadin.layer.map.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.GeolocationFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapFunctions;
+import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.operations.LeafletOperation;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
@@ -77,7 +77,7 @@ import org.slf4j.LoggerFactory;
 @JsModule("leaflet/dist/leaflet-src.js")
 @CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
-public class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunctions, GeolocationFunctions,
+public final class LeafletMap extends PolymerTemplate<LeafletModel> implements MapFunctions, GeolocationFunctions,
 		SupportsMouseEvents, SupportsMapEvents, SupportsLocationEvents, HasSize, HasTheme {
 
 	private static final long serialVersionUID = 3789693345308589828L;

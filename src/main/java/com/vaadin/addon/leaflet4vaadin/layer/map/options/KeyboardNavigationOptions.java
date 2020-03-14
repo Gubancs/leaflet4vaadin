@@ -12,29 +12,37 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.map;
+package com.vaadin.addon.leaflet4vaadin.layer.map.options;
 
 import java.io.Serializable;
 
 /**
- * Animation Options
+ * Leaflet map keyboard navigation options
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
  * 
- * @since 2020-03-06
+ * @since 2020-03-14
  * @version 1.0
  */
-public interface AnimationOptions extends Serializable {
+public interface KeyboardNavigationOptions extends Serializable {
 
-	boolean isZoomAnimation();
+    boolean isKeyboard();
 
-	/**
-	 * Whether the map zoom animation is enabled. By default it's enabled in all
-	 * browsers that support CSS3 Transitions except Android.
-	 * 
-	 * @param zoomAnimation whether the map zoom animation is enabled
-	 */
-	void setZoomAnimation(boolean zoomAnimation);
+    /**
+     * Makes the map focusable and allows users to navigate the map with keyboard
+     * arrows and +/- keys.
+     * 
+     * @param keyboard set true to enable keyboard navigation
+     */
+    void setKeyboard(boolean keyboard);
 
+    double getKeyboardPanDelta();
+
+    /**
+     * Amount of pixels to pan when pressing an arrow key.
+     * 
+     * @param keyboardPanDelta amount of pixels
+     */
+    void setKeyboardPanDelta(double keyboardPanDelta);
 }
