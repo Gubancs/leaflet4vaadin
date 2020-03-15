@@ -92,7 +92,7 @@ public interface MapStateOptions extends Serializable {
      * bounds, bouncing the user back if the user tries to pan outside the view. To
      * set the restriction dynamically, use setMaxBounds method.
      * 
-     * @param maxBounds
+     * @param maxBounds restricts the view to the given bounds
      */
     void setMaxBounds(LatLngBounds maxBounds);
 }

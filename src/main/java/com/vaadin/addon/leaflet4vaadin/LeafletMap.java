@@ -401,6 +401,9 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel>
 
 	/**
 	 * Returns the layer with the given internal ID.
+	 * 
+	 * @param layerId the id of the layer to be looking for
+	 * @return the layer with the given internal ID
 	 */
 	public Layer getLayer(String layerId) {
 		return this.mapLayer.getLayer(layerId).orElse(this.mapLayer);

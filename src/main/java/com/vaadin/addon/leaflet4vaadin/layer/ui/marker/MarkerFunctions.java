@@ -26,7 +26,7 @@ public interface MarkerFunctions extends ExecutableFunctions {
     /**
      * Changes the marker position to the given point.
      * 
-     * @param the new position of the marker
+     * @param latLng the new position of the marker
      */
     default void setLatLng(LatLng latLng) {
         execute("setLatLng", latLng);

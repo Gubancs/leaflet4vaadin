@@ -118,7 +118,7 @@ class LeafletMap extends PolymerElement {
 
       this.map.whenReady(() => {
         console.log("LeafletMap - whenReady() invalidate map size");
-        //this.map.invalidateSize();
+        this.map.invalidateSize();
       });
 
       this.mapInitialized = true;

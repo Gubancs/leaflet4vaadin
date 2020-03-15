@@ -35,7 +35,8 @@ public interface PanningInteriaOptions extends Serializable {
      * some time. Feels especially nice on touch devices. Enabled by default unless
      * running on old Android devices.
      * 
-     * @param inertia
+     * @param inertia If enabled, panning of the map will have an inertia effect
+     *                where the map builds momentum while dragging
      */
     void setInertia(boolean inertia);
 
@@ -44,7 +45,7 @@ public interface PanningInteriaOptions extends Serializable {
     /**
      * The rate with which the inertial movement slows down, in pixels/second².
      * 
-     * @param inertiaDeceleration
+     * @param inertiaDeceleration the value of interial deceleration
      */
     void setInertiaDeceleration(double inertiaDeceleration);
 
@@ -53,7 +54,7 @@ public interface PanningInteriaOptions extends Serializable {
     /**
      * Max speed of the inertial movement, in pixels/second.
      * 
-     * @param inertiaMaxSpeed
+     * @param inertiaMaxSpeed the max speed of interial movement
      */
     void setInertiaMaxSpeed(double inertiaMaxSpeed);
 
@@ -68,7 +69,8 @@ public interface PanningInteriaOptions extends Serializable {
      * the world and seamlessly jumps to the original one so that all overlays like
      * markers and vector layers are still visible.
      * 
-     * @param worldCopyJump
+     * @param worldCopyJump if true the map tracks when you pan to another "copy" of
+     *                      the world
      */
     void setWorldCopyJump(boolean worldCopyJump);
 
@@ -81,7 +83,7 @@ public interface PanningInteriaOptions extends Serializable {
      * outside bounds, and 1.0 makes the bounds fully solid, preventing the user
      * from dragging outside the bounds.
      * 
-     * @param maxBoundsViscosity
+     * @param maxBoundsViscosity the value of maximum bounds when dragging the map
      */
     void setMaxBoundsViscosity(double maxBoundsViscosity);
 }

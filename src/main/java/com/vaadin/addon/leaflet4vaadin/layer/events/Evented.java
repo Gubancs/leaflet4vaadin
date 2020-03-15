@@ -50,6 +50,8 @@ public interface Evented {
 
 	/**
 	 * Alias to off(…)
+	 * 
+	 * @param eventType the event type
 	 */
 	void removeEventListener(LeafletEventType eventType);
 
@@ -79,6 +81,7 @@ public interface Evented {
 	 * Alias to listens(…)
 	 * 
 	 * @param eventType the event type
+	 * @return true if a particular event type has any listeners attached to it
 	 */
 	boolean hasEventListeners(LeafletEventType eventType);
 
@@ -86,6 +89,7 @@ public interface Evented {
 	 * Returns true if a particular event type has any listeners attached to it.
 	 * 
 	 * @param eventType the event type
+	 * @return true if a particular event type has any listeners attached to it
 	 */
 	default boolean listens(LeafletEventType eventType) {
 		return hasEventListeners(eventType);

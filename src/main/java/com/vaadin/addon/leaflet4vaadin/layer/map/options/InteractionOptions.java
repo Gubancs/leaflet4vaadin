@@ -32,7 +32,8 @@ public interface InteractionOptions extends Serializable {
     /**
      * Set it to false if you don't want popups to close when user clicks the map.
      * 
-     * @param closePopupOnClick
+     * @param closePopupOnClick set to false if you don't want popups to close when
+     *                          user clicks the map
      */
     void setClosePopupOnClick(boolean closePopupOnClick);
 
@@ -45,7 +46,7 @@ public interface InteractionOptions extends Serializable {
      * granularity. A value of 0 means the zoom level will not be snapped after
      * fitBounds or a pinch-zoom.
      * 
-     * @param zoomSnap
+     * @param zoomSnap the value of zoom snap
      */
     void setZoomSnap(double zoomSnap);
 
@@ -56,7 +57,8 @@ public interface InteractionOptions extends Serializable {
      * zoomOut(), pressing + or - on the keyboard, or using the zoom controls.
      * Values smaller than 1 (e.g. 0.5) allow for greater granularity.
      * 
-     * @param zoomDelta
+     * @param zoomDelta the value how much the map's zoom level will change after a
+     *                  zoomIn(), zoomOut()
      */
     void setZoomDelta(double zoomDelta);
 
@@ -65,7 +67,7 @@ public interface InteractionOptions extends Serializable {
     /**
      * Whether the map automatically handles browser window resize to update itself.
      * 
-     * @param trackResize
+     * @param trackResize if true automatically handles browser window resize
      */
     void setTrackResize(boolean trackResize);
 
@@ -75,7 +77,8 @@ public interface InteractionOptions extends Serializable {
      * Whether the map can be zoomed to a rectangular area specified by dragging the
      * mouse while pressing the shift key.
      * 
-     * @param trackResize
+     * @param boxZoom if true the map can be zoomed to a rectangular area specified
+     *                by dragging
      */
     void setBoxZoom(boolean boxZoom);
 
@@ -86,7 +89,7 @@ public interface InteractionOptions extends Serializable {
      * double clicking while holding shift. If passed 'center', double-click zoom
      * will zoom to the center of the view regardless of where the mouse was.
      * 
-     * @param doubleClickZoom
+     * @param doubleClickZoom if true the map can be zoomed in by double clicking
      */
     void setDoubleClickZoom(boolean doubleClickZoom);
 
@@ -95,7 +98,7 @@ public interface InteractionOptions extends Serializable {
     /**
      * Whether the map be draggable with mouse/touch or not.
      * 
-     * @param dragging
+     * @param dragging if true the map will be draggable
      */
     void setDragging(boolean dragging);
 }

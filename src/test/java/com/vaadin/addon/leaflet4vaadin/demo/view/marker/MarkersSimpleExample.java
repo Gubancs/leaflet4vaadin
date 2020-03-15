@@ -68,8 +68,7 @@ public class MarkersSimpleExample extends ExampleContainer {
 		binder.forField(longitude).bind((m) -> String.valueOf(m.getLatLng().getLon()), null);
 		binder.readBean(marker);
 
-		marker.onDrag((e) -> {
-			marker.setLatLng(e.getLatLng());
+		marker.onMove((e) -> {
 			binder.readBean(marker);
 		});
 		leafletMap.addLayer(marker);

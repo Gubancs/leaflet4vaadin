@@ -42,7 +42,7 @@ public interface AnimationOptions extends Serializable {
 	/**
 	 * Won't animate zoom if the zoom difference exceeds this value.
 	 * 
-	 * @param zoomAnimationThreshold
+	 * @param zoomAnimationThreshold the max zoom animation difference
 	 */
 	void setZoomAnimationThreshold(double zoomAnimationThreshold);
 
@@ -52,7 +52,7 @@ public interface AnimationOptions extends Serializable {
 	 * Whether the tile fade animation is enabled. By default it's enabled in all
 	 * browsers that support CSS3 Transitions except Android.
 	 * 
-	 * @param fadeAnimation
+	 * @param fadeAnimation if true the tile fade animation will be enabled
 	 */
 	void setFadeAnimation(boolean fadeAnimation);
 
@@ -63,7 +63,8 @@ public interface AnimationOptions extends Serializable {
 	 * will disappear for the length of the animation. By default it's enabled in
 	 * all browsers that support CSS3 Transitions except Android.
 	 * 
-	 * @param markerZoomAnimation
+	 * @param markerZoomAnimation if true markers will animate their zoom with the
+	 *                            zoom animation
 	 */
 	void setMarkerZoomAnimation(boolean markerZoomAnimation);
 
@@ -74,7 +75,7 @@ public interface AnimationOptions extends Serializable {
 	 * should not be changed unless a web browser positions layers in the wrong
 	 * place after doing a large panBy.
 	 * 
-	 * @param transform3DLimit
+	 * @param transform3DLimit the maximum size of a CSS translation transform
 	 */
 	void setTransform3DLimit(double transform3DLimit);
 }

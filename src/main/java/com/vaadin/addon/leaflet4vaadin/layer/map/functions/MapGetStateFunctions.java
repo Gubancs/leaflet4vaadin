@@ -84,6 +84,9 @@ public interface MapGetStateFunctions extends ExecutableFunctions {
      * returns the minimum zoom level on which the map view fits into the given
      * bounds in its entirety.
      * 
+     * @param bounds  the bounds
+     * @param inside  the inside
+     * @param padding the padding
      * @return the maximum zoom level on which the given bounds fit to the map view
      *         in its entirety
      */
@@ -124,6 +127,7 @@ public interface MapGetStateFunctions extends ExecutableFunctions {
      * Returns the world's bounds in pixel coordinates for zoom level zoom. If zoom
      * is omitted, the map's current zoom level is used.
      * 
+     * @param zoom the value of zoom level
      * @return the world's bounds in pixel coordinates for zoom level zoom
      */
     default CompletableFuture<Bounds> getPixelWorldBounds(Double zoom) {

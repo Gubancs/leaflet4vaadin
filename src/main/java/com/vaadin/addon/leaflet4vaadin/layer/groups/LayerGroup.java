@@ -52,9 +52,9 @@ public class LayerGroup extends Layer {
 	 * is 6 places. Returns a GeoJSON representation of the layer group (as a
 	 * GeoJSON FeatureCollection, GeometryCollection, or MultiPoint).
 	 * 
-	 * @param percision the precision
+	 * @param precision the precision
 	 */
-	public Object toGeoJSON(int precision) {
+	public void toGeoJSON(int precision) {
 		throw new UnsupportedOperationException("This method not suported yet.");
 	}
 
@@ -119,6 +119,8 @@ public class LayerGroup extends Layer {
 	 * Calls methodName on every layer contained in this group, passing any
 	 * additional parameters. Has no effect if the layers contained do not implement
 	 * methodName.
+	 * 
+	 * @param functionName the function name to be invoke
 	 */
 	public void invoke(String functionName) {
 		execute(this, "invoke", functionName);
@@ -127,6 +129,8 @@ public class LayerGroup extends Layer {
 	/**
 	 * Iterates over the layers of the group, optionally specifying context of the
 	 * iterator function.
+	 * 
+	 * @param action the callback function
 	 */
 	public void eachLayer(Consumer<Layer> action) {
 		Objects.requireNonNull(action);
@@ -158,8 +162,8 @@ public class LayerGroup extends Layer {
 	/**
 	 * Returns the internal ID for a layer
 	 * 
-	 * @param layer
-	 * @return
+	 * @param layer a layer
+	 * @return the id of the given layer
 	 */
 	public String getLayerId(Layer layer) {
 		return layer.getUuid();

@@ -34,6 +34,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the view of the map (geographical center and zoom)
+     * 
+     * @param latlng the new center coordiantes
      */
     default void flyTo(LatLng latlng) {
         execute("flyTo", latlng);
@@ -41,6 +43,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the view of the map (geographical center and zoom)
+     * 
+     * @param latlng the new center coordiantes
+     * @param zoom   the new zoom level
      */
     default void flyTo(LatLng latlng, int zoom) {
         execute("flyTo", latlng, zoom);
@@ -49,6 +54,10 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Sets the view of the map (geographical center and zoom) performing a smooth
      * pan animation.
+     * 
+     * @param latlng  the new center coordiantes
+     * @param zoom    the new zoom level
+     * @param options the pan animation options
      */
     default void flyTo(LatLng latlng, int zoom, PanOptions options) {
         execute("flyTo", latlng, zoom, options);
@@ -57,6 +66,10 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Sets the view of the map (geographical center and zoom) performing a smooth
      * zoom animation.
+     * 
+     * @param latlng  the new center coordiantes
+     * @param zoom    the new zoom level
+     * @param options the zoom animation options
      */
     default void flyTo(LatLng latlng, int zoom, ZoomOptions options) {
         execute("flyTo", latlng, zoom, options);
@@ -64,6 +77,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Pans the map to a given center.
+     * 
+     * @param latlng pans the map to a given latlng.
      */
     default void panTo(LatLng latlng) {
         execute("panTo", latlng);
@@ -71,6 +86,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Pans the map to a given center.
+     * 
+     * @param latlng  pans the map to a given latlng.
+     * @param options the pan animation options
      */
     default void panTo(LatLng latlng, PanOptions options) {
         execute("panTo", latlng, options);
@@ -78,6 +96,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the view of the map (geographical center and zoom)
+     * 
+     * @param center the new center coordiantes
+     * @param zoom   the new zoom level
      */
     default void setView(LatLng center, int zoom) {
         execute("setView", center, zoom);
@@ -86,6 +107,10 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Sets the view of the map (geographical center and zoom) with the given
      * animation options.
+     * 
+     * @param center  the new center coordiantes
+     * @param zoom    the new zoom level
+     * @param options the zoom animation options
      */
     default void setView(LatLng center, int zoom, ZoomOptions options) {
         execute("setView", center, zoom, options);
@@ -94,6 +119,10 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Sets the view of the map (geographical center and zoom) with the given
      * animation options.
+     * 
+     * @param center  the new center coordiantes
+     * @param zoom    the new zoom level
+     * @param options the pan animation options
      */
     default void setView(LatLng center, int zoom, PanOptions options) {
         execute("setView", center, zoom, options);
@@ -101,6 +130,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the zoom of the map.
+     * 
+     * @param zoom the new zoom level
      */
     default void setZoom(int zoom) {
         execute("setZoom", zoom);
@@ -108,6 +139,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the zoom of the map.
+     * 
+     * @param zoom    the new zoom level
+     * @param options the pan animation options
      */
     default void setZoom(int zoom, PanOptions options) {
         execute("setZoom", zoom, options);
@@ -115,6 +149,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Increases the zoom of the map by delta (zoomDelta by default).
+     * 
+     * @param delta increases the zoom of the map by delta
      */
     default void zoomIn(int delta) {
         execute("zoomIn", delta);
@@ -122,6 +158,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Increases the zoom of the map by delta (zoomDelta by default).
+     * 
+     * @param delta   increases the zoom of the map by delta
+     * @param options the zoom animation options
      */
     default void zoomIn(int delta, ZoomOptions options) {
         execute("zoomIn", delta, options);
@@ -129,6 +168,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Decreases the zoom of the map by delta (zoomDelta by default).
+     * 
+     * @param delta decreases the zoom of the map by delta
      */
     default void zoomOut(int delta) {
         execute("zoomOut", delta);
@@ -136,6 +177,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Decreases the zoom of the map by delta (zoomDelta by default).
+     * 
+     * @param delta   decreases the zoom of the map by delta
+     * @param options the pan animation options
      */
     default void zoomOut(int delta, ZoomOptions options) {
         execute("zoomOut", delta, options);
@@ -144,6 +188,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Zooms the map while keeping a specified geographical point on the map
      * stationary (e.g. used internally for scroll zoom and double-click zoom).
+     * 
+     * @param latlng the geographical point
+     * @param zoom   the zoom level
      */
     default void setZoomAround(LatLng latlng, int zoom) {
         execute("setZoomAround", latlng, zoom);
@@ -152,6 +199,10 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Zooms the map while keeping a specified pixel on the map (relative to the
      * top-left corner) stationary.
+     * 
+     * @param offset  the offset relative to the top-left corner
+     * @param zoom    the zoom level
+     * @param options the zoom animation options
      * 
      */
     default void setZoomAround(Point offset, int zoom, ZoomOptions options) {
@@ -249,6 +300,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the lower limit for the available zoom levels (see the minZoom option).
+     * 
+     * @param minZoom the lower limit for the available zoom levels
      */
     default void setMinZoom(int minZoom) {
         execute("setMinZoom", minZoom);
@@ -256,6 +309,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
 
     /**
      * Sets the upper limit for the available zoom levels (see the maxZoom option).
+     * 
+     * @param maxZoom the upper limit for the available zoom levels
      */
     default void setMaxZoom(int maxZoom) {
         execute("setMaxZoom", maxZoom);
@@ -265,6 +320,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * Pans the map to the closest view that would lie inside the given bounds (if
      * it's not already), controlling the animation using the options specific, if
      * any.
+     * 
+     * @param bounds the bounds
      */
     default void panInsideBounds(LatLngBounds bounds) {
         execute("panInsideBounds", bounds);
@@ -274,6 +331,9 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * Pans the map to the closest view that would lie inside the given bounds (if
      * it's not already), controlling the animation using the options specific, if
      * any.
+     * 
+     * @param bounds  the bounds
+     * @param options the pan options
      */
     default void panInsideBounds(LatLngBounds bounds, PanOptions options) {
         execute("panInsideBounds", bounds, options);
@@ -285,6 +345,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * restricted bounds, like fitBounds. If latlng is already within the
      * (optionally padded) display bounds, the map will not be panned.
      * 
+     * @param latlng the latlng
      */
     default void panInside(LatLng latlng) {
         execute("panInside", latlng);
@@ -296,6 +357,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * restricted bounds, like fitBounds. If latlng is already within the
      * (optionally padded) display bounds, the map will not be panned.
      * 
+     * @param latlng  the latlng
+     * @param options the pan options
      */
     default void panInside(LatLng latlng, PanOptions options) {
         execute("panInside", latlng, options);
@@ -318,6 +381,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * If options.pan is false, panning will not occur. If options.debounceMoveend
      * is true, it will delay moveend event so that it doesn't happen often even if
      * the method is called many times in a row.
+     * 
+     * @param options the pan options
      */
     default void invalidateSize(PanOptions options) {
         execute("invalidateSize", options);
@@ -329,6 +394,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * If options.pan is false, panning will not occur. If options.debounceMoveend
      * is true, it will delay moveend event so that it doesn't happen often even if
      * the method is called many times in a row.
+     * 
+     * @param options the zoom options
      */
     default void invalidateSize(ZoomOptions options) {
         execute("invalidateSize", options);
@@ -337,6 +404,8 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
     /**
      * Checks if the map container size changed and updates the map if so — call it
      * after you've changed the map size dynamically, also animating pan by default.
+     * 
+     * @param animate set true to animating
      */
     default void invalidateSize(boolean animate) {
         execute("invalidateSize", animate);
