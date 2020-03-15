@@ -12,21 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.events;
+package com.vaadin.addon.leaflet4vaadin.layer.events.types;
 
-import com.vaadin.addon.leaflet4vaadin.layer.Layer;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType;
-import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+/**
+ * Location events
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * 
+ * @since 2020-03-11
+ * @version 1.0
+ */
+public enum LayerEventType implements LeafletEventType {
 
-public class DragEvent extends MoveEvent {
+    /**
+     * Fired when a layer is added to a LayerGroup
+     */
+    layeradd,
 
-    public DragEvent(Layer layer, DragEventType eventType, LatLng oldLatLng, LatLng latLng) {
-        super(layer, eventType, oldLatLng, latLng);
-    }
-
-    @Override
-    public String toString() {
-        return "DragEvent [type=" + super.getType() + ",latLng=" + getLatLng() + ", oldLatLng=" + getOldLatLng() + "]";
-    }
-
+    /**
+     * Fired when a layer is removed from a LayerGroup
+     */
+    layerremove;
 }

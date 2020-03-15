@@ -54,4 +54,5 @@ public class LatLng implements LeafletClass {
 	public static LatLng latlng(double lat, double lon) {
 		return new LatLng(lat, lon);
 	}
+
 }

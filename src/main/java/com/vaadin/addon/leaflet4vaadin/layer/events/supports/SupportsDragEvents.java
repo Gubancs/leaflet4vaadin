@@ -15,7 +15,6 @@
 package com.vaadin.addon.leaflet4vaadin.layer.events.supports;
 
 import com.vaadin.addon.leaflet4vaadin.layer.events.DragEndEvent;
-import com.vaadin.addon.leaflet4vaadin.layer.events.DragEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
@@ -57,7 +56,7 @@ public interface SupportsDragEvents extends Evented {
 	 * 
 	 * @param listener the event listener
 	 */
-	default void onDrag(LeafletEventListener<DragEvent> listener) {
+	default void onDrag(LeafletEventListener<LeafletEvent> listener) {
 		on(DragEventType.drag, listener);
 	}
 

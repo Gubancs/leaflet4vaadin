@@ -55,4 +55,9 @@ public class ErrorEvent extends LeafletEvent {
         return message;
     }
 
+    @Override
+    public String toString() {
+        return "ErrorEvent [type=" + super.getType() + ", code=" + code + ", message=" + message + "]";
+    }
+
 }

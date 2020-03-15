@@ -22,22 +22,51 @@ import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
 
-public interface MapFunctions extends ExecutableFunctions {
+/**
+ * Methods for modifying map state
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-02-06
+ * @version 1.1
+ */
+public interface MapModifyStateFunctions extends ExecutableFunctions {
+
+    /**
+     * Sets the view of the map (geographical center and zoom)
+     */
+    default void flyTo(LatLng latlng) {
+        execute("flyTo", latlng);
+    }
+
+    /**
+     * Sets the view of the map (geographical center and zoom)
+     */
+    default void flyTo(LatLng latlng, int zoom) {
+        execute("flyTo", latlng, zoom);
+    }
 
     /**
      * Sets the view of the map (geographical center and zoom) performing a smooth
-     * pan-zoom animation.
+     * pan animation.
+     */
+    default void flyTo(LatLng latlng, int zoom, PanOptions options) {
+        execute("flyTo", latlng, zoom, options);
+    }
+
+    /**
+     * Sets the view of the map (geographical center and zoom) performing a smooth
+     * zoom animation.
      */
     default void flyTo(LatLng latlng, int zoom, ZoomOptions options) {
         execute("flyTo", latlng, zoom, options);
     }
 
     /**
-     * Sets the view of the map (geographical center and zoom) performing a smooth
-     * pan-zoom animation.
+     * Pans the map to a given center.
      */
-    default void flyTo(LatLng latlng, int zoom, PanOptions options) {
-        execute("flyTo", latlng, zoom, options);
+    default void panTo(LatLng latlng) {
+        execute("panTo", latlng);
     }
 
     /**
@@ -45,6 +74,13 @@ public interface MapFunctions extends ExecutableFunctions {
      */
     default void panTo(LatLng latlng, PanOptions options) {
         execute("panTo", latlng, options);
+    }
+
+    /**
+     * Sets the view of the map (geographical center and zoom)
+     */
+    default void setView(LatLng center, int zoom) {
+        execute("setView", center, zoom);
     }
 
     /**
@@ -65,10 +101,23 @@ public interface MapFunctions extends ExecutableFunctions {
 
     /**
      * Sets the zoom of the map.
-     * 
+     */
+    default void setZoom(int zoom) {
+        execute("setZoom", zoom);
+    }
+
+    /**
+     * Sets the zoom of the map.
      */
     default void setZoom(int zoom, PanOptions options) {
         execute("setZoom", zoom, options);
+    }
+
+    /**
+     * Increases the zoom of the map by delta (zoomDelta by default).
+     */
+    default void zoomIn(int delta) {
+        execute("zoomIn", delta);
     }
 
     /**
@@ -81,17 +130,23 @@ public interface MapFunctions extends ExecutableFunctions {
     /**
      * Decreases the zoom of the map by delta (zoomDelta by default).
      */
+    default void zoomOut(int delta) {
+        execute("zoomOut", delta);
+    }
+
+    /**
+     * Decreases the zoom of the map by delta (zoomDelta by default).
+     */
     default void zoomOut(int delta, ZoomOptions options) {
         execute("zoomOut", delta, options);
     }
 
     /**
-     * 
      * Zooms the map while keeping a specified geographical point on the map
      * stationary (e.g. used internally for scroll zoom and double-click zoom).
      */
-    default void setZoomAround(LatLng latlng, int zoom, ZoomOptions options) {
-        execute("setZoomAround", latlng, zoom, options);
+    default void setZoomAround(LatLng latlng, int zoom) {
+        execute("setZoomAround", latlng, zoom);
     }
 
     /**
@@ -101,6 +156,16 @@ public interface MapFunctions extends ExecutableFunctions {
      */
     default void setZoomAround(Point offset, int zoom, ZoomOptions options) {
         execute("setZoomAround", offset, zoom, options);
+    }
+
+    /**
+     * Sets a map view that contains the given geographical bounds with the maximum
+     * zoom level possible.
+     * 
+     * @param bounds the bounds
+     */
+    default void fitBounds(LatLngBounds bounds) {
+        execute("fitBounds", bounds);
     }
 
     /**
@@ -131,6 +196,15 @@ public interface MapFunctions extends ExecutableFunctions {
      */
     default void fitWorld(FitBoundsOptions options) {
         execute("fitWorld", options);
+    }
+
+    /**
+     * Pans the map by a given number of pixels (animated).
+     * 
+     * @param offset number of pixels
+     */
+    default void panBy(Point offset) {
+        execute("panBy", offset);
     }
 
     /**
@@ -192,8 +266,28 @@ public interface MapFunctions extends ExecutableFunctions {
      * it's not already), controlling the animation using the options specific, if
      * any.
      */
+    default void panInsideBounds(LatLngBounds bounds) {
+        execute("panInsideBounds", bounds);
+    }
+
+    /**
+     * Pans the map to the closest view that would lie inside the given bounds (if
+     * it's not already), controlling the animation using the options specific, if
+     * any.
+     */
     default void panInsideBounds(LatLngBounds bounds, PanOptions options) {
         execute("panInsideBounds", bounds, options);
+    }
+
+    /**
+     * Pans the map the minimum amount to make the latlng visible. Use padding,
+     * paddingTopLeft and paddingTopRight options to fit the display to more
+     * restricted bounds, like fitBounds. If latlng is already within the
+     * (optionally padded) display bounds, the map will not be panned.
+     * 
+     */
+    default void panInside(LatLng latlng) {
+        execute("panInside", latlng);
     }
 
     /**
@@ -213,10 +307,19 @@ public interface MapFunctions extends ExecutableFunctions {
      * If options.pan is false, panning will not occur. If options.debounceMoveend
      * is true, it will delay moveend event so that it doesn't happen often even if
      * the method is called many times in a row.
-     * 
-     * 
      */
-    default void invalidateSize(ZoomOptions options) {
+    default void invalidateSize() {
+        execute("invalidateSize");
+    }
+
+    /**
+     * Checks if the map container size changed and updates the map if so — call it
+     * after you've changed the map size dynamically, also animating pan by default.
+     * If options.pan is false, panning will not occur. If options.debounceMoveend
+     * is true, it will delay moveend event so that it doesn't happen often even if
+     * the method is called many times in a row.
+     */
+    default void invalidateSize(PanOptions options) {
         execute("invalidateSize", options);
     }
 
@@ -226,9 +329,8 @@ public interface MapFunctions extends ExecutableFunctions {
      * If options.pan is false, panning will not occur. If options.debounceMoveend
      * is true, it will delay moveend event so that it doesn't happen often even if
      * the method is called many times in a row.
-     * 
      */
-    default void invalidateSize(PanOptions options) {
+    default void invalidateSize(ZoomOptions options) {
         execute("invalidateSize", options);
     }
 

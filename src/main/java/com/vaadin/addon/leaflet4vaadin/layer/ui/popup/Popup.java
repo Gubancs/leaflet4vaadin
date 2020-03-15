@@ -154,4 +154,15 @@ public class Popup implements Serializable {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	@Override
+	public String toString() {
+		return "Popup [autoClose=" + autoClose + ", autoPan=" + autoPan + ", autoPanPadding=" + autoPanPadding
+				+ ", autoPanPaddingBottomRight=" + autoPanPaddingBottomRight + ", autoPanPaddingTopLeft="
+				+ autoPanPaddingTopLeft + ", className=" + className + ", closeButton=" + closeButton
+				+ ", closeOnClick=" + closeOnClick + ", closeOnEscapeKey=" + closeOnEscapeKey + ", content=" + content
+				+ ", keepInView=" + keepInView + ", maxHeight=" + maxHeight + ", maxWidth=" + maxWidth + ", minWidht="
+				+ minWidht + "]";
+	}
+
 }

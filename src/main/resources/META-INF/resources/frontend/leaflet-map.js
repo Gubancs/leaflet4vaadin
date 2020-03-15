@@ -118,7 +118,7 @@ class LeafletMap extends PolymerElement {
 
       this.map.whenReady(() => {
         console.log("LeafletMap - whenReady() invalidate map size");
-        this.map.invalidateSize();
+        //this.map.invalidateSize();
       });
 
       this.mapInitialized = true;
@@ -200,7 +200,7 @@ class LeafletMap extends PolymerElement {
 
     let layer = this.findLayer(this.map, operation.layerId);
     let leafletArgs = JSON.parse(operation.arguments);
-    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));;
+    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));
     console.log("LeafletMap - callLeafletFunction() - leafletArgs", leafletArgs);
     let result = layer[operation.functionName].apply(layer, leafletArgs);
 
@@ -256,15 +256,16 @@ class LeafletMap extends PolymerElement {
   }
 
   registerEventListener(layer, event) {
-    console.log("LeafletMap - try to register event listener for event type:", { event: event });
+    let found = this.getEventMap().find(e => e.events.indexOf(event) >= 0);
+    let eventListener = this.onBaseEventHandler;
+    if (found) {
+      if (!found.condition || found.condition.call(this, layer)) {
+        eventListener = found.handler;
+      }
+    }
 
-    this.getEventMap()
-      .slice()
-      .filter(e => e.events.indexOf(event) >= 0)
-      .forEach(e => {
-        console.log("LeafletMap - binding event listener to layer:", { event: event });
-        layer.on(event, e.handler, this);
-      });
+    console.log("LeafletMap - registerEventListener() register listener for event", { event: event });
+    layer.on(event, eventListener, this);
   }
 
   getEventMap() {
@@ -275,32 +276,29 @@ class LeafletMap extends PolymerElement {
           handler: this.onMouseEventEventHandler
         },
         {
-          events: ["dragstart", "movestart", "moveend"],
-          handler: this.onBaseEventHandler
-        },
-        {
-          events: ["drag"],
-          handler: this.onDragEventHandler
+          events: ["keypress", "keydown", "keyup"],
+          handler: this.onKeyboardEventHandler
         },
         {
           events: ["resize"],
           handler: this.onResizeEventHandler
         },
         {
+          events: ["zoomanim"],
+          handler: this.onZoomAnimEventHandler
+        },
+        {
           events: ["dragend"],
           handler: this.onDragEndEventHandler
         },
         {
-          events: ["add", "remove"],
-          handler: this.onBaseEventHandler
+          events: ["layeradd", "layerremove"],
+          handler: this.onLayerEventHandler
         },
         {
           events: ["move"],
+          condition: layer => layer.leafletType === "Marker",
           handler: this.onMoveEventHandler
-        },
-        {
-          events: ["zoomanim"],
-          handler: this.onZoomAnimEventHandler
         },
         {
           events: ["popupclose", "popupopen"],
@@ -317,14 +315,44 @@ class LeafletMap extends PolymerElement {
         {
           events: ["locationerror"],
           handler: this.onErrorEventHandler
-        },
-        {
-          events: ["zoomlevelschange", "unload", "viewreset", "load", "zoom", "zoomend", "zoomstart", "movestart", "moveend"],
-          handler: this.onBaseEventHandler
         }
       ];
     }
     return this.eventMap;
+  }
+
+  onMouseEventEventHandler(event) {
+    console.info("LeafletMap - onMouseEventEventHandler()", event);
+  }
+  onKeyboardEventHandler(event) {
+    console.info("LeafletMap - onKeyboardEventHandler()", event);
+  }
+  onResizeEventHandler(event) {
+    console.info("LeafletMap - onResizeEventHandler()", event);
+  }
+  onZoomAnimEventHandler(event) {
+    console.info("LeafletMap - onZoomAnimEventHandler()", event);
+  }
+  onDragEndEventHandler(event) {
+    console.info("LeafletMap - onDragEndEventHandler()", event);
+  }
+  onLayerEventHandler(event) {
+    console.info("LeafletMap - onLayerEventHandler()", event);
+  }
+  onMoveEventHandler(event) {
+    console.info("LeafletMap - onMoveEventHandler()", event);
+  }
+  onPopupEventHandler(event) {
+    console.info("LeafletMap - onPopupEventHandler()", event);
+  }
+  onTooltipEventHandler(event) {
+    console.info("LeafletMap - onTooltipEventHandler()", event);
+  }
+  onLocationEventHandler(event) {
+    console.info("LeafletMap - onLocationEventHandler()", event);
+  }
+  onErrorEventHandler(event) {
+    console.info("LeafletMap - onErrorEventHandler()", event);
   }
 }
 

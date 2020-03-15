@@ -29,10 +29,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
  */
 public interface Evented {
 	/**
-	 * Adds a listener function (fn) to a particular event type of the object. You
-	 * can optionally specify the context of the listener (object the this keyword
-	 * will point to). You can also pass several space-separated types (e.g. 'click
-	 * dblclick').
+	 * Adds a listener function (fn) to a particular event type of the object.
 	 * 
 	 * @param eventType type of the event to be listening
 	 * @param listener  the event listener
@@ -51,29 +48,47 @@ public interface Evented {
 		addEventListener(eventType, listener);
 	}
 
-	//
-	// /**
-	// * Removes all listeners to all events on the object. This includes implicitly
-	// * attached events.
-	// */
-	// void off();
-	//
-	// /**
-	// * Removes a previously added listener function. It will remove all the
-	// * listeners of that particular event from the object.
-	// */
-	// void off(LeafletEventType leafletEventType);
-	//
-	// /**
-	// * Fires an event of the specified type.
-	// */
-	// void fireEvent(LeafletEventType leafletEventType);
-	//
-	// /**
-	// * Alias to fireEvent(…)
-	// */
-	// default void fire(LeafletEventType leafletEventType) {
-	// fireEvent(leafletEventType);
-	// }
+	/**
+	 * Alias to off(…)
+	 */
+	void removeEventListener(LeafletEventType eventType);
+
+	/**
+	 * Removes a previously added listener function.
+	 * 
+	 * @param eventType the event type
+	 */
+	default void off(LeafletEventType eventType) {
+		removeEventListener(eventType);
+	}
+
+	/**
+	 * Alias to off()
+	 */
+	void clearAllEventListeners();
+
+	/**
+	 * Removes all listeners to all events on the object. This includes implicitly
+	 * attached events.
+	 */
+	default void off() {
+		clearAllEventListeners();
+	}
+
+	/**
+	 * Alias to listens(…)
+	 * 
+	 * @param eventType the event type
+	 */
+	boolean hasEventListeners(LeafletEventType eventType);
+
+	/**
+	 * Returns true if a particular event type has any listeners attached to it.
+	 * 
+	 * @param eventType the event type
+	 */
+	default boolean listens(LeafletEventType eventType) {
+		return hasEventListeners(eventType);
+	}
 
 }

@@ -50,4 +50,9 @@ public class LeafletEvent {
 		return type;
 	}
 
+	@Override
+	public String toString() {
+		return "LeafletEvent [type=" + type + "]";
+	}
+
 }

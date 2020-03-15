@@ -54,20 +54,33 @@ public class MapEventsExample extends ExampleContainer {
 		options.setZoom(7);
 		final LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+
+		// Interaction events
 		leafletMap.onClick(this::logEvent);
-		leafletMap.onMoveEnd(this::logEvent);
 		leafletMap.onMouseOut(this::logEvent);
-		leafletMap.onResize(this::logEvent);
 		leafletMap.onDoubleClick(this::logEvent);
 		leafletMap.onContextMenuOpened(this::logEvent);
 		leafletMap.onMouseDown(this::logEvent);
 		leafletMap.onMouseUp(this::logEvent);
 		leafletMap.onMouseOver(this::logEvent);
-		leafletMap.onZoomLevelsChange(this::logEvent);
 
-		leafletMap.onZoom(this::logEvent);
+		// Map state change events
+		leafletMap.onZoomLevelsChange(this::logEvent);
+		leafletMap.onResize(this::logEvent);
+		leafletMap.onUnload(this::logEvent);
+		leafletMap.onViewReset(this::logEvent);
+		leafletMap.onLoad(this::logEvent);
 		leafletMap.onZoomStart(this::logEvent);
+		leafletMap.onMoveStart(this::logEvent);
+		leafletMap.onZoom(this::logEvent);
+		leafletMap.onMove(this::logEvent);
 		leafletMap.onZoomEnd(this::logEvent);
+		leafletMap.onMoveEnd(this::logEvent);
+
+		// keyboard events
+		leafletMap.onKeyDown(this::logEvent);
+		leafletMap.onKeyUp(this::logEvent);
+		leafletMap.onKeyPress(this::logEvent);
 
 		layout.add(leafletMap, sidebar);
 		mapContainer.add(layout);

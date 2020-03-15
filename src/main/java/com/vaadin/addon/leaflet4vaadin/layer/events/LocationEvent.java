@@ -124,4 +124,11 @@ public class LocationEvent extends LeafletEvent {
     public Double getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "LocationEvent [type=" + super.getType() + ", accuracy=" + accuracy + ", altitude=" + altitude
+                + ", altitudeAccuracy=" + altitudeAccuracy + ", bounds=" + bounds + ", heading=" + heading + ", latlng="
+                + latlng + ", speed=" + speed + ", timestamp=" + timestamp + "]";
+    }
 }

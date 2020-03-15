@@ -15,14 +15,14 @@
 package com.vaadin.addon.leaflet4vaadin.layer.events;
 
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.TooltipEventType;
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.TileEventType;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
 
 public class TileEvent extends LeafletEvent {
 
     private Point coords;
 
-    public TileEvent(Layer layer, TooltipEventType eventType, Point coords) {
+    public TileEvent(Layer layer, TileEventType eventType, Point coords) {
         super(layer, eventType);
         this.coords = coords;
     }
@@ -35,4 +35,10 @@ public class TileEvent extends LeafletEvent {
     public Point getCoords() {
         return coords;
     }
+
+    @Override
+    public String toString() {
+        return "TileEvent [type=" + super.getType() + ", coords=" + coords + "]";
+    }
+
 }

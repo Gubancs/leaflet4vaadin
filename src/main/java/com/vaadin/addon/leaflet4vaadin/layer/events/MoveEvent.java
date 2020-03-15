@@ -42,4 +42,10 @@ public class MoveEvent extends LeafletEvent {
     public LatLng getOldLatLng() {
         return oldLatLng;
     }
+
+    @Override
+    public String toString() {
+        return "MoveEvent [type=" + super.getType() + ",latLng=" + latLng + ", oldLatLng=" + oldLatLng + "]";
+    }
+
 }

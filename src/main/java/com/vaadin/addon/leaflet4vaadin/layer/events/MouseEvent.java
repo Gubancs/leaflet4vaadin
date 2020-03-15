@@ -61,4 +61,10 @@ public class MouseEvent extends LeafletEvent {
         return containerPoint;
     }
 
+    @Override
+    public String toString() {
+        return "MouseEvent [type=" + super.getType() + ", containerPoint=" + containerPoint + ", latLng=" + latLng
+                + ", layerPoint=" + layerPoint + "]";
+    }
+
 }

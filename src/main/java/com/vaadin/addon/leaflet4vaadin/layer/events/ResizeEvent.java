@@ -15,7 +15,7 @@
 package com.vaadin.addon.leaflet4vaadin.layer.events;
 
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType;
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.MapEventType;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
 
 public class ResizeEvent extends LeafletEvent {
@@ -23,8 +23,8 @@ public class ResizeEvent extends LeafletEvent {
     private final Point oldSize;
     private final Point newSize;
 
-    public ResizeEvent(Layer layer, MouseEventType eventType, Point oldSize, Point newSize) {
-        super(layer, eventType);
+    public ResizeEvent(Layer layer, Point oldSize, Point newSize) {
+        super(layer, MapEventType.resize);
         this.newSize = newSize;
         this.oldSize = oldSize;
     }
@@ -46,4 +46,10 @@ public class ResizeEvent extends LeafletEvent {
     public Point getNewSize() {
         return newSize;
     }
+
+    @Override
+    public String toString() {
+        return "ResizeEvent [type=" + super.getType() + ", newSize=" + newSize + ", oldSize=" + oldSize + "]";
+    }
+
 }

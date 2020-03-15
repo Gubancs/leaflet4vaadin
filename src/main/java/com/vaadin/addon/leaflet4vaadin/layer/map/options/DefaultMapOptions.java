@@ -54,7 +54,7 @@ public class DefaultMapOptions implements MapOptions {
     private LatLng center;
     private Integer zoom;
     private Integer minZoom = 0;
-    private Integer maxZoom = 30;
+    private Integer maxZoom = 20;
     private LatLngBounds maxBounds;
     private LatLngBounds bounds;
 

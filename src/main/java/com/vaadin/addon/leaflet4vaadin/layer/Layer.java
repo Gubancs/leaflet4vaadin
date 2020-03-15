@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -147,20 +148,6 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 		on(Events.popupclose, listener);
 	}
 
-	@Override
-	public <T extends LeafletEvent> void addEventListener(LeafletEventType eventType,
-			LeafletEventListener<T> listener) {
-		if (!events.contains(eventType.getLeafletEvent())) {
-			events.add(eventType.getLeafletEvent());
-		}
-		Set<LeafletEventListener> listeners = eventListeners.get(eventType);
-		if (listeners == null) {
-			listeners = new HashSet<>();
-			eventListeners.putIfAbsent(eventType, listeners);
-		}
-		listeners.add(listener);
-	}
-
 	public <T extends LeafletEvent> void fireEvent(T leafletEvent) {
 		Optional<LeafletEventType> event = eventListeners.keySet().stream()
 				.filter(type -> type.equals(leafletEvent.getType())).findFirst();
@@ -188,14 +175,6 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 	public void addTo(LeafletMap leafletMap) {
 		this.functionDelegate = leafletMap;
 		leafletMap.addLayer(this);
-	}
-
-	public Optional<Layer> findLayer(String layerId) {
-		return itsMe(layerId) ? Optional.of(this) : Optional.empty();
-	}
-
-	private boolean itsMe(String layerId) {
-		return this.getUuid().equals(layerId);
 	}
 
 	public List<String> getEvents() {
@@ -281,12 +260,46 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 	}
 
 	@Override
-	public <T extends Serializable> T call(Identifiable target, String functionName, Class<T> resultType,
+	public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType,
 			Serializable... arguments) {
 		if (functionDelegate instanceof ExecutableFunctions) {
 			return functionDelegate.call(target, functionName, resultType, arguments);
 		} else {
 			throw new RuntimeException("Failed to execute leaflet function " + functionName);
 		}
+	}
+
+	@Override
+	public <T extends LeafletEvent> void addEventListener(LeafletEventType eventType,
+			LeafletEventListener<T> listener) {
+		if (!events.contains(eventType.getLeafletEvent())) {
+			events.add(eventType.getLeafletEvent());
+		}
+		Set<LeafletEventListener> listeners = eventListeners.get(eventType);
+		if (listeners == null) {
+			listeners = new HashSet<>();
+			eventListeners.putIfAbsent(eventType, listeners);
+		}
+		listeners.add(listener);
+	}
+
+	@Override
+	public void clearAllEventListeners() {
+		this.eventListeners.clear();
+		this.events.clear();
+		execute(this, "clearAllEventListeners");
+	}
+
+	@Override
+	public boolean hasEventListeners(LeafletEventType eventType) {
+		Set<LeafletEventListener> listeners = this.eventListeners.get(eventType);
+		return listeners != null && listeners.size() > 0;
+	}
+
+	@Override
+	public void removeEventListener(LeafletEventType eventType) {
+		this.eventListeners.remove(eventType);
+		this.events.remove(eventType.getLeafletEvent());
+		execute(this, "removeEventListener", eventType.getLeafletEvent());
 	}
 }

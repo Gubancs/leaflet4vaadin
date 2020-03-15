@@ -33,4 +33,10 @@ public class PopupEvent extends LeafletEvent {
     public Popup getPopup() {
         return popup;
     }
+
+    @Override
+    public String toString() {
+        return "PopupEvent [type=" + super.getType() + ", popup=" + popup + "]";
+    }
+
 }

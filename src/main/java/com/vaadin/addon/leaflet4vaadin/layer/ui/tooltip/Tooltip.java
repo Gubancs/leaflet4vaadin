@@ -101,4 +101,11 @@ public class Tooltip implements Serializable {
 		this.content = content;
 	}
 
+	@Override
+	public String toString() {
+		return "Tooltip [content=" + content + ", direction=" + direction + ", interactive=" + interactive + ", offset="
+				+ offset + ", opacity=" + opacity + ", pane=" + pane + ", permanent=" + permanent + ", sticky=" + sticky
+				+ "]";
+	}
+
 }

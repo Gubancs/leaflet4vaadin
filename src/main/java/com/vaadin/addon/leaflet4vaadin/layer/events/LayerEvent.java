@@ -12,41 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer.groups;
-
-import java.util.List;
+package com.vaadin.addon.leaflet4vaadin.layer.events;
 
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
-import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsLayerEvents;
-import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsMouseEvents;
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.LayerEventType;
 
 /**
- * Extended LayerGroup that makes it easier to do the same thing to all its
- * member layers
+ * Represents the Leaflet LayerEevent
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
  * 
- * @since 2020-02-06
+ * @since 2020-03-14
  * @version 1.0
  */
-public class FeatureGroup extends LayerGroup implements SupportsMouseEvents, SupportsLayerEvents {
+public class LayerEvent extends LeafletEvent {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 4315847050612014255L;
+    private Layer child;
 
-	public FeatureGroup() {
-		super();
-	}
+    public LayerEvent(Layer layer, LayerEventType eventType, Layer child) {
+        super(layer, eventType);
+    }
 
-	public FeatureGroup(final Layer... layers) {
-		super(layers);
-	}
+    /**
+     * The layer that was added or removed.
+     * 
+     * @return the child
+     */
+    public Layer getChild() {
+        return child;
+    }
 
-	public FeatureGroup(final List<Layer> layers) {
-		super(layers);
-	}
+    @Override
+    public String toString() {
+        return "LayerEvent [type=" + super.getType() + ", child=" + child + "]";
+    }
 
 }

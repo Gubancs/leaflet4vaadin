@@ -15,32 +15,30 @@
 package com.vaadin.addon.leaflet4vaadin.layer.events;
 
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType;
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.TileEventType;
+import com.vaadin.addon.leaflet4vaadin.types.Point;
 
-/**
- * The base event object. All other event objects contain these properties too.
- */
-public class DragEndEvent extends LeafletEvent {
+public class TileErrorEvent extends LeafletEvent {
 
-    private final double distance;
+    private Point coords;
 
-    public DragEndEvent(Layer layer, DragEventType eventType, double distance) {
+    public TileErrorEvent(Layer layer, TileEventType eventType, Point coords) {
         super(layer, eventType);
-        this.distance = distance;
+        this.coords = coords;
     }
 
     /**
-     * The distance in pixels the draggable element was moved by.
+     * Point object with the tile's x, y, and z (zoom level) coordinates.
      * 
-     * @return the distance in pixels.
+     * @return the coords
      */
-    public double getDistance() {
-        return distance;
+    public Point getCoords() {
+        return coords;
     }
 
     @Override
     public String toString() {
-        return "DragEndEvent [type=" + super.getType() + ",distance=" + distance + "]";
+        return "TileErrorEvent [type=" + super.getType() + ", coords=" + coords + "]";
     }
 
 }

@@ -57,4 +57,11 @@ public class ZoomAnimEvent extends LeafletEvent {
     public boolean isNoUpdate() {
         return noUpdate;
     }
+
+    @Override
+    public String toString() {
+        return "ZoomAnimEvent [type=" + super.getType() + ", center=" + center + ", noUpdate=" + noUpdate + ", zoom="
+                + zoom + "]";
+    }
+
 }

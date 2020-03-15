@@ -33,4 +33,10 @@ public class TooltipEvent extends LeafletEvent {
     public Tooltip getTooltip() {
         return tooltip;
     }
+
+    @Override
+    public String toString() {
+        return "TooltipEvent [type=" + super.getType() + ", tooltip=" + tooltip + "]";
+    }
+
 }
