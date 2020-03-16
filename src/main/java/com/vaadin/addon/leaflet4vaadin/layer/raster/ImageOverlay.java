@@ -59,7 +59,7 @@ public class ImageOverlay extends InteractiveLayer {
     /**
      * Fired when the ImageOverlay layer has loaded its image
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onLoad(LeafletEventListener<LeafletEvent> listener) {
         on(Events.load, listener);
@@ -68,7 +68,7 @@ public class ImageOverlay extends InteractiveLayer {
     /**
      * Fired when the ImageOverlay layer fails to load its image
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onError(LeafletEventListener<LeafletEvent> listener) {
         on(Events.error, listener);

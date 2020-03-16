@@ -33,6 +33,10 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/events", layout = LeafletDemoApp.class)
 public class MarkersEventsExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -9185254069257875170L;
 	private Label eventLabel;
 
 	@Override

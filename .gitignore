@@ -5,3 +5,7 @@ pnpmfile.js
 node_modules
 target
 webpack.generated.js
+.settings
+.vscode/settings.json
+package-lock.json
+pnpm-lock.yaml

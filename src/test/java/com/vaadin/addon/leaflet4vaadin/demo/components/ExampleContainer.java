@@ -32,6 +32,10 @@ import com.vaadin.flow.component.tabs.Tabs.SelectedChangeEvent;
 
 public abstract class ExampleContainer extends VerticalLayout {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -731433552726627896L;
 	private Tabs tabs = new Tabs();
 	private Map<Tab, Component> tabsToPages = new HashMap<>();
 	private Set<Component> pagesShown;

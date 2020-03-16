@@ -14,29 +14,31 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.events.supports;
 
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.LocationEventType.locationerror;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.LocationEventType.locationfound;
+
 import com.vaadin.addon.leaflet4vaadin.layer.events.ErrorEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LocationEvent;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.LocationEventType;
 
 public interface SupportsLocationEvents extends Evented {
 
 	/**
 	 * Fired when geolocation (using the locate method) failed.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onLocationError(LeafletEventListener<ErrorEvent> listener) {
-		on(LocationEventType.locationerror, listener);
+		on(locationerror, listener);
 	}
 
 	/**
 	 * Fired when geolocation (using the locate method) went successfully.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onLocationFound(LeafletEventListener<LocationEvent> listener) {
-		on(LocationEventType.locationfound, listener);
+		on(locationfound, listener);
 	}
 }

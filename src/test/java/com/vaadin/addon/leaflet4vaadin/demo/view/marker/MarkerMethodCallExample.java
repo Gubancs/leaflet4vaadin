@@ -29,6 +29,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/method-call", layout = LeafletDemoApp.class)
 public class MarkerMethodCallExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -217776717442416339L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

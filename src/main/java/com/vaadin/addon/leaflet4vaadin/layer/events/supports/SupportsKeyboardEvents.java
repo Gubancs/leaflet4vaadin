@@ -14,10 +14,13 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.events.supports;
 
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.KeyboardEventType.keydown;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.KeyboardEventType.keypress;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.KeyboardEventType.keyup;
+
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
 import com.vaadin.addon.leaflet4vaadin.layer.events.KeyboardEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.KeyboardEventType;
 
 public interface SupportsKeyboardEvents extends Evented {
 
@@ -25,28 +28,28 @@ public interface SupportsKeyboardEvents extends Evented {
      * Fired when the user presses a key from the keyboard that produces a character
      * value while the map is focused.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     default void onKeyPress(LeafletEventListener<KeyboardEvent> listener) {
-        on(KeyboardEventType.keypress, listener);
+        on(keypress, listener);
     }
 
     /**
      * Fired when the user presses a key from the keyboard while the map is focused.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     default void onKeyDown(LeafletEventListener<KeyboardEvent> listener) {
-        on(KeyboardEventType.keydown, listener);
+        on(keydown, listener);
     }
 
     /**
      * Fired when the user releases a key from the keyboard while the map is
      * focused.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     default void onKeyUp(LeafletEventListener<KeyboardEvent> listener) {
-        on(KeyboardEventType.keyup, listener);
+        on(keyup, listener);
     }
 }

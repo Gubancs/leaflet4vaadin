@@ -18,9 +18,12 @@ import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vividsolutions.jts.geom.GeometryCollection;
 
-
 public class GeoJSON extends FeatureGroup {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -276591822504800118L;
     private boolean markersInheritOptions = false;
     private GeometryCollection geometryCollection;
 

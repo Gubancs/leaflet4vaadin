@@ -33,6 +33,11 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 @Route(value = "layers/geojson", layout = LeafletDemoApp.class)
 public class GeoJSONLayerExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7955888151715306558L;
+
 	@Override
 	protected void initMap(final Div mapContainer) {
 

@@ -14,12 +14,18 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.events.supports;
 
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType.drag;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType.dragend;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType.dragstart;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType.move;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType.moveend;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType.movestart;
+
 import com.vaadin.addon.leaflet4vaadin.layer.events.DragEndEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
 import com.vaadin.addon.leaflet4vaadin.layer.events.MoveEvent;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.DragEventType;
 
 public interface SupportsDragEvents extends Evented {
 
@@ -27,54 +33,54 @@ public interface SupportsDragEvents extends Evented {
 	 * Fired when this layer is moved via setLatLng or by dragging. Old and new
 	 * coordinates are included in event arguments as oldLatLng, latlng.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMove(LeafletEventListener<MoveEvent> listener) {
-		on(DragEventType.move, listener);
+		on(move, listener);
 	}
 
 	/**
 	 * Fired when the user starts dragging this layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onDragStart(LeafletEventListener<LeafletEvent> listener) {
-		on(DragEventType.dragstart, listener);
+		on(dragstart, listener);
 	}
 
 	/**
 	 * Fired when this layer starts moving (because of dragging).
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMoveStart(LeafletEventListener<LeafletEvent> listener) {
-		on(DragEventType.movestart, listener);
+		on(movestart, listener);
 	}
 
 	/**
 	 * Fired repeatedly while the user drags this layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onDrag(LeafletEventListener<LeafletEvent> listener) {
-		on(DragEventType.drag, listener);
+		on(drag, listener);
 	}
 
 	/**
 	 * Fired when the user stops dragging this layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onDragEnd(LeafletEventListener<DragEndEvent> listener) {
-		on(DragEventType.dragend, listener);
+		on(dragend, listener);
 	}
 
 	/**
 	 * Fired when this layer stops moving (because of dragging).
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMoveEnd(LeafletEventListener<LeafletEvent> listener) {
-		on(DragEventType.moveend, listener);
+		on(moveend, listener);
 	}
 }

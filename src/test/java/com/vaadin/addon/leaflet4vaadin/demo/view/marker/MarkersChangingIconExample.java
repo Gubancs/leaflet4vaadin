@@ -29,6 +29,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/changing-the-icons", layout = LeafletDemoApp.class)
 public class MarkersChangingIconExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7094280184463472668L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

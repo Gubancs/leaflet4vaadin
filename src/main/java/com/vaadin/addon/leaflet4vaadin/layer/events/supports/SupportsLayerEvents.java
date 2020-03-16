@@ -14,29 +14,31 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.events.supports;
 
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.LayerEventType.layeradd;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.LayerEventType.layerremove;
+
 import com.vaadin.addon.leaflet4vaadin.layer.events.ErrorEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LocationEvent;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.LayerEventType;
 
 public interface SupportsLayerEvents extends Evented {
 
 	/**
 	 * Fired when a layer is added to this layer
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onLayerAdd(LeafletEventListener<ErrorEvent> listener) {
-		on(LayerEventType.layeradd, listener);
+		on(layeradd, listener);
 	}
 
 	/**
 	 * Fired when a layer is removed from this layer
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onLayerRemove(LeafletEventListener<LocationEvent> listener) {
-		on(LayerEventType.layerremove, listener);
+		on(layerremove, listener);
 	}
 }

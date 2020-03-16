@@ -28,6 +28,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "controls/remove-defaults", layout = LeafletDemoApp.class)
 public class RemoveDefaultControlsExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7395956669043290420L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

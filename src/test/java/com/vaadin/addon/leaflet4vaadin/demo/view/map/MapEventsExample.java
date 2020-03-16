@@ -23,6 +23,8 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -32,6 +34,10 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/events", layout = LeafletDemoApp.class)
 public class MapEventsExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 6608207938871245065L;
 	private TextArea eventLogs;
 
 	@Override
@@ -81,6 +87,10 @@ public class MapEventsExample extends ExampleContainer {
 		leafletMap.onKeyDown(this::logEvent);
 		leafletMap.onKeyUp(this::logEvent);
 		leafletMap.onKeyPress(this::logEvent);
+
+		leafletMap.whenReady((event) -> {
+			Notification.show("map gets initialized ", 2000, Position.TOP_CENTER);
+		});
 
 		layout.add(leafletMap, sidebar);
 		mapContainer.add(layout);

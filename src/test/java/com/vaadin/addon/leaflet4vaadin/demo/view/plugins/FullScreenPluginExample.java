@@ -31,6 +31,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "plugins/fullscreen", layout = LeafletDemoApp.class)
 public class FullScreenPluginExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 6662792618804598561L;
+
 	@Override
 	protected void initMap(Div mapContainer) {
 
@@ -47,6 +52,11 @@ public class FullScreenPluginExample extends ExampleContainer {
 	}
 
 	public class FullScreenControl extends LeafletControl {
+
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = -8895908746666586972L;
 
 		public FullScreenControl() {
 			super("fullscreen");

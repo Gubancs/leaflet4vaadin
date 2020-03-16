@@ -32,6 +32,10 @@ import elemental.json.impl.JreJsonFactory;
 
 public class LeafletI18n implements Serializable {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 8240099358732023102L;
     private static final JsonValue DEFAULT_I18N;
 
     static {
@@ -43,9 +47,6 @@ public class LeafletI18n implements Serializable {
             throw new IllegalStateException("Cannot find the default i18n configuration");
         }
     }
-
-    private String zoomIn;
-    private String zoomOut;
 
     /**
      * @return a new instance with the default messages

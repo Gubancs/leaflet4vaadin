@@ -31,6 +31,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/polling", layout = LeafletDemoApp.class)
 public class MapPollListenerExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1095566366104041991L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

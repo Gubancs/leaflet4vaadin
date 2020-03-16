@@ -37,7 +37,7 @@ class LeafletMap extends PolymerElement {
    * a comma-separated list of one or more dependencies.
    */
   static get observers() {
-    return ["updateZoom(mapOptions.zoom)", "updateBounds(mapOptions.bounds)", "updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
+    return ["updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
   }
 
   /**
@@ -117,8 +117,9 @@ class LeafletMap extends PolymerElement {
       });
 
       this.map.whenReady(() => {
-        console.log("LeafletMap - whenReady() invalidate map size");
-        this.map.invalidateSize();
+        console.log("LeafletMap - whenReady()");
+        //this.map.invalidateSize();
+        this.onMapReadyEventHandler.call();
       });
 
       this.mapInitialized = true;
@@ -139,24 +140,6 @@ class LeafletMap extends PolymerElement {
       this.overlayControl.addBaseLayer(leafletLayer, layer.name);
     }
     console.log("LeafletMap - " + layer.leafletType + " has been added to map", leafletLayer);
-  }
-
-  /**
-   * Called when the 'zoom' property changed on the server side.
-   */
-  updateZoom(zoom) {
-    console.log("LeafletMap - zoom property changed", zoom);
-    if (this.map) {
-      this.map.setZoom(zoom);
-    }
-  }
-
-  /**
-   * Called when the 'bounds' property changed on the server side.
-   */
-  updateBounds(bounds) {
-    console.log("LeafletMap - bounds property changed", bounds);
-    this.fitBounds(bounds);
   }
 
   updateMapListeners(changeRecord) {
@@ -297,7 +280,7 @@ class LeafletMap extends PolymerElement {
         },
         {
           events: ["move"],
-          condition: layer => layer.leafletType === "Marker",
+          condition: layer => layer.options.leafletType === "Marker",
           handler: this.onMoveEventHandler
         },
         {

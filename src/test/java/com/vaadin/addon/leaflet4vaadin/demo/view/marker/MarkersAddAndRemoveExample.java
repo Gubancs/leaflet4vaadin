@@ -35,6 +35,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/add-and-remove-markers", layout = LeafletDemoApp.class)
 public class MarkersAddAndRemoveExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5769568472203107171L;
+
     @Override
     protected void initMap(Div mapContainer) {
         HorizontalLayout layout = new HorizontalLayout();

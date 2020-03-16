@@ -15,12 +15,17 @@
 package com.vaadin.addon.leaflet4vaadin.controls;
 
 import java.io.Serializable;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
+import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
+import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
+import com.vaadin.addon.leaflet4vaadin.types.LeafletClass;
 import com.vaadin.flow.templatemodel.Encode;
 import com.vaadin.flow.templatemodel.ModelEncoder;
 
-public abstract class LeafletControl implements Serializable {
+public abstract class LeafletControl implements LeafletClass, ExecutableFunctions {
 
 	private static final long serialVersionUID = -2562236800599480357L;
 
@@ -28,19 +33,28 @@ public abstract class LeafletControl implements Serializable {
 		topleft, topright, bottomleft, bottomright;
 	}
 
-	private final String leafletType;
+	private final String uuid;
+	private final String controlType;
 	private ControlPosition position = ControlPosition.topright;
+	private ExecutableFunctions functionDelegate;
 
-	public LeafletControl(String leafletType) {
-		this.leafletType = leafletType;
+	public LeafletControl(String controlType) {
+		this.controlType = controlType;
+		this.uuid = UUID.randomUUID().toString();
+	}
+
+	@Override
+	public String getUuid() {
+		return uuid;
 	}
 
 	public ControlPosition getPosition() {
 		return position;
 	}
 
+	@Override
 	public String getLeafletType() {
-		return leafletType;
+		return controlType;
 	}
 
 	@Encode(value = ControlPositionModelEncoder.class)
@@ -54,6 +68,7 @@ public abstract class LeafletControl implements Serializable {
 	 * @param leafletMap add this control to the given leaflet map
 	 */
 	public void addTo(LeafletMap leafletMap) {
+		this.functionDelegate = leafletMap;
 		leafletMap.addControl(this);
 	}
 
@@ -74,6 +89,25 @@ public abstract class LeafletControl implements Serializable {
 			return ControlPosition.valueOf(value);
 		}
 
+	}
+
+	@Override
+	public void execute(Identifiable target, String functionName, Serializable... arguments) {
+		if (functionDelegate != null) {
+			functionDelegate.execute(target, functionName, arguments);
+		} else {
+			throw new RuntimeException("Unable to execute leaflet function " + functionName);
+		}
+	}
+
+	@Override
+	public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName,
+			Class<T> resultType, Serializable... arguments) {
+		if (functionDelegate != null) {
+			return functionDelegate.call(target, functionName, resultType, arguments);
+		} else {
+			throw new RuntimeException("Unable to call leaflet function " + functionName);
+		}
 	}
 
 }

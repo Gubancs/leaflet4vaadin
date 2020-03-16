@@ -29,6 +29,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapConversionMethodsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
@@ -90,6 +91,7 @@ public class LeafletDemoApp extends AppLayoutRouterLayout<LeftResponsiveHybrid> 
 								.add(menuItem(MapEventsExample.class)).add(menuItem(MapDarkThemeExample.class))
 								.add(menuItem(MapPollListenerExample.class)).add(menuItem(MapFunctionsExample.class))
 								.add(menuItem(MapGeolocationExample.class))
+								.add(menuItem(MapConversionMethodsExample.class))
 								.build())
 						.add(LeftSubMenuBuilder.get("Markers", new Icon(VaadinIcon.MAP_MARKER))
 								.add(menuItem(MarkersSimpleExample.class)).add(menuItem(MarkersWithEventsExample.class))

@@ -14,65 +14,72 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.events.supports;
 
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.click;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.contextmenu;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.dblclick;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mousedown;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mouseout;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mouseover;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mouseup;
+
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
 import com.vaadin.addon.leaflet4vaadin.layer.events.MouseEvent;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType;
 
 public interface SupportsMouseEvents extends Evented {
 
 	/**
 	 * Fired when the user clicks (or taps) the layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onClick(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.click, listener);
+		on(click, listener);
 	}
 
 	/**
 	 * Fired when the user double-clicks (or double-taps) the layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onDoubleClick(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.dblclick, listener);
+		on(dblclick, listener);
 	}
 
 	/**
 	 * Fired when the user pushes the mouse button on the layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMouseDown(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.mousedown, listener);
+		on(mousedown, listener);
 	}
 
 	/**
 	 * Fired when the mouse enters the layer
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMouseOver(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.mouseover, listener);
+		on(mouseover, listener);
 	}
 
 	/**
 	 * Fired when the user releases the mouse button pushed on the layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMouseUp(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.mouseup, listener);
+		on(mouseup, listener);
 	}
 
 	/**
 	 * Fired when the mouse leaves the layer.
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onMouseOut(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.mouseout, listener);
+		on(mouseout, listener);
 	}
 
 	/**
@@ -81,10 +88,10 @@ public interface SupportsMouseEvents extends Evented {
 	 * mobile when the user holds a single touch for a second (also called long
 	 * press).
 	 * 
-	 * @param listener the event listener
+	 * @param listener the listener to call when the event occurs, not {@code null}
 	 */
 	default void onContextMenuOpened(LeafletEventListener<MouseEvent> listener) {
-		on(MouseEventType.contextmenu, listener);
+		on(contextmenu, listener);
 	}
 
 }

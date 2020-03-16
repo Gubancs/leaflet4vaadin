@@ -33,6 +33,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/remove-on-click", layout = LeafletDemoApp.class)
 public class MarkersRemoveOnClickExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -4737660367386714966L;
+
 	@Override
 	protected void initMap(Div mapContainer) {
 

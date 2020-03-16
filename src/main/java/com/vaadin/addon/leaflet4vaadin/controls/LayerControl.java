@@ -58,4 +58,17 @@ public class LayerControl extends LeafletControl {
 		this.sortLayers = sortLayers;
 	}
 
+	/**
+	 * Expand the control container if collapsed.
+	 */
+	public void expand() {
+		execute(this, "expand");
+	}
+
+	/**
+	 * Collapse the control container if expanded.
+	 */
+	public void collapse() {
+		execute(this, "collapse");
+	}
 }

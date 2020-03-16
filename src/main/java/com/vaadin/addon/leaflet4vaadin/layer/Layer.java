@@ -260,8 +260,8 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 	}
 
 	@Override
-	public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType,
-			Serializable... arguments) {
+	public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName,
+			Class<T> resultType, Serializable... arguments) {
 		if (functionDelegate instanceof ExecutableFunctions) {
 			return functionDelegate.call(target, functionName, resultType, arguments);
 		} else {

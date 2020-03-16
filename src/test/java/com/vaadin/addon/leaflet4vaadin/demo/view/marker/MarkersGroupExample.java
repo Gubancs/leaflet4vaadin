@@ -33,6 +33,10 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/group", layout = LeafletDemoApp.class)
 public class MarkersGroupExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3686513404441062815L;
     private LeafletMap leafletMap;
     private LayerGroup defaultGroup;
     private LayerGroup customGroup;

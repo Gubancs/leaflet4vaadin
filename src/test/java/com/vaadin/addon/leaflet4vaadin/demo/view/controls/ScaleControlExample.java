@@ -30,6 +30,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "controls/scale-control", layout = LeafletDemoApp.class)
 public class ScaleControlExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1551177549650182745L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

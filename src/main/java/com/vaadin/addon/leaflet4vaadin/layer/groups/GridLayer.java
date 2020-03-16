@@ -61,7 +61,7 @@ public class GridLayer extends Layer {
     /**
      * Fired when the grid layer starts loading tiles.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onLoading(LeafletEventListener<LeafletEvent> listener) {
         on(Events.loading, listener);
@@ -70,7 +70,7 @@ public class GridLayer extends Layer {
     /**
      * Fired when a tile is removed (e.g. when a tile goes off the screen).
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onTileUnload(LeafletEventListener<TileEvent> listener) {
         on(Events.tileunload, listener);
@@ -79,7 +79,7 @@ public class GridLayer extends Layer {
     /**
      * Fired when a tile is requested and starts loading.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onTileLoadStart(LeafletEventListener<TileEvent> listener) {
         on(Events.tileloadstart, listener);
@@ -88,7 +88,7 @@ public class GridLayer extends Layer {
     /**
      * Fired when there is an error loading a tile.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onTileError(LeafletEventListener<TileEvent> listener) {
         on(Events.tileerror, listener);
@@ -97,7 +97,7 @@ public class GridLayer extends Layer {
     /**
      * Fired when a tile loads.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onTileLoad(LeafletEventListener<TileEvent> listener) {
         on(Events.tileload, listener);
@@ -106,7 +106,7 @@ public class GridLayer extends Layer {
     /**
      * Fired when the grid layer loaded all visible tiles.
      * 
-     * @param listener the event listener
+     * @param listener the listener to call when the event occurs, not {@code null}
      */
     public void onLoad(LeafletEventListener<LeafletEvent> listener) {
         on(Events.load, listener);

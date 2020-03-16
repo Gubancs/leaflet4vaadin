@@ -31,6 +31,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/map-events", layout = LeafletDemoApp.class)
 public class MarkersWithEventsExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 5192876579950862599L;
+
 	@Override
 	protected void initMap(Div mapContainer) {
 

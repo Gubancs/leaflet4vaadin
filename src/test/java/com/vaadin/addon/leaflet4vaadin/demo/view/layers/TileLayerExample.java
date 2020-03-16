@@ -29,6 +29,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "layers/tilelayer", layout = LeafletDemoApp.class)
 public class TileLayerExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -875948840999507377L;
+
 	@Override
 	protected void initMap(final Div mapContainer) {
 

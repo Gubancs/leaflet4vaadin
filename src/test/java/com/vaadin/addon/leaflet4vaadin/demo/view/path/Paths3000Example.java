@@ -31,6 +31,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/paths-3000", layout = LeafletDemoApp.class)
 public class Paths3000Example extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6757625262580562897L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

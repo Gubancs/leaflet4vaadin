@@ -27,10 +27,15 @@ public interface ExecutableFunctions extends Identifiable {
 
     void execute(Identifiable target, String functionName, Serializable... arguments);
 
-    default <T extends Serializable> CompletableFuture<T> call(String functionName, Class<T> resultType, Serializable... arguments) {
+    default <T extends Serializable> CompletableFuture<T> call(String functionName, Class<T> resultType,
+            Serializable... arguments) {
         return call(this, functionName, resultType, arguments);
     }
 
     <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType,
             Serializable... arguments);
+
+    default UnsupportedOperationException unsupportedOperation() {
+        return new UnsupportedOperationException("Sorry, but this function is not supported yet!");
+    }
 }

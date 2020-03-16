@@ -28,6 +28,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "mixed/word-map-flags", layout = LeafletDemoApp.class)
 public class WorldMapFlagsExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -5044756740892920650L;
+
 	@Override
 	protected void initMap(Div mapContainer) {
 

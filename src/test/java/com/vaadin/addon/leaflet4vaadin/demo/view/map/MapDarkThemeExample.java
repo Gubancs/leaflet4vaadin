@@ -30,6 +30,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/darktheme", layout = LeafletDemoApp.class)
 public class MapDarkThemeExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -714283376130864857L;
+
 	@Override
 	protected void initMap(final Div mapContainer) {
 

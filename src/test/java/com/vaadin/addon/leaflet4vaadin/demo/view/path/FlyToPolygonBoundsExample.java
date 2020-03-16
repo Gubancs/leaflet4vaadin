@@ -30,6 +30,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/fly-to-bounds", layout = LeafletDemoApp.class)
 public class FlyToPolygonBoundsExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1011084083592421402L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

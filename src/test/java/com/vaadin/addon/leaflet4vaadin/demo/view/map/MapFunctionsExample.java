@@ -32,6 +32,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/functions", layout = LeafletDemoApp.class)
 public class MapFunctionsExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1221500534388495912L;
+
 	@Override
 	protected void initMap(final Div mapContainer) {
 		VerticalLayout layout = new VerticalLayout();

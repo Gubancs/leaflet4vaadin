@@ -37,6 +37,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/locate-user", layout = LeafletDemoApp.class)
 public class MapGeolocationExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -3956839422711312002L;
+
 	@Override
 	protected void initMap(final Div mapContainer) {
 		VerticalLayout layout = new VerticalLayout();

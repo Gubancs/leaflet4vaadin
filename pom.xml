@@ -7,7 +7,7 @@
 	<artifactId>leafletf4vaadin</artifactId>
 	<version>0.2.4-beta</version>
 	<name>Leaflet4Vaadin</name>
-	<description>Integration of Leaflet map for Vaadin platform</description>
+	<description>Integration of Leaflet map for Vaadin platform LTS 14</description>
 	<scm>
 		<url>https://github.com/Gubancs/leaflet4vaadin</url>
 		<connection>scm:git:git://https://github.com/Gubancs/leaflet4vaadin.git</connection>

@@ -30,6 +30,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "controls/positioning", layout = LeafletDemoApp.class)
 public class ControlPositionExample extends ExampleContainer {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4742537288905986507L;
+
     @Override
     protected void initMap(Div mapContainer) {
 

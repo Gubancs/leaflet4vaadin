@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
+package com.vaadin.addon.leaflet4vaadin.demo.view.map;
 
 import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
@@ -24,62 +24,84 @@ import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 
-@Caption("Markers simple")
-@Route(value = "marker/simple", layout = LeafletDemoApp.class)
-public class MarkersSimpleExample extends ExampleContainer {
+@Caption("Map conversion methods")
+@Route(value = "map/conversion", layout = LeafletDemoApp.class)
+public class MapConversionMethodsExample extends ExampleContainer {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -2604214754789085086L;
+	private static final long serialVersionUID = -3659860383467926963L;
+
+	TextField latitude;
+	TextField longitude;
+	TextField locationX;
+	TextField locationY;
+
+	private LeafletMap leafletMap;
 
 	@Override
-	protected void initMap(Div mapContainer) {
+	protected void initMap(final Div mapContainer) {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSizeFull();
 
 		FormLayout sidebar = new FormLayout();
 		sidebar.setHeightFull();
 		sidebar.setWidth("400px");
-		TextField latitude = new TextField();
-		TextField longitude = new TextField();
-		longitude.setWidthFull();
+
+		latitude = new TextField();
+		longitude = new TextField();
+		locationX = new TextField();
+		locationY = new TextField();
+
+		latitude.setReadOnly(true);
+		longitude.setReadOnly(true);
+		locationX.setReadOnly(true);
+		locationY.setReadOnly(true);
+
 		latitude.setWidthFull();
+		longitude.setWidthFull();
+		locationX.setWidthFull();
+		locationY.setWidthFull();
 
 		sidebar.addFormItem(latitude, "Latitude");
 		sidebar.addFormItem(longitude, "Longitude");
+		sidebar.addFormItem(locationX, "Location X (pixels): ");
+		sidebar.addFormItem(locationY, "Location Y (pixels):");
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.2041015625));
 		options.setZoom(7);
-		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
 		Marker marker = new Marker(options.getCenter());
-		marker.setDraggable(true);
-		marker.bindPopup("Hey, drag me if you want");
-		marker.onClick((e) -> {
-			Notification.show("You click the marker.", 3000, Position.TOP_CENTER);
-		});
-		Binder<Marker> binder = new Binder<>(Marker.class);
-		binder.forField(latitude).bind((m) -> String.valueOf(m.getLatLng().getLat()), null);
-		binder.forField(longitude).bind((m) -> String.valueOf(m.getLatLng().getLon()), null);
-		binder.readBean(marker);
+		marker.bindTooltip("Just click on map to change my location.");
+		marker.addTo(leafletMap);
 
-		marker.onMove((e) -> {
-			binder.readBean(marker);
+		leafletMap.whenReady((event) -> {
+			updateMarkerPosition(marker, options.getCenter());
 		});
-		leafletMap.addLayer(marker);
 
+		leafletMap.onClick((event) -> {
+			updateMarkerPosition(marker, event.getLatLng());
+		});
 
 		layout.add(leafletMap, sidebar);
 		mapContainer.add(layout);
 	}
+
+	private void updateMarkerPosition(Marker marker, LatLng latLng) {
+		latitude.setValue(String.valueOf(latLng.getLat()));
+		longitude.setValue(String.valueOf(latLng.getLon()));
+
+		leafletMap.latLngToContainerPoint(latLng).thenAccept((result) -> {
+			locationX.setValue(String.valueOf(result.getX()));
+			locationY.setValue(String.valueOf(result.getY()));
+		});
+
+		marker.setLatLng(latLng);
+	}
+
 }

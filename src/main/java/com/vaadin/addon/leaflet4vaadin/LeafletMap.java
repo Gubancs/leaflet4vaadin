@@ -14,12 +14,14 @@
 
 package com.vaadin.addon.leaflet4vaadin;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
@@ -56,6 +58,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.types.TileEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.TooltipEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.GeolocationFunctions;
+import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapConversionFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapGetStateFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapModifyStateFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
@@ -63,6 +66,9 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.operations.LeafletOperation;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
+import com.vaadin.flow.component.ComponentEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasTheme;
@@ -70,10 +76,14 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
+import com.vaadin.flow.component.internal.DeadlockDetectingCompletableFuture;
 import com.vaadin.flow.component.page.PendingJavaScriptResult;
+import com.vaadin.flow.component.page.PendingJavaScriptResult.JavaScriptException;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.internal.JsonSerializer;
+import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.shared.Registration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,15 +94,20 @@ import org.slf4j.LoggerFactory;
 @JsModule("leaflet/dist/leaflet-src.js")
 @CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
-public final class LeafletMap extends PolymerTemplate<LeafletModel>
-		implements MapModifyStateFunctions, MapGetStateFunctions, GeolocationFunctions, SupportsMouseEvents,
-		SupportsMapEvents, SupportsLocationEvents, SupportsKeyboardEvents, SupportsLayerEvents, HasSize, HasTheme {
+public final class LeafletMap extends PolymerTemplate<LeafletModel> implements MapModifyStateFunctions,
+		MapGetStateFunctions, GeolocationFunctions, MapConversionFunctions, SupportsMouseEvents, SupportsMapEvents,
+		SupportsLocationEvents, SupportsKeyboardEvents, SupportsLayerEvents, HasSize, HasTheme {
 
 	private static final long serialVersionUID = 3789693345308589828L;
 
 	private final Logger logger = LoggerFactory.getLogger(LeafletMap.class);
 
 	private static class MapLayer extends LayerGroup {
+
+		/**
+		 *
+		 */
+		private static final long serialVersionUID = -3205153902141978918L;
 	}
 
 	private final MapLayer mapLayer = new MapLayer();
@@ -465,6 +480,26 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel>
 	}
 
 	/**
+	 * Fired when the map gets initialized with a view (center and zoom) and at
+	 * least one layer, or immediately if it's already initialized.
+	 * 
+	 * @param listener the listener to call when the event occurs, not {@code null}
+	 * @return a handle that can be used for removing the listener
+	 */
+	public Registration whenReady(ComponentEventListener<MapReadyEvent> listener) {
+		return ComponentUtil.addListener(this, MapReadyEvent.class, listener);
+	}
+
+	/**
+	 * Fired when the map gets initialized on client side
+	 */
+	@EventHandler
+	private void onMapReadyEventHandler() {
+		logger.info("Leaflet map gets initialized on client side.");
+		fireEvent(new MapReadyEvent(this));
+	}
+
+	/**
 	 * Adds theme variants to the map component.
 	 *
 	 * @param variants theme variants to add
@@ -487,7 +522,24 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel>
 		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
 		PendingJavaScriptResult javascriptResult = getElement().callJsFunction("callLeafletFunction",
 				JsonSerializer.toJson(leafletOperation));
-		return javascriptResult.toCompletableFuture(resultType);
+
+		VaadinSession session = VaadinSession.getCurrent();
+
+		CompletableFuture<T> completableFuture = new DeadlockDetectingCompletableFuture<>(session);
+		javascriptResult.then(value -> {
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				T result = objectMapper.readValue(value.toString(), resultType);
+				completableFuture.complete(result);
+			} catch (IOException e) {
+				throw new RuntimeException("Failed to parse javascript result", e);
+			}
+		}, errorValue -> {
+			JavaScriptException exception = new JavaScriptException(errorValue);
+			completableFuture.completeExceptionally(exception);
+		});
+
+		return completableFuture;
 	}
 
 	@Override
@@ -519,4 +571,21 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel>
 		return this.mapLayer.hasEventListeners(eventType);
 	}
 
+	/**
+	 * Map event which fired when map gets initialized on client side
+	 * 
+	 * @author <strong>Gabor Kokeny</strong> Email:
+	 *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+	 * @since 2020-03-16
+	 * @version 1.0
+	 */
+	public static final class MapReadyEvent extends ComponentEvent<LeafletMap> {
+
+		private static final long serialVersionUID = 412791990495078838L;
+
+		public MapReadyEvent(LeafletMap source) {
+			super(source, true);
+		}
+
+	}
 }

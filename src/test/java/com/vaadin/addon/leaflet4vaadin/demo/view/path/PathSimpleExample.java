@@ -30,6 +30,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/simple", layout = LeafletDemoApp.class)
 public class PathSimpleExample extends ExampleContainer {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = -3987504308625840763L;
+
 	@Override
 	protected void initMap(Div mapContainer) {
 
