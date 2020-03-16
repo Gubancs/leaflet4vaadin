@@ -1,11 +1,17 @@
-.classpath
+# Maven files
+target/
+
+# Eclipse files
 .project
-.pnpm-lock.yaml
-pnpmfile.js
-node_modules
-target
-webpack.generated.js
 .settings
-.vscode/settings.json
-package-lock.json
-pnpm-lock.yaml
+.classpath
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# generated/updated by the flow-maven-plugin
+node_modules
+package*.json
+webpack.config.js
+webpack.generated.js
