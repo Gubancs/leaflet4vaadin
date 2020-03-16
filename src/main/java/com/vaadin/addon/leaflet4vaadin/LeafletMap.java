@@ -76,13 +76,11 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.internal.DeadlockDetectingCompletableFuture;
 import com.vaadin.flow.component.page.PendingJavaScriptResult;
 import com.vaadin.flow.component.page.PendingJavaScriptResult.JavaScriptException;
 import com.vaadin.flow.component.polymertemplate.EventHandler;
 import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.internal.JsonSerializer;
-import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.shared.Registration;
 
 import org.slf4j.Logger;
@@ -523,9 +521,8 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 		PendingJavaScriptResult javascriptResult = getElement().callJsFunction("callLeafletFunction",
 				JsonSerializer.toJson(leafletOperation));
 
-		VaadinSession session = VaadinSession.getCurrent();
 
-		CompletableFuture<T> completableFuture = new DeadlockDetectingCompletableFuture<>(session);
+		CompletableFuture<T> completableFuture = new CompletableFuture<>();
 		javascriptResult.then(value -> {
 			try {
 				ObjectMapper objectMapper = new ObjectMapper();
