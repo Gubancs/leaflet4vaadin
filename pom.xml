@@ -549,6 +549,14 @@
 							</webResources>
 						</configuration>
 					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>heroku-deploy</id>
+			<build>
+				<plugins>
 					<plugin>
 						<groupId>com.heroku.sdk</groupId>
 						<artifactId>heroku-maven-plugin</artifactId>
