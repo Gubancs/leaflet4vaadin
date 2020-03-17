@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.vaadin</groupId>
@@ -153,7 +155,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.30</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -339,7 +340,6 @@
 						<executions>
 							<execution>
 								<goals>
-                                    <goal>prepare-frontend</goal>
 									<goal>build-frontend</goal>
 								</goals>
 							</execution>
@@ -349,7 +349,7 @@
 			</build>
 		</profile>
 
-		<!-- Integration test profile-->
+		<!-- Integration test profile -->
 		<profile>
 			<id>integration-tests</id>
 			<build>
@@ -466,7 +466,7 @@
 		<profile>
 			<id>heroku</id>
 			<build>
-				<finalName>heroku-app</finalName>
+				<finalName>leaflet4vaadin-demo</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -475,7 +475,9 @@
 							<execution>
 								<id>copy-test-libs</id>
 								<phase>package</phase>
-								<goals><goal>copy-dependencies</goal></goals>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
 								<configuration>
 									<outputDirectory>${project.build.directory}/test-libs</outputDirectory>
 									<includeScope>test</includeScope>
@@ -496,8 +498,16 @@
 						</executions>
 						<configuration>
 							<failOnMissingWebXml>false</failOnMissingWebXml>
-							<archiveClasses>true</archiveClasses>
+							<archiveClasses>false</archiveClasses>
 							<webResources>
+								<resource>
+									<directory>${basedir}/src/test/resources</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}/classes/META-INF/VAADIN</directory>
+									<targetPath>WEB-INF/classes/META-INF/VAADIN</targetPath>
+								</resource>
 								<resource>
 									<directory>${project.build.directory}/test-classes</directory>
 									<targetPath>WEB-INF/classes</targetPath>
@@ -523,9 +533,12 @@
 						</executions>
 						<configuration>
 							<appName>${project.artifactId}</appName>
-							<warFile>${project.build.directory}/heroku-app.war</warFile>
+							<warFile>${project.build.directory}/leaflet4vaadin-demo.war</warFile>
 							<logProgress>true</logProgress>
 							<includeTarget>false</includeTarget>
+							<includes>
+								<include>${project.build.directory}/leaflet4vaadin-demo.war</include>
+							</includes>
 						</configuration>
 					</plugin>
 				</plugins>
