@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.vaadin</groupId>
-	<artifactId>leafletf4vaadin</artifactId>
+	<artifactId>leaflet4vaadin</artifactId>
 	<version>0.2.5-beta</version>
 	<name>Leaflet4Vaadin</name>
 	<description>Integration of Leaflet map for Vaadin platform LTS 14</description>
@@ -24,6 +24,10 @@
 		<drivers.dir>${project.basedir}/drivers</drivers.dir>
 
 		<jetty.version>9.4.15.v20190215</jetty.version>
+		<webapp-runner.version>9.0.31.0</webapp-runner.version>
+
+		<maven-war-plugin.version>3.2.3</maven-war-plugin.version>
+		<heroku-maven-plugin>3.0.1</heroku-maven-plugin>
 	</properties>
 	<organization>
 		<name>Vaadin Visitor</name>
@@ -148,7 +152,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.30</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -173,6 +184,16 @@
 					<filesets>
 						<fileset>
 							<directory>node_modules</directory>
+						</fileset>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>package.json</include>
+								<include>package-lock.json</include>
+								<include>pnpm-lock.yaml</include>
+								<include>webpack.config.js</include>
+								<include>webpack.generated.js</include>
+							</includes>
 						</fileset>
 					</filesets>
 				</configuration>
@@ -225,6 +246,8 @@
 	</build>
 
 	<profiles>
+
+		<!-- Vaadin Directory Profile -->
 		<profile>
 			<id>directory</id>
 			<build>
@@ -316,6 +339,7 @@
 						<executions>
 							<execution>
 								<goals>
+                                    <goal>prepare-frontend</goal>
 									<goal>build-frontend</goal>
 								</goals>
 							</execution>
@@ -325,6 +349,7 @@
 			</build>
 		</profile>
 
+		<!-- Integration test profile-->
 		<profile>
 			<id>integration-tests</id>
 			<build>
@@ -437,48 +462,71 @@
 			</build>
 		</profile>
 
+		<!-- Heroku profile -->
 		<profile>
 			<id>heroku</id>
 			<build>
+				<finalName>heroku-app</finalName>
 				<plugins>
 					<plugin>
-						<groupId>com.github.eirslett</groupId>
-						<artifactId>frontend-maven-plugin</artifactId>
-						<version>1.9.1</version>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>install node and npm</id>
+								<id>copy-test-libs</id>
+								<phase>package</phase>
+								<goals><goal>copy-dependencies</goal></goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/test-libs</outputDirectory>
+									<includeScope>test</includeScope>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>${maven-war-plugin.version}</version>
+						<executions>
+							<execution>
 								<goals>
-									<goal>install-node-and-npm</goal>
+									<goal>war</goal>
 								</goals>
-								<phase>generate-resources</phase>
 							</execution>
 						</executions>
 						<configuration>
-							<nodeVersion>v12.16.1</nodeVersion>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+							<archiveClasses>true</archiveClasses>
+							<webResources>
+								<resource>
+									<directory>${project.build.directory}/test-classes</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}/test-libs</directory>
+									<targetPath>WEB-INF/lib</targetPath>
+								</resource>
+							</webResources>
 						</configuration>
 					</plugin>
 					<plugin>
-						<groupId>org.eclipse.jetty</groupId>
-						<artifactId>jetty-maven-plugin</artifactId>
-						<version>${jetty.version}</version>
-						<configuration>
-							<scanIntervalSeconds>3</scanIntervalSeconds>
-							<!-- Use test scope because the UI/demo classes are in the test package. -->
-							<useTestScope>true</useTestScope>
-							<supportedPackagings>
-								<supportedPackaging>jar</supportedPackaging>
-							</supportedPackagings>
-						</configuration>
+						<groupId>com.heroku.sdk</groupId>
+						<artifactId>heroku-maven-plugin</artifactId>
+						<version>${heroku-maven-plugin}</version>
 						<executions>
 							<execution>
-								<id>run-jetty</id>
-								<phase>install</phase>
 								<goals>
-									<goal>run</goal>
+									<goal>deploy-war</goal>
 								</goals>
+								<phase>install</phase>
 							</execution>
 						</executions>
+						<configuration>
+							<appName>${project.artifactId}</appName>
+							<warFile>${project.build.directory}/heroku-app.war</warFile>
+							<logProgress>true</logProgress>
+							<includeTarget>false</includeTarget>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
