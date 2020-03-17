@@ -473,6 +473,21 @@
 						<artifactId>maven-dependency-plugin</artifactId>
 						<executions>
 							<execution>
+								<id>copy-webapp-runner</id>
+								<phase>package</phase>
+								<goals><goal>copy</goal></goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>com.heroku</groupId>
+											<artifactId>webapp-runner</artifactId>
+											<version>${webapp-runner.version}</version>
+											<destFileName>webapp-runner.jar</destFileName>
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+							<execution>
 								<id>copy-test-libs</id>
 								<phase>package</phase>
 								<goals>
