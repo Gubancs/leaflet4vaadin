@@ -158,9 +158,9 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.13.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -343,6 +343,9 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<optimizeBundle>false</optimizeBundle>
+						</configuration>
 					</plugin>
 				</plugins>
 			</build>
@@ -461,11 +464,85 @@
 			</build>
 		</profile>
 
+		<!-- build war -->
+		<profile>
+			<id>war</id>
+			<build>
+				<finalName>leaflet4vaadin-demo</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-test-libs</id>
+								<phase>package</phase>
+								<goals>
+									<goal>copy-dependencies</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${project.build.directory}/test-libs</outputDirectory>
+									<includeScope>test</includeScope>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>${maven-war-plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>war</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<archive>
+								<index>true</index>
+								<manifest>
+									<addClasspath>false</addClasspath>
+									<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+								</manifest>
+								<manifestEntries>
+									<Vaadin-Package-Version>1</Vaadin-Package-Version>
+								</manifestEntries>
+							</archive>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+							<archiveClasses>true</archiveClasses>
+							<webResources>
+								<resource>
+									<directory>${basedir}/src/test/resources</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}/classes/META-INF/VAADIN</directory>
+									<targetPath>WEB-INF/classes/META-INF/VAADIN</targetPath>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}/frontend</directory>
+									<targetPath>frontend</targetPath>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}/test-classes</directory>
+									<targetPath>WEB-INF/classes</targetPath>
+								</resource>
+								<resource>
+									<directory>${project.build.directory}/test-libs</directory>
+									<targetPath>WEB-INF/lib</targetPath>
+								</resource>
+							</webResources>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
 		<!-- Heroku profile -->
 		<profile>
 			<id>heroku</id>
 			<build>
-				<finalName>leaflet4vaadin-demo</finalName>
 				<plugins>
 					<plugin>
 						<groupId>com.github.eirslett</groupId>
@@ -502,52 +579,7 @@
 									</artifactItems>
 								</configuration>
 							</execution>
-							<execution>
-								<id>copy-test-libs</id>
-								<phase>package</phase>
-								<goals>
-									<goal>copy-dependencies</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${project.build.directory}/test-libs</outputDirectory>
-									<includeScope>test</includeScope>
-								</configuration>
-							</execution>
 						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>${maven-war-plugin.version}</version>
-						<executions>
-							<execution>
-								<goals>
-									<goal>war</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<failOnMissingWebXml>false</failOnMissingWebXml>
-							<archiveClasses>false</archiveClasses>
-							<webResources>
-								<resource>
-									<directory>${basedir}/src/test/resources</directory>
-									<targetPath>WEB-INF/classes</targetPath>
-								</resource>
-								<resource>
-									<directory>${project.build.directory}/classes/META-INF/VAADIN</directory>
-									<targetPath>WEB-INF/classes/META-INF/VAADIN</targetPath>
-								</resource>
-								<resource>
-									<directory>${project.build.directory}/test-classes</directory>
-									<targetPath>WEB-INF/classes</targetPath>
-								</resource>
-								<resource>
-									<directory>${project.build.directory}/test-libs</directory>
-									<targetPath>WEB-INF/lib</targetPath>
-								</resource>
-							</webResources>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
