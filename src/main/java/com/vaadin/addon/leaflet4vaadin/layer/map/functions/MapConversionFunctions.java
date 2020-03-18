@@ -47,7 +47,7 @@ public interface MapConversionFunctions extends ExecutableFunctions {
     /**
      * Inverse of project.
      * 
-     * @param latLng the coordinate to be unprojected
+     * @param point the point to be unprojected
      * @param zoom   the zoom level
      * @return the geographical coordinate
      */
