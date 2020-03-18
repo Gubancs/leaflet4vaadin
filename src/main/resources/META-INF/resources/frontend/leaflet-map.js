@@ -93,39 +93,41 @@ class LeafletMap extends PolymerElement {
     console.log("LeafletMap - afterServerUpdate() !!!!!!");
     console.log("LeafletMap - afterServerUpdate() mapOptions: {}", this.mapOptions);
     if (!this.mapInitialized) {
-      console.log("LeafletMap - afterServerUpdate() baseUrl: {}", this.baseUrl);
+      this.map.whenReady(() => {
+        console.log("LeafletMap - whenReady()");
+        this.map.invalidateSize();
+        this.initMap();
+        this.onMapReadyEventHandler();
+      });
+    } else {
+      console.log("LeafletMap - afterServerUpdate() Leaflet Map already initialized");
+    }
+  }
+
+  initMap() {
+    console.log("LeafletMap - initMap() baseUrl: {}", this.baseUrl);
       if (this.baseUrl) {
         L.tileLayer(this.baseUrl).addTo(this.map);
       }
 
-      console.log("LeafletMap - afterServerUpdate() layer control options: {}", this.layerControlOptions);
+      console.log("LeafletMap - initMap() layer control options: {}", this.layerControlOptions);
       if (this.layers) {
         this.overlayControl = L.control.layers({}, this.overlays, this.layerControlOptions);
         this.overlayControl.addTo(this.map);
       }
-      console.log("LeafletMap - afterServerUpdate() initial bounds: {}", this.mapOptions.bounds);
+      console.log("LeafletMap - initMap() initial bounds: {}", this.mapOptions.bounds);
       if (this.mapOptions.bounds) {
         this.fitBounds(this.mapOptions.bounds);
       }
-      console.log("LeafletMap - afterServerUpdate() initial layers: {}", this.layers);
+      console.log("LeafletMap - initMap() initial layers: {}", this.layers);
       this.layers.forEach(layer => this.addLayerToMap(layer));
 
-      console.log("LeafletMap - afterServerUpdate() initial controls: {}", this.controls);
+      console.log("LeafletMap - initMap() initial controls: {}", this.controls);
       this.controls.forEach(control => {
         console.log("LeafletMap --- add control to map: {}", control);
         this.leafletConverter.toLeafletControl(control).addTo(this.map);
       });
-
-      this.map.whenReady(() => {
-        console.log("LeafletMap - whenReady()");
-        //this.map.invalidateSize();
-        this.onMapReadyEventHandler.call();
-      });
-
       this.mapInitialized = true;
-    } else {
-      console.log("LeafletMap - afterServerUpdate() Leaflet Map already initialized");
-    }
   }
 
   addLayerToMap(layer) {
