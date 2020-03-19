@@ -16,6 +16,7 @@
 - Vaadin Add-on directory:
 https://vaadin.com/directory/component/leaflet4vaadin/
 - Live demo: Coming soon
+- Source Code Example with Vaadin Flow V15: https://github.com/Gubancs/leaflet4vaadin-demo
 
 <img src="https://raw.githubusercontent.com/Gubancs/leaflet4vaadin/master/demo.png" alt="Lichess homepage" title="Lichess comes with light and dark theme, this screenshot shows both." />
 
