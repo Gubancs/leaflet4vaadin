@@ -1,6 +1,9 @@
 # Maven files
 target/
 
+# Visual Studio Code
+.vscode
+
 # Eclipse files
 .project
 .settings

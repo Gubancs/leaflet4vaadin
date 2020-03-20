@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -23,15 +22,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.raster.TileLayer;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Simple tile layer")
+@PageTitle("Simple tile layer")
 @Route(value = "layers/tilelayer", layout = LeafletDemoApp.class)
 public class TileLayerExample extends ExampleContainer {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -875948840999507377L;
 
 	@Override

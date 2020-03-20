@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.map;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -26,9 +25,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Map conversion methods")
+@PageTitle("Map conversion methods")
 @Route(value = "map/conversion", layout = LeafletDemoApp.class)
 public class MapConversionMethodsExample extends ExampleContainer {
 

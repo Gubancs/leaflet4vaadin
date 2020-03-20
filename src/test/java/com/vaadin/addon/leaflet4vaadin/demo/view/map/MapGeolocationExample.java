@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.map;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -31,15 +30,13 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Locate user")
+@PageTitle("Locate user")
 @Route(value = "map/locate-user", layout = LeafletDemoApp.class)
 public class MapGeolocationExample extends ExampleContainer {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -3956839422711312002L;
 
 	@Override

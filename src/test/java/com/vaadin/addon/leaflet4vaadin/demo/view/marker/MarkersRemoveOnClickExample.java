@@ -17,7 +17,6 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
 import static com.vaadin.addon.leaflet4vaadin.types.LatLng.latlng;
 import static java.util.stream.IntStream.range;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -27,15 +26,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Remove on click")
+@PageTitle("Remove on click")
 @Route(value = "marker/remove-on-click", layout = LeafletDemoApp.class)
 public class MarkersRemoveOnClickExample extends ExampleContainer {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -4737660367386714966L;
 
 	@Override

@@ -19,7 +19,6 @@ import static com.vaadin.addon.leaflet4vaadin.types.LatLng.latlng;
 
 import java.util.function.Supplier;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -36,15 +35,13 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Type of paths")
+@PageTitle("Type of paths")
 @Route(value = "path/types", layout = LeafletDemoApp.class)
 public class TypeOfPathsExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 6407154243967502379L;
 
     @Override

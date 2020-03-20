@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.map;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -28,16 +27,17 @@ import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteAlias;
 
-@Caption("Map events")
+@PageTitle("Map events")
+@RouteAlias(value = "", layout = LeafletDemoApp.class)
 @Route(value = "map/events", layout = LeafletDemoApp.class)
 public class MapEventsExample extends ExampleContainer {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 6608207938871245065L;
+
 	private TextArea eventLogs;
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.controls;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -22,15 +21,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Remove default controls")
+@PageTitle("Remove default controls")
 @Route(value = "controls/remove-defaults", layout = LeafletDemoApp.class)
 public class RemoveDefaultControlsExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -7395956669043290420L;
 
     @Override

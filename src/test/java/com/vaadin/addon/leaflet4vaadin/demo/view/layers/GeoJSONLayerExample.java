@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -23,19 +22,17 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 
-@Caption("GeoJSON layer")
+@PageTitle("GeoJSON layer")
 @Route(value = "layers/geojson", layout = LeafletDemoApp.class)
 public class GeoJSONLayerExample extends ExampleContainer {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 7955888151715306558L;
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -29,15 +28,13 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Add/remove markers easily")
+@PageTitle("Add/remove markers easily")
 @Route(value = "marker/add-and-remove-markers", layout = LeafletDemoApp.class)
 public class MarkersAddAndRemoveExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -5769568472203107171L;
 
     @Override

@@ -16,7 +16,6 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.map;
 
 import static com.vaadin.addon.leaflet4vaadin.types.LatLng.latlng;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -25,15 +24,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.CircleMarker;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Map poll listener")
+@PageTitle("Map poll listener")
 @Route(value = "map/polling", layout = LeafletDemoApp.class)
 public class MapPollListenerExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1095566366104041991L;
 
     @Override

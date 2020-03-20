@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.vaadin</groupId>
 	<artifactId>leaflet4vaadin</artifactId>
-	<version>0.2.5-beta</version>
+	<version>0.2.6-beta</version>
 	<name>Leaflet4Vaadin</name>
 	<description>Integration of Leaflet map for Vaadin platform LTS 14</description>
 	<scm>
@@ -166,11 +164,6 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-testbench</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.github.appreciated</groupId>
-			<artifactId>app-layout-addon</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -339,6 +332,7 @@
 						<executions>
 							<execution>
 								<goals>
+									<goal>prepare-frontend</goal>
 									<goal>build-frontend</goal>
 								</goals>
 							</execution>
@@ -476,7 +470,7 @@
 						<executions>
 							<execution>
 								<id>copy-test-libs</id>
-								<phase>package</phase>
+								<phase>generate-resources</phase>
 								<goals>
 									<goal>copy-dependencies</goal>
 								</goals>
@@ -510,7 +504,7 @@
 								</manifestEntries>
 							</archive>
 							<failOnMissingWebXml>false</failOnMissingWebXml>
-							<archiveClasses>true</archiveClasses>
+							<archiveClasses>false</archiveClasses>
 							<webResources>
 								<resource>
 									<directory>${basedir}/src/test/resources</directory>
@@ -519,10 +513,6 @@
 								<resource>
 									<directory>${project.build.directory}/classes/META-INF/VAADIN</directory>
 									<targetPath>WEB-INF/classes/META-INF/VAADIN</targetPath>
-								</resource>
-								<resource>
-									<directory>${project.build.directory}/frontend</directory>
-									<targetPath>frontend</targetPath>
 								</resource>
 								<resource>
 									<directory>${project.build.directory}/test-classes</directory>
@@ -567,7 +557,9 @@
 							<execution>
 								<id>copy-webapp-runner</id>
 								<phase>package</phase>
-								<goals><goal>copy</goal></goals>
+								<goals>
+									<goal>copy</goal>
+								</goals>
 								<configuration>
 									<artifactItems>
 										<artifactItem>

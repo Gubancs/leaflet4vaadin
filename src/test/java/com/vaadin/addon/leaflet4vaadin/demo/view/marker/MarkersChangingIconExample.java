@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -23,15 +22,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Changing the marker icons")
+@PageTitle("Changing the marker icons")
 @Route(value = "marker/changing-the-icons", layout = LeafletDemoApp.class)
 public class MarkersChangingIconExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 7094280184463472668L;
 
     @Override

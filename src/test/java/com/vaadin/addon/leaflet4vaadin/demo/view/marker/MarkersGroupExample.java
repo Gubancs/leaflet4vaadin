@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -27,16 +26,15 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Marker group")
+@PageTitle("Marker group")
 @Route(value = "marker/group", layout = LeafletDemoApp.class)
 public class MarkersGroupExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -3686513404441062815L;
+    
     private LeafletMap leafletMap;
     private LayerGroup defaultGroup;
     private LayerGroup customGroup;

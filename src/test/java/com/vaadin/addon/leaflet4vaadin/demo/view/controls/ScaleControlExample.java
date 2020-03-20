@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.controls;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl.ControlPosition;
 import com.vaadin.addon.leaflet4vaadin.controls.ScaleControl;
@@ -24,15 +23,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Scale control")
+@PageTitle("Scale control")
 @Route(value = "controls/scale-control", layout = LeafletDemoApp.class)
 public class ScaleControlExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -1551177549650182745L;
 
     @Override

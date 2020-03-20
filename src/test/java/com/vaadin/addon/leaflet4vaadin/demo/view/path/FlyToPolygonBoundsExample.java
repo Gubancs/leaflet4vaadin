@@ -16,7 +16,6 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.path;
 
 import static com.vaadin.addon.leaflet4vaadin.types.LatLng.latlng;
 
-import com.github.appreciated.app.layout.annotations.Caption;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -24,15 +23,13 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.Polygon;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Caption("Fly to bounds")
+@PageTitle("Fly to bounds")
 @Route(value = "path/fly-to-bounds", layout = LeafletDemoApp.class)
 public class FlyToPolygonBoundsExample extends ExampleContainer {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -1011084083592421402L;
 
     @Override
