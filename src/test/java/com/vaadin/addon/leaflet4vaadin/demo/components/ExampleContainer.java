@@ -14,10 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.components;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,8 +24,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Pre;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -93,18 +87,8 @@ public abstract class ExampleContainer extends VerticalLayout {
 		VerticalLayout verticalLayout = new VerticalLayout();
 		verticalLayout.setSpacing(false);
 		verticalLayout.setPadding(false);
-		try {
-			Pre code = new Pre(getSourceCode());
-			code.getStyle().set("padding", "30px");
-			code.getStyle().set("background", "#3a3a3a");
-			code.getStyle().set("color", "#fff");
-			code.getStyle().set("font-size", "14px");
-			code.getStyle().set("-webkit-font-smoothing", "antialiased");
-			verticalLayout.add(code);
-		} catch (Exception e) {
-			verticalLayout.add(new Label("Unable to get source code from GitHub. :("));
-			e.printStackTrace();
-		}
+		verticalLayout.add(new SourceCodeViewer(getGitHubURL()));
+
 		tabContent.add(verticalLayout);
 	}
 
@@ -120,28 +104,7 @@ public abstract class ExampleContainer extends VerticalLayout {
 
 	protected abstract void initMap(Div mapContainer);
 
-	private String getSourceCode() throws Exception {
-		URL website = new URL(getGitHubPath());
-		URLConnection connection = website.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-		StringBuilder response = new StringBuilder();
-		String inputLine;
-
-		while ((inputLine = in.readLine()) != null) {
-			if (inputLine.startsWith("import ") || inputLine.startsWith("// ") || inputLine.startsWith("package ")) {
-				continue;
-			}
-			response.append(inputLine);
-			response.append("\n");
-		}
-
-		in.close();
-
-		return response.toString().trim();
-	}
-
-	private String getGitHubPath() {
+	private String getGitHubURL() {
 		return gitHubDir + getClass().getName().replaceAll("\\.", "/") + ".java";
 	}
 }
