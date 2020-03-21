@@ -17,77 +17,149 @@ package com.vaadin.addon.leaflet4vaadin.types;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+/**
+ * Represents a rectangular geographical area on a map.
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-21
+ * @version 1.0
+ */
 public class LatLngBounds implements LeafletClass {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -7421430446913242834L;
-	private double southWestLng;
-	private double southWestLat;
-	private double northEastLng;
-	private double northEastLat;
 
-	public LatLngBounds(LatLng... points) {
-		this(Arrays.asList(points));
+	@JsonProperty("_southWest")
+	private LatLng southWest = new LatLng();
+	@JsonProperty("_northEast")
+	private LatLng northEast = new LatLng();
+
+	public LatLngBounds() {
 	}
 
-	public LatLngBounds(List<LatLng> points) {
-		this(points.get(0));
-		points.forEach(p -> extend(p));
+	public LatLngBounds(LatLng... latlngs) {
+		this(Arrays.asList(latlngs));
 	}
 
-	public LatLngBounds(LatLng point) {
-		setSouthWestLat(point.getLat());
-		setSouthWestLon(point.getLon());
-		setNorthEastLat(point.getLat());
-		setNorthEastLon(point.getLon());
+	public LatLngBounds(List<LatLng> latlngs) {
+		this(latlngs.get(0));
+		latlngs.forEach(p -> extend(p));
 	}
 
-	public double getSouthWestLon() {
-		return southWestLng;
+	/**
+	 * @param southWest the southWest to set
+	 */
+	public void setSouthWest(LatLng southWest) {
+		this.southWest = southWest;
 	}
 
-	public void setSouthWestLon(double southWestLng) {
-		this.southWestLng = southWestLng;
+	/**
+	 * @param northEast the northEast to set
+	 */
+	public void setNorthEast(LatLng northEast) {
+		this.northEast = northEast;
 	}
 
-	public double getSouthWestLat() {
-		return southWestLat;
+	/**
+	 * Returns the south-west point of the bounds.
+	 * 
+	 * @return the south-west point of the bounds.
+	 */
+	public LatLng getSouthWest() {
+		return this.southWest;
 	}
 
-	public void setSouthWestLat(double southWestLat) {
-		this.southWestLat = southWestLat;
+	/**
+	 * Returns the south-east point of the bounds.
+	 * 
+	 * @return the south-east point of the bounds
+	 */
+	public LatLng getSouthEast() {
+		return new LatLng(this.getSouth(), this.getEast());
 	}
 
-	public double getNorthEastLon() {
-		return northEastLng;
+	/**
+	 * Returns the north-east point of the bounds.
+	 * 
+	 * @return the north-east point of the bounds.
+	 */
+	public LatLng getNorthEast() {
+		return this.northEast;
 	}
 
-	public void setNorthEastLon(double northEastLng) {
-		this.northEastLng = northEastLng;
+	/**
+	 * Returns the north-west point of the bounds.
+	 * 
+	 * @return Returns the north-west point of the bounds
+	 */
+	public LatLng getNorthWest() {
+		return new LatLng(this.getNorth(), this.getWest());
 	}
 
-	public double getNorthEastLat() {
-		return northEastLat;
+	/**
+	 * Returns the west longitude of the bounds
+	 * 
+	 * @return the west longitude of the bounds
+	 */
+	public double getWest() {
+		return this.southWest.getLng();
 	}
 
-	public void setNorthEastLat(double northEastLat) {
-		this.northEastLat = northEastLat;
+	/**
+	 * Returns the south latitude of the bounds
+	 * 
+	 * @return the south latitude of the bounds
+	 */
+	public double getSouth() {
+		return this.southWest.getLat();
 	}
 
-	public void extend(LatLng... points) {
-		for (LatLng point : points) {
-			setNorthEastLat(Math.max(getNorthEastLat(), point.getLat()));
-			setNorthEastLon(Math.max(getNorthEastLon(), point.getLon()));
-			setSouthWestLat(Math.min(getSouthWestLat(), point.getLat()));
-			setSouthWestLon(Math.min(getSouthWestLon(), point.getLon()));
-		}
+	/**
+	 * Returns the east longitude of the bounds
+	 * 
+	 * @return the east longitude of the bounds
+	 */
+	public double getEast() {
+		return this.northEast.getLng();
 	}
 
+	/**
+	 * Returns the north latitude of the bounds
+	 * 
+	 * @return the north latitude of the bounds
+	 */
+	public double getNorth() {
+		return this.northEast.getLat();
+	}
+
+	/**
+	 * Returns the center point of the bounds.
+	 * 
+	 * @return the center point of the bounds.
+	 */
 	public LatLng getCenter() {
-		return new LatLng((getNorthEastLat() + getSouthWestLat()) / 2, (getNorthEastLon() + getSouthWestLon()) / 2);
+		double lat = (this.southWest.getLat() + this.northEast.getLat()) / 2;
+		double lon = (this.southWest.getLng() + this.northEast.getLng()) / 2;
+		return new LatLng(lat, lon);
+	}
+
+	public LatLngBounds(LatLng latlng) {
+		southWest.setLat(latlng.getLat());
+		southWest.setLng(latlng.getLng());
+		northEast.setLat(latlng.getLat());
+		northEast.setLng(latlng.getLng());
+	}
+
+	public void extend(LatLng... latlngs) {
+		for (LatLng latlng : latlngs) {
+			northEast.setLat(Math.max(northEast.getLat(), latlng.getLat()));
+			northEast.setLng(Math.max(northEast.getLng(), latlng.getLng()));
+			southWest.setLat(Math.min(southWest.getLat(), latlng.getLat()));
+			southWest.setLng(Math.min(southWest.getLng(), latlng.getLng()));
+		}
 	}
 
 	@Override

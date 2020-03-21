@@ -16,6 +16,14 @@ package com.vaadin.addon.leaflet4vaadin.types;
 
 import java.io.Serializable;
 
+/**
+ * The root class of the leaflet classes
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-21
+ * @version 1.0
+ */
 public interface LeafletClass extends Serializable {
 
     default String getLeafletType() {

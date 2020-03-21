@@ -18,6 +18,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+/**
+ * Represents a list of LatLng objects
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-21
+ * @version 1.0
+ */
 public class LatLngArray extends ArrayList<LatLng> {
 
     /**

@@ -56,7 +56,7 @@ public class PathsEventPropagationExample extends ExampleContainer {
                     + "<br/><strong>Opacity: </strong>" + circleMarker.getOpacity()
                     + "<br/><strong>Fill color: </strong>" + circleMarker.getFillColor()
                     + "<br/><strong>Latitude: </strong>" + circleMarker.getLatlng().getLat()
-                    + "<br/><strong>Longitude: </strong>" + circleMarker.getLatlng().getLon());
+                    + "<br/><strong>Longitude: </strong>" + circleMarker.getLatlng().getLng());
             circleMarker.addTo(leafletMap);
         }
 

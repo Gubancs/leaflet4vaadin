@@ -59,7 +59,10 @@ export class LeafletTypeConverter {
       throw "Unsupported control type : " + control.leafletType;
     }
     let leafletControl = controlFn(control);
-    console.log("LeafletTypeConverter --- toLeafletControl() result", leafletControl);
+    console.log(
+      "LeafletTypeConverter --- toLeafletControl() result",
+      leafletControl
+    );
     return leafletControl;
   }
 
@@ -108,15 +111,15 @@ export class LeafletTypeConverter {
    * Convert the given JsonObject to Leaflet LatLng
    */
   toLatLng(latLng) {
-    return latLng ? L.latLng(latLng.lat, latLng.lon) : latLng;
+    return latLng ? L.latLng(latLng.lat, latLng.lng) : latLng;
   }
 
   /**
    * Convert the given JsonObject to Leaflet Bounds
    */
   toBounds(bounds) {
-    let corner1 = L.point(bounds.northEastLat, bounds.northEastLon);
-    let corner2 = L.point(bounds.southWestLat, bounds.southWestLon);
+    let corner1 = L.point(bounds.topLeft.x, bounds.topLeft.y);
+    let corner2 = L.point(bounds.bottomRight.x, bounds.bottomRight.y);
     return L.bounds(corner1, corner2);
   }
 
@@ -124,19 +127,26 @@ export class LeafletTypeConverter {
    * Convert the given JsonObject to Leaflet LatLngBounds
    */
   toLatLngBounds(bounds) {
-    let corner1 = L.latLng(bounds.northEastLat, bounds.northEastLon);
-    let corner2 = L.latLng(bounds.southWestLat, bounds.southWestLon);
+    let corner1 = L.latLng(bounds._northEast);
+    let corner2 = L.latLng(bounds._southWest);
     return L.latLngBounds(corner1, corner2);
   }
 
   _applyOptions(layer, options) {
     if (options.tooltip) {
-      let leafletTooltip = L.tooltip(options.tooltip).setContent(options.tooltip.content);
-      console.log("LeafletConverter - binding tooltip to layer", leafletTooltip);
+      let leafletTooltip = L.tooltip(options.tooltip).setContent(
+        options.tooltip.content
+      );
+      console.log(
+        "LeafletConverter - binding tooltip to layer",
+        leafletTooltip
+      );
       layer.bindTooltip(leafletTooltip);
     }
     if (options.popup) {
-      let leafletPopup = L.popup(options.popup).setContent(options.popup.content);
+      let leafletPopup = L.popup(options.popup).setContent(
+        options.popup.content
+      );
       console.log("LeafletConverter - binding popup to layer", leafletPopup);
       layer.bindPopup(leafletPopup);
     }

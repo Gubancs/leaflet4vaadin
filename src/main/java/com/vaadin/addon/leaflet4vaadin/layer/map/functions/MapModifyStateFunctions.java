@@ -17,7 +17,6 @@ package com.vaadin.addon.leaflet4vaadin.layer.map.functions;
 import com.vaadin.addon.leaflet4vaadin.options.FitBoundsOptions;
 import com.vaadin.addon.leaflet4vaadin.options.PanOptions;
 import com.vaadin.addon.leaflet4vaadin.options.ZoomOptions;
-import com.vaadin.addon.leaflet4vaadin.types.Bounds;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
@@ -294,7 +293,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * 
      * @param bounds the bounds
      */
-    default void setMaxBounds(Bounds bounds) {
+    default void setMaxBounds(LatLngBounds bounds) {
         execute("setMaxBounds", bounds);
     }
 

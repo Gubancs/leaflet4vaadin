@@ -79,7 +79,6 @@ public class MapEventsExample extends ExampleContainer {
 		leafletMap.onZoomStart(this::logEvent);
 		leafletMap.onMoveStart(this::logEvent);
 		leafletMap.onZoom(this::logEvent);
-		leafletMap.onMove(this::logEvent);
 		leafletMap.onZoomEnd(this::logEvent);
 		leafletMap.onMoveEnd(this::logEvent);
 

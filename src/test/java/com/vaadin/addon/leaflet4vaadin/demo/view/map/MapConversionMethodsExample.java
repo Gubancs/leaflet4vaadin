@@ -94,7 +94,7 @@ public class MapConversionMethodsExample extends ExampleContainer {
 
 	private void updateMarkerPosition(Marker marker, LatLng latLng) {
 		latitude.setValue(String.valueOf(latLng.getLat()));
-		longitude.setValue(String.valueOf(latLng.getLon()));
+		longitude.setValue(String.valueOf(latLng.getLng()));
 
 		leafletMap.latLngToContainerPoint(latLng).thenAccept((result) -> {
 			locationX.setValue(String.valueOf(result.getX()));

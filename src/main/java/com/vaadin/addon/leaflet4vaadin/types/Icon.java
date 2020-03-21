@@ -14,11 +14,16 @@
 
 package com.vaadin.addon.leaflet4vaadin.types;
 
+/**
+ * Represents an icon to provide when creating a marker.
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-21
+ * @version 1.0
+ */
 public class Icon implements LeafletClass {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -5884170824139869060L;
 
 	private static final String SHADOW_URL = "images/marker-shadow.png";

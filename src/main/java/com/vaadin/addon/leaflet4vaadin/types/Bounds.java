@@ -17,18 +17,24 @@ package com.vaadin.addon.leaflet4vaadin.types;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+/**
+ * Represents a rectangular area in pixel coordinates.
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-21
+ * @version 1.0
+ */
 public class Bounds implements LeafletClass {
     private static final long serialVersionUID = 181166727523469617L;
-    private double southWestLng;
-    private double southWestLat;
-    private double northEastLng;
-    private double northEastLat;
+    private Point max = new Point();
+    private Point min = new Point();
 
     public Bounds() {
-        setSouthWestLat(Double.MAX_VALUE);
-        setSouthWestLon(Double.MAX_VALUE);
-        setNorthEastLat(Double.NEGATIVE_INFINITY);
-        setNorthEastLon(Double.NEGATIVE_INFINITY);
+        max.setX(Double.MAX_VALUE);
+        max.setY(Double.MAX_VALUE);
+        min.setX(Double.NEGATIVE_INFINITY);
+        min.setY(Double.NEGATIVE_INFINITY);
     }
 
     public Bounds(Point... point) {
@@ -36,36 +42,40 @@ public class Bounds implements LeafletClass {
         extend(point);
     }
 
-    public double getSouthWestLon() {
-        return southWestLng;
+    /**
+     * Returns the bottom-left point of the bounds.
+     * 
+     * @return the bottom-left point of the bounds.
+     */
+    public Point getBottomLeft() {
+        return new Point(this.min.getX(), this.max.getY());
     }
 
-    public void setSouthWestLon(double southWestLng) {
-        this.southWestLng = southWestLng;
+    /**
+     * Returns the bottom-left point of the bounds.
+     * 
+     * @return the bottom-left point of the bounds.
+     */
+    public Point getTopRight() {
+        return new Point(this.max.getX(), this.min.getY());
     }
 
-    public double getSouthWestLat() {
-        return southWestLat;
+    /**
+     * Returns the top-left point of the bounds
+     * 
+     * @return the top-left point of the bounds
+     */
+    public Point getTopLeft() {
+        return this.min;
     }
 
-    public void setSouthWestLat(double southWestLat) {
-        this.southWestLat = southWestLat;
-    }
-
-    public double getNorthEastLon() {
-        return northEastLng;
-    }
-
-    public void setNorthEastLon(double northEastLng) {
-        this.northEastLng = northEastLng;
-    }
-
-    public double getNorthEastLat() {
-        return northEastLat;
-    }
-
-    public void setNorthEastLat(double northEastLat) {
-        this.northEastLat = northEastLat;
+    /**
+     * Returns the bottom-right point of the bounds
+     * 
+     * @return the bottom-right point of the bounds
+     */
+    public Point getBottomRight() {
+        return this.max;
     }
 
     public void extend(Point... points) {
@@ -74,17 +84,17 @@ public class Bounds implements LeafletClass {
         }
     }
 
-    public void extend(double latitude, double longitude) {
-        setNorthEastLat(max(getNorthEastLat(), latitude));
-        setNorthEastLon(max(getNorthEastLon(), longitude));
-        setSouthWestLat(min(getSouthWestLat(), latitude));
-        setSouthWestLon(min(getSouthWestLon(), longitude));
+    public void extend(double x, double y) {
+        max.setX(max(max.getX(), x));
+        max.setY(max(max.getY(), y));
+        min.setX(min(min.getX(), x));
+        min.setY(min(min.getY(), y));
     }
 
     public Point getCenter() {
-        double x = (getNorthEastLat() + getSouthWestLat()) / 2;
-        double y = (getNorthEastLon() + getSouthWestLon()) / 2;
-        return Point.of(x, y);
+        double x = (this.min.getX() + this.max.getY()) / 2;
+        double y = (this.min.getX() + this.max.getY()) / 2;
+        return new Point(x, y);
     }
 
 }

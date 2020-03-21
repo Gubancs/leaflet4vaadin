@@ -14,28 +14,34 @@
 
 package com.vaadin.addon.leaflet4vaadin.types;
 
+/**
+ * Represents a geographical point with a certain latitude and longitude.
+ * 
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-21
+ * @version 1.0
+ */
 public class LatLng implements LeafletClass {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 8519525431224154852L;
-	private double lon;
+	private double lng;
 	private double lat;
 
 	public LatLng() {
 	}
 
-	public LatLng(double lat, double lon) {
-		this.lon = lon;
+	public LatLng(double lat, double lng) {
+		this.lng = lng;
 		this.lat = lat;
 	}
 
-	public Double getLon() {
-		return lon;
+	public Double getLng() {
+		return lng;
 	}
 
-	public void setLon(Double lon) {
-		this.lon = lon;
+	public void setLng(Double lng) {
+		this.lng = lng;
 	}
 
 	public Double getLat() {
@@ -48,11 +54,11 @@ public class LatLng implements LeafletClass {
 
 	@Override
 	public String toString() {
-		return lat + "," + lon;
+		return lat + "," + lng;
 	}
 
-	public static LatLng latlng(double lat, double lon) {
-		return new LatLng(lat, lon);
+	public static LatLng latlng(double lat, double lng) {
+		return new LatLng(lat, lng);
 	}
 
 }

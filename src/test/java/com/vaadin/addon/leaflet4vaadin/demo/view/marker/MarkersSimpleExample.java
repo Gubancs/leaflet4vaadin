@@ -67,7 +67,7 @@ public class MarkersSimpleExample extends ExampleContainer {
 		});
 		Binder<Marker> binder = new Binder<>(Marker.class);
 		binder.forField(latitude).bind((m) -> String.valueOf(m.getLatLng().getLat()), null);
-		binder.forField(longitude).bind((m) -> String.valueOf(m.getLatLng().getLon()), null);
+		binder.forField(longitude).bind((m) -> String.valueOf(m.getLatLng().getLng()), null);
 		binder.readBean(marker);
 
 		marker.onMove((e) -> {
