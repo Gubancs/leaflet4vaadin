@@ -21,34 +21,46 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import com.vaadin.flow.component.html.Pre;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
-public class SourceCodeViewer extends Pre {
+public class SourceCodeViewer extends VerticalLayout {
 
 	private final String urlSpec;
 
-	private String varibleColor = "#dadada";
+	private String varibleColor = "#deeaef";
 	private String numberColor = "#23a263";
 	private String annotationColor = "#fff";
 	private String stringColor = "#f5986b";
 	private String keywordColor = "#2bcdff";
-	private String typeColor = "green";
+	private String typeColor = "#508dff";
 	private String methodColor = "#d2d081";
+	private String staticVariableColor = "#41a6ff";
 
 	protected SourceCodeViewer(String urlSpec) {
 		super();
 		this.urlSpec = urlSpec;
-		getStyle().set("padding", "30px");
-		getStyle().set("background", "rgb(37, 37, 37)");
-		getStyle().set("color", "rgb(197, 197, 197)");
-		getStyle().set("font-size", "14px");
-		getStyle().set("-webkit-font-smoothing", "antialiased");
+		setSpacing(false);
+		setPadding(true);
+		setSizeFull();
+		getStyle().set("background", "rgb(52, 52, 52)");
+		getStyle().set("box-shadow", "inset 0 0 61px #5a5a5a");
+		getStyle().set("overflow", "auto");
+
+		Pre code = new Pre();
+		code.getStyle().set("margin", "0px");
+		code.getStyle().set("background", "transparent");
+		code.getStyle().set("color", "rgb(197, 197, 197)");
+		code.getStyle().set("font-size", "14px");
+		code.getStyle().set("-webkit-font-smoothing", "antialiased");
 
 		try {
-			getElement().setProperty("innerHTML", getSourceCode());
+			code.getElement().setProperty("innerHTML", getSourceCode());
 		} catch (Exception e) {
 			getElement().setProperty("innerHTML", "Unable to get source code from GitHub. :(");
 			e.printStackTrace();
 		}
+
+		add(code);
 	}
 
 	private String getSourceCode() throws Exception {
@@ -77,6 +89,7 @@ public class SourceCodeViewer extends Pre {
 	private String highlightJava(String inputLine) {
 		inputLine = highlightVariables(inputLine, varibleColor);
 		inputLine = highlightNumbers(inputLine, numberColor);
+		inputLine = highlightStaticVariables(inputLine, staticVariableColor);
 		inputLine = highlightAnnotations(inputLine, annotationColor);
 		inputLine = highlightStrings(inputLine, stringColor);
 		inputLine = highlightKeywords(inputLine, keywordColor, "public", "private", "protected", "final", "new",
@@ -91,37 +104,34 @@ public class SourceCodeViewer extends Pre {
 
 		inputLine = highlightTypes(inputLine, typeColor, "long", "int", "short", "double", "float", "byte", "char",
 				"String");
+		inputLine = highlightMethodInvocations(inputLine, methodColor);
+		inputLine = highlightMethodReferences(inputLine, methodColor);
 		inputLine = highlightMethods(inputLine, methodColor);
 		return inputLine;
 	}
 
 	private String highlightBlockKeywords(String code, String color, String... keywords) {
-		for (String keyword : keywords) {
-			code = highlight(code, "(" + keyword + "\\s+)\\s?", color);
-		}
-		return code;
+		return highlightKeywords(code, color, keywords);
+	}
+
+	private String highlightTypes(String code, String color, String... primitiveTypes) {
+		return highlightKeywords(code, color, primitiveTypes);
 	}
 
 	private String highlightKeywords(String code, String color, String... keywords) {
 		for (String keyword : keywords) {
-			code = highlight(code, "(" + keyword + "\\s+)\\s?", color);
-		}
-		return code;
-	}
-
-	private String highlightTypes(String code, String color, String... primitiveTypes) {
-		for (String type : primitiveTypes) {
-			code = highlight(code, "(" + type + "\\s+)\\s?", color);
+			code = code.replaceAll("(\\s*)(" + keyword + ")(\\s+)",
+					"$1<strong style='color:" + color + "'>$2</strong>$3");
 		}
 		return code;
 	}
 
 	private String highlightNumbers(String code, String color) {
-		return highlight(code, "(-?[0-9]+.?[0-9]+[l|L]?)", color);
+		return code.replaceAll("([-+]?\\d+[\\.,]?[\\d]*[lL]?)", "<strong style='color:" + color + "'>$1</strong>");
 	}
 
 	private String highlightAnnotations(String code, String color) {
-		return highlight(code, "(@[\\w]+)", color);
+		return code.replaceAll("(@[\\w]+)", "<strong style='color:" + color + "'>$1</strong>");
 	}
 
 	private String highlightInstanceKeywords(String code, String color, String... keywords) {
@@ -137,17 +147,25 @@ public class SourceCodeViewer extends Pre {
 	}
 
 	private String highlightMethods(String code, String color) {
-		return code.replaceAll("([\\.\\s\\(:]+)([a-z]{1}\\w+)([\\(,]{1})",
-				"$1<strong style='color:" + color + "'>$2</strong>$3");
+		return code.replaceAll("(\\s+)([a-z]\\w*)(\\()", "$1<strong style='color:" + color + "'>$2</strong>$3");
+	}
+
+	private String highlightMethodInvocations(String code, String color) {
+		return code.replaceAll("(\\.)([a-z]\\w*)(\\()", "$1<strong style='color:" + color + "'>$2</strong>$3");
+	}
+
+	private String highlightMethodReferences(String code, String color) {
+		return code.replaceAll("(::)([a-z]\\w*)([\\),;])", "$1<strong style='color:" + color + "'>$2</strong>$3");
 	}
 
 	private String highlightVariables(String code, String color) {
-		return code.replaceAll("([\\s\\()]+)([a-z]{1}\\w+)(\\s?[=\\.,;\\)]{1})",
+		return code.replaceAll("([\\s\\(\\)]+)([a-z]\\w+)(\\s?[=\\.,;\\)])",
 				"$1<strong style='color:" + color + "'>$2</strong>$3");
 	}
 
-	private String highlight(String code, String regex, String color) {
-		return code.replaceAll(regex, "<strong style='color:" + color + "'>$1</strong>");
+	private String highlightStaticVariables(String code, String color) {
+		return code.replaceAll("([\\s\\.\\()])([A-Z_]+)([\\)\\(\\s=])",
+				"$1<strong style='color:" + color + "'>$2</strong>$3");
 	}
 
 }

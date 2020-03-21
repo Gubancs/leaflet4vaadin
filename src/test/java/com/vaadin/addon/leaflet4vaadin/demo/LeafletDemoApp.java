@@ -14,6 +14,8 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo;
 
+import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenu;
+import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.RemoveDefaultControlsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
@@ -41,32 +43,35 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.path.Paths3000Example;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsEventPropagationExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.TypeOfPathsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.accordion.Accordion;
-import com.vaadin.flow.component.accordion.AccordionPanel;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.details.DetailsVariant;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
 
+@CssImport(value = "styles/demo-applayout.css", themeFor = "vaadin-app-layout")
 @Theme(value = Lumo.class, variant = Lumo.LIGHT)
-public class LeafletDemoApp extends AppLayout {
+public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver {
 
 	private static final long serialVersionUID = -9119767347112138141L;
 
+	private AppMenu appMenu = AppMenu.create();
+
 	public LeafletDemoApp() {
-		addToNavbar(true, new DrawerToggle());
+		DrawerToggle drawerToggle = new DrawerToggle();
+		drawerToggle.setIcon(new Icon(VaadinIcon.MENU));
+		addToNavbar(true, drawerToggle);
 
 		// Leaflet Icon
 		Image image = new Image("https://leafletjs.com/docs/images/logo.png", "icon");
@@ -74,6 +79,14 @@ public class LeafletDemoApp extends AppLayout {
 		image.getStyle().set("margin", "10px");
 		image.addClickListener((e) -> UI.getCurrent().getPage().setLocation("https://leafletjs.com/"));
 		addToNavbar(image);
+
+		// App title
+		Label appTitle = new Label("Vaadin - Leaflet examples");
+		appTitle.setWidthFull();
+		appTitle.getStyle().set("font-size", "20px");
+		appTitle.getStyle().set("margin-left", "10px");
+		appTitle.getStyle().set("font-weight", "300");
+		addToNavbar(appTitle);
 
 		// External links in navbar
 		initActionButtons();
@@ -102,76 +115,49 @@ public class LeafletDemoApp extends AppLayout {
 		actions.add(directoryButton, githubButton);
 
 		addToNavbar(actions);
-		
+
 	}
 
 	private void initializeDemoMenu() {
-		Accordion accordion = new Accordion();
 
 		// Map examples
-		MenuItem.create("Map").addSubMenu(MapEventsExample.class).addSubMenu(MapDarkThemeExample.class)
-				.addSubMenu(MapPollListenerExample.class).addSubMenu(MapGeolocationExample.class)
-				.addSubMenu(MapFunctionsExample.class).addSubMenu(MapConversionMethodsExample.class).addTo(accordion);
+		AppMenuItem.create("Map", new Icon(VaadinIcon.GLOBE)).addSubMenu(MapEventsExample.class)
+				.addSubMenu(MapDarkThemeExample.class).addSubMenu(MapPollListenerExample.class)
+				.addSubMenu(MapGeolocationExample.class).addSubMenu(MapFunctionsExample.class)
+				.addSubMenu(MapConversionMethodsExample.class).addTo(appMenu);
 
 		// Marker examples
-		MenuItem.create("Markers").addSubMenu(MarkersSimpleExample.class).addSubMenu(MarkersEventsExample.class)
-				.addSubMenu(MarkersWithEventsExample.class).addSubMenu(MarkersGroupExample.class)
-				.addSubMenu(MarkersAddAndRemoveExample.class).addSubMenu(MarkersChangingIconExample.class)
-				.addSubMenu(MarkersRemoveOnClickExample.class).addSubMenu(MarkerMethodCallExample.class)
-				.addTo(accordion);
+		AppMenuItem.create("Markers", new Icon(VaadinIcon.MAP_MARKER)).addSubMenu(MarkersSimpleExample.class)
+				.addSubMenu(MarkersEventsExample.class).addSubMenu(MarkersWithEventsExample.class)
+				.addSubMenu(MarkersGroupExample.class).addSubMenu(MarkersAddAndRemoveExample.class)
+				.addSubMenu(MarkersChangingIconExample.class).addSubMenu(MarkersRemoveOnClickExample.class)
+				.addSubMenu(MarkerMethodCallExample.class).addTo(appMenu);
 
 		// Layers examples
-		MenuItem.create("Layers").addSubMenu(TileLayerExample.class).addSubMenu(MultipleBaseLayersExample.class)
-				.addSubMenu(GeoJSONLayerExample.class).addTo(accordion);
+		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL)).addSubMenu(TileLayerExample.class)
+				.addSubMenu(MultipleBaseLayersExample.class).addSubMenu(GeoJSONLayerExample.class).addTo(appMenu);
 
 		// Paths examples
-		MenuItem.create("Paths").addSubMenu(PathSimpleExample.class).addSubMenu(TypeOfPathsExample.class)
-				.addSubMenu(PathsEventPropagationExample.class).addSubMenu(FlyToPolygonBoundsExample.class)
-				.addSubMenu(Paths3000Example.class).addTo(accordion);
+		AppMenuItem.create("Paths", new Icon(VaadinIcon.FILL)).addSubMenu(PathSimpleExample.class)
+				.addSubMenu(TypeOfPathsExample.class).addSubMenu(PathsEventPropagationExample.class)
+				.addSubMenu(FlyToPolygonBoundsExample.class).addSubMenu(Paths3000Example.class).addTo(appMenu);
 
 		// Controls examples
-		MenuItem.create("Controls").addSubMenu(RemoveDefaultControlsExample.class)
-				.addSubMenu(ControlPositionExample.class).addSubMenu(ScaleControlExample.class).addTo(accordion);
+		AppMenuItem.create("Controls", new Icon(VaadinIcon.ARROWS)).addSubMenu(RemoveDefaultControlsExample.class)
+				.addSubMenu(ControlPositionExample.class).addSubMenu(ScaleControlExample.class).addTo(appMenu);
 
 		// Mixins examples
-		MenuItem.create("Mixin").addSubMenu(WorldMapFlagsExample.class).addTo(accordion);
+		AppMenuItem.create("Mixin", new Icon(VaadinIcon.SHIELD)).addSubMenu(WorldMapFlagsExample.class).addTo(appMenu);
 
 		// Plugins examples
-		MenuItem.create("Plugins").addSubMenu(FullScreenPluginExample.class).addTo(accordion);
+		AppMenuItem.create("Plugins", new Icon(VaadinIcon.PLUG)).addSubMenu(FullScreenPluginExample.class)
+				.addTo(appMenu);
 
-		addToDrawer(accordion);
+		addToDrawer(appMenu);
 	}
 
-	private static class MenuItem extends VerticalLayout {
-
-		private static final long serialVersionUID = 6428270908323350266L;
-		private final String title;
-
-		public MenuItem(String title) {
-			this.title = title;
-			setSpacing(false);
-			setPadding(false);
-		}
-
-		public AccordionPanel addTo(Accordion accordion) {
-			AccordionPanel menuPanel = new AccordionPanel(title, this);
-			menuPanel.addThemeVariants(DetailsVariant.FILLED, DetailsVariant.REVERSE);
-			accordion.add(menuPanel);
-			return menuPanel;
-		}
-
-		public MenuItem addSubMenu(Class<? extends Component> navigationTarget) {
-			Button menuButton = new Button(navigationTarget.getAnnotation(PageTitle.class).value());
-			menuButton.setWidthFull();
-			menuButton.addThemeVariants(ButtonVariant.LUMO_SMALL);
-			menuButton.addClickListener((event) -> UI.getCurrent().navigate(navigationTarget));
-			add(menuButton);
-			return this;
-		}
-
-		public static MenuItem create(String title) {
-			return new MenuItem(title);
-		}
-
+	@Override
+	public void afterNavigation(AfterNavigationEvent event) {
+		appMenu.setActivePath(event.getLocation().getPath());
 	}
 }

@@ -84,12 +84,7 @@ public abstract class ExampleContainer extends VerticalLayout {
 	}
 
 	protected void initSourceContent(HasComponents tabContent) {
-		VerticalLayout verticalLayout = new VerticalLayout();
-		verticalLayout.setSpacing(false);
-		verticalLayout.setPadding(false);
-		verticalLayout.add(new SourceCodeViewer(getGitHubURL()));
-
-		tabContent.add(verticalLayout);
+		tabContent.add(new SourceCodeViewer(getGitHubURL()));
 	}
 
 	protected Component initDemoLayout() {

@@ -1,0 +1,20 @@
+.app-menu-item-panel.active {
+  background: #e5f1fd;
+}
+
+.app-menu-item-summary {
+  padding: 5px 0px;
+}
+
+.app-menu-item-panel.active .app-menu-item-summary {
+  color: var(--lumo-primary-text-color);
+}
+
+.app-submenu-item {
+  height: 30px;
+  font-size: 14px;
+}
+
+.app-submenu-item:hover {
+  cursor: pointer;
+}
