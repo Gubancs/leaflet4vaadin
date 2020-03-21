@@ -26,6 +26,14 @@ public class SourceCodeViewer extends Pre {
 
 	private final String urlSpec;
 
+	private String varibleColor = "#dadada";
+	private String numberColor = "#23a263";
+	private String annotationColor = "#fff";
+	private String stringColor = "#f5986b";
+	private String keywordColor = "#2bcdff";
+	private String typeColor = "green";
+	private String methodColor = "#d2d081";
+
 	protected SourceCodeViewer(String urlSpec) {
 		super();
 		this.urlSpec = urlSpec;
@@ -67,33 +75,75 @@ public class SourceCodeViewer extends Pre {
 	}
 
 	private String highlightJava(String inputLine) {
-		inputLine = highlightNumbers(inputLine, "#23a263");
-		inputLine = highlightAnnotations(inputLine, "white");
-		inputLine = highlightStrings(inputLine, "#f5986b");
-		inputLine = highlightKeywords(inputLine, "#2b88ff", "public", "private", "protected", "final", "new", "return",
-				"continue", "if", "while", "for", "this", "super", "class", "extends", "implements", "null", "throws",
-				"throw", "try", "catch", "static", "long", "int", "short", "double", "float", "byte", "void",
-				"abstract", "false", "true");
+		inputLine = highlightVariables(inputLine, varibleColor);
+		inputLine = highlightNumbers(inputLine, numberColor);
+		inputLine = highlightAnnotations(inputLine, annotationColor);
+		inputLine = highlightStrings(inputLine, stringColor);
+		inputLine = highlightKeywords(inputLine, keywordColor, "public", "private", "protected", "final", "new",
+				"return", "continue", "extends", "implements", "null", "throws", "throw", "static", "void", "abstract",
+				"instanceof", "volatile", "transient", "synchronized", "strictfp", "package", "native", "interface",
+				"goto", "enum", "const", "assert");
+
+		inputLine = highlightBlockKeywords(inputLine, keywordColor, "if", "else", "else if", "while", "for", "try",
+				"case", "break", "default", "catch", "switch", "finally", "do");
+
+		inputLine = highlightInstanceKeywords(inputLine, keywordColor, "true", "false", "class", "this", "super");
+
+		inputLine = highlightTypes(inputLine, typeColor, "long", "int", "short", "double", "float", "byte", "char",
+				"String");
+		inputLine = highlightMethods(inputLine, methodColor);
 		return inputLine;
+	}
+
+	private String highlightBlockKeywords(String code, String color, String... keywords) {
+		for (String keyword : keywords) {
+			code = highlight(code, "(" + keyword + "\\s+)\\s?", color);
+		}
+		return code;
 	}
 
 	private String highlightKeywords(String code, String color, String... keywords) {
 		for (String keyword : keywords) {
-			code = code.replaceAll(keyword, "<strong style='color:" + color + "'>" + keyword + "</strong>");
+			code = highlight(code, "(" + keyword + "\\s+)\\s?", color);
+		}
+		return code;
+	}
+
+	private String highlightTypes(String code, String color, String... primitiveTypes) {
+		for (String type : primitiveTypes) {
+			code = highlight(code, "(" + type + "\\s+)\\s?", color);
 		}
 		return code;
 	}
 
 	private String highlightNumbers(String code, String color) {
-		return highlight(code, "(-?[0-9]+.?[0-9]+)", color);
+		return highlight(code, "(-?[0-9]+.?[0-9]+[l|L]?)", color);
 	}
 
 	private String highlightAnnotations(String code, String color) {
 		return highlight(code, "(@[\\w]+)", color);
 	}
 
+	private String highlightInstanceKeywords(String code, String color, String... keywords) {
+		for (String keyword : keywords) {
+			code = code.replaceAll("(" + keyword + ")(\\s|[:|\\.|\\)]+)",
+					"<strong style='color:" + color + "'>$1</strong>$2");
+		}
+		return code;
+	}
+
 	private String highlightStrings(String code, String color) {
 		return code.replaceAll("\"(\\.|[^\"]*)\"", "<strong style='color:" + color + "'>\"$1\"</strong>");
+	}
+
+	private String highlightMethods(String code, String color) {
+		return code.replaceAll("([\\.\\s\\(:]+)([a-z]{1}\\w+)([\\(,]{1})",
+				"$1<strong style='color:" + color + "'>$2</strong>$3");
+	}
+
+	private String highlightVariables(String code, String color) {
+		return code.replaceAll("([\\s\\()]+)([a-z]{1}\\w+)(\\s?[=\\.,;\\)]{1})",
+				"$1<strong style='color:" + color + "'>$2</strong>$3");
 	}
 
 	private String highlight(String code, String regex, String color) {
