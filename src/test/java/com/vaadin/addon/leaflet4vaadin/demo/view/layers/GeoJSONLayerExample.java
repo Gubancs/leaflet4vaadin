@@ -24,10 +24,12 @@ import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vividsolutions.jts.geom.Coordinate;
-import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.GeometryFactory;
+
+import org.geojson.GeometryCollection;
+import org.geojson.LineString;
+import org.geojson.LngLatAlt;
+import org.geojson.Point;
+import org.geojson.Polygon;
 
 @PageTitle("GeoJSON layer")
 @Route(value = "layers/geojson", layout = LeafletDemoApp.class)
@@ -45,15 +47,17 @@ public class GeoJSONLayerExample extends ExampleContainer {
 		final LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		GeometryFactory factory = new GeometryFactory();
-		Geometry point = factory.createPoint(new Coordinate(17.80, 47.5));
-		Geometry line = factory
-				.createLineString(new Coordinate[] { new Coordinate(17.80, 47.5), new Coordinate(17.20, 47.8) });
-		Geometry polygon = factory.createPolygon(new Coordinate[] { new Coordinate(19.20, 47.0),
-				new Coordinate(19.20, 47.25), new Coordinate(18.50, 47.3), new Coordinate(19.20, 47.0) });
-		Geometry[] geometries = { point, line, polygon };
-		GeometryCollection gc = factory.createGeometryCollection(geometries);
-		GeoJSON geoJSON = new GeoJSON(gc);
+		Point point = new Point(17.80, 47.5);
+		LineString line = new LineString(new LngLatAlt(17.80, 47.5), new LngLatAlt(17.20, 47.8));
+		Polygon polygon = new Polygon(new LngLatAlt(19.20, 47.0), new LngLatAlt(19.20, 47.25),
+				new LngLatAlt(18.50, 47.3), new LngLatAlt(19.20, 47.0));
+
+		GeometryCollection geoJson = new GeometryCollection();
+		geoJson.add(point);
+		geoJson.add(line);
+		geoJson.add(polygon);
+
+		GeoJSON geoJSON = new GeoJSON(geoJson);
 		geoJSON.addTo(leafletMap);
 
 		mapContainer.add(leafletMap);

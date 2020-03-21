@@ -14,9 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.groups;
 
-import com.bedatadriven.jackson.datatype.jts.JtsModule;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vividsolutions.jts.geom.GeometryCollection;
+import org.geojson.GeoJsonObject;
 
 public class GeoJSON extends FeatureGroup {
 
@@ -25,15 +23,10 @@ public class GeoJSON extends FeatureGroup {
      */
     private static final long serialVersionUID = -276591822504800118L;
     private boolean markersInheritOptions = false;
-    private GeometryCollection geometryCollection;
+    private GeoJsonObject geoJson;
 
-    public GeoJSON(GeometryCollection geometryCollection) {
-        this.geometryCollection = geometryCollection;
-    }
-
-    @Override
-    protected void configureObjectMapper(ObjectMapper objectMapper) {
-        objectMapper.registerModule(new JtsModule());
+    public GeoJSON(GeoJsonObject geoJson) {
+        this.geoJson = geoJson;
     }
 
     /**
@@ -53,9 +46,9 @@ public class GeoJSON extends FeatureGroup {
     }
 
     /**
-     * @return the geometryCollection
+     * @return the geoJson
      */
-    public GeometryCollection getGeometryCollection() {
-        return geometryCollection;
+    public GeoJsonObject getGeoJson() {
+        return geoJson;
     }
 }

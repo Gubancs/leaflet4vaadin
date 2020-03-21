@@ -17,12 +17,16 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.mixed;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
+import com.vaadin.addon.leaflet4vaadin.demo.utils.GeoJsonUtils;
+import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import org.geojson.FeatureCollection;
 
 @PageTitle("World map flags")
 @Route(value = "mixed/word-map-flags", layout = LeafletDemoApp.class)
@@ -38,6 +42,10 @@ public class WorldMapFlagsExample extends ExampleContainer {
 		options.setZoom(7);
 		LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+
+		FeatureCollection featureCollection = GeoJsonUtils.loadFeatureCollection("json/countries.geo.json");
+		GeoJSON geoJSON = new GeoJSON(featureCollection);
+		geoJSON.addTo(leafletMap);
 
 		mapContainer.add(leafletMap);
 	}
