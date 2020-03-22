@@ -17,6 +17,7 @@
 https://vaadin.com/directory/component/leaflet4vaadin/
 - Live demo: https://leaflet4vaadin.herokuapp.com/
 - Source Code Example with Vaadin Flow V15: https://github.com/Gubancs/leaflet4vaadin-demo
+- Feel free to donate: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8M9BEK428U6AW&source=url
 
 <img src="https://raw.githubusercontent.com/Gubancs/leaflet4vaadin/master/demo.png" alt="Lichess homepage" title="Lichess comes with light and dark theme, this screenshot shows both." />
 
