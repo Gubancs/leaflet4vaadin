@@ -35,15 +35,16 @@ public class AppMenu extends Accordion {
     }
 
     public void setActivePath(String path) {
+        close();
         getChildren().forEach((child) -> {
             AccordionPanel panel = (AccordionPanel) child;
             AppMenuItem menuItem = (AppMenuItem) panel.getContent().findFirst().get();
-
             panel.getElement().getClassList().remove("active");
             menuItem.getSubMenuItems().forEach(item -> item.removeThemeVariants(ButtonVariant.LUMO_PRIMARY));
             Optional<Button> submenu = menuItem.getSubMenuItems().filter(item -> item.getElement() != null)
                     .filter((item) -> path.equals(item.getElement().getAttribute("path"))).findFirst();
             if (submenu.isPresent()) {
+                open(panel);
                 panel.getElement().getClassList().add("active");
                 submenu.get().addThemeVariants(ButtonVariant.LUMO_PRIMARY);
             }
