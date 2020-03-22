@@ -26,6 +26,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
@@ -80,6 +81,11 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 	}
 
 	protected void configureObjectMapper(final ObjectMapper objectMapper) {
+	}
+
+	@JsonIgnore
+	protected boolean isInitialized() {
+		return functionDelegate != null;
 	}
 
 	@Override

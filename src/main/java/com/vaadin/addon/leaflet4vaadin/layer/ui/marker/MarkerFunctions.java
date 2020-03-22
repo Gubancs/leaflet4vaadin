@@ -14,7 +14,10 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.ui.marker;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
+import com.vaadin.addon.leaflet4vaadin.types.Icon;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 
 /**
@@ -22,6 +25,15 @@ import com.vaadin.addon.leaflet4vaadin.types.LatLng;
  * methods like bindPopup() you can also use the following methods:
  */
 public interface MarkerFunctions extends ExecutableFunctions {
+
+    /**
+     * Returns the current geographical position of the marker.
+     * 
+     * @return the current geographical position of the marker
+     */
+    default CompletableFuture<LatLng> callLatLng() {
+        return call("getLatLng", LatLng.class);
+    }
 
     /**
      * Changes the marker position to the given point.
@@ -32,4 +44,38 @@ public interface MarkerFunctions extends ExecutableFunctions {
         execute("setLatLng", latLng);
     }
 
+    /**
+     * Changes the zIndex offset of the marker.
+     * 
+     * @param offset the zIndex offset value
+     */
+    default void setZIndexOffset(int offset) {
+        execute("setZIndexOffset", offset);
+    }
+
+    /**
+     * Returns the current icon used by the marker
+     * 
+     * @param icon the current icon used by the marker
+     */
+    Icon getIcon();
+
+    /**
+     * Changes the marker icon.
+     * 
+     * @param icon the new icon options
+     */
+    default void setIcon(Icon icon) {
+        execute("setIcon", icon);
+    }
+
+    /**
+     * Changes the opacity of the marker.
+     * 
+     * 
+     * @param icon the new opacity of the marker
+     */
+    default void setOpacity(double opacity) {
+        execute("setOpacity", opacity);
+    }
 }

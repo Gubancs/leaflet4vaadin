@@ -65,12 +65,17 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 	}
 
 	public LatLng getLatLng() {
+		if (isInitialized()) {
+			MarkerFunctions.super.callLatLng().thenAccept((result) -> this.latLng = result);
+		}
 		return latLng;
 	}
 
 	@Override
 	public void setLatLng(LatLng latLng) {
-		MarkerFunctions.super.setLatLng(latLng);
+		if (isInitialized()) {
+			MarkerFunctions.super.setLatLng(latLng);
+		}
 		this.latLng = latLng;
 	}
 
@@ -87,6 +92,9 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 	}
 
 	public void setOpacity(double opacity) {
+		if (isInitialized()) {
+			MarkerFunctions.super.setOpacity(opacity);
+		}
 		this.opacity = opacity;
 	}
 
@@ -94,7 +102,11 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 		return icon;
 	}
 
+	@Override
 	public void setIcon(Icon icon) {
+		if (isInitialized()) {
+			MarkerFunctions.super.setIcon(icon);
+		}
 		this.icon = icon;
 	}
 
@@ -135,6 +147,9 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 	}
 
 	public void setzIndexOffset(int zIndexOffset) {
+		if (isInitialized()) {
+			MarkerFunctions.super.setZIndexOffset(zIndexOffset);
+		}
 		this.zIndexOffset = zIndexOffset;
 	}
 

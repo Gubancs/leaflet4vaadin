@@ -66,8 +66,8 @@ public class MarkersSimpleExample extends ExampleContainer {
 		marker.onMove((e) -> {
 			binder.readBean(marker);
 		});
-		leafletMap.addLayer(marker);
 
+		marker.addTo(leafletMap);
 
 		addToContent(leafletMap);
 	}
