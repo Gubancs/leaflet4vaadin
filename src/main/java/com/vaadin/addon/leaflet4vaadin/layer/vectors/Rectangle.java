@@ -14,8 +14,9 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
+import java.util.List;
+
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.addon.leaflet4vaadin.types.LatLngArray;
 
 /**
  * A class for drawing rectangle overlays on a map. Extends Polygon.
@@ -25,10 +26,10 @@ public class Rectangle extends Polygon {
     private static final long serialVersionUID = -1163695901226058734L;
 
     public Rectangle(LatLng... latlngs) {
-        this(new LatLngArray(latlngs));
+        super(latlngs);
     }
 
-    public Rectangle(LatLngArray latlngs) {
+    public Rectangle(List<LatLng> latlngs) {
         super(latlngs);
     }
 

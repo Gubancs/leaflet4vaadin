@@ -14,10 +14,10 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.addon.leaflet4vaadin.types.LatLngArray;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
@@ -29,17 +29,13 @@ public class Polyline extends Path {
     private static final long serialVersionUID = -2430760430165501877L;
     private double smoothFactor = 1.0;
     private boolean noClip;
-    private final LatLngArray latlngs;
+    private final List<LatLng> latlngs;
 
     public Polyline(LatLng... latlngs) {
-        this(new LatLngArray(latlngs));
+        this(Arrays.asList(latlngs));
     }
 
     public Polyline(List<LatLng> latlngs) {
-        this.latlngs = new LatLngArray(latlngs);
-    }
-
-    public Polyline(LatLngArray latlngs) {
         this.latlngs = latlngs;
     }
 

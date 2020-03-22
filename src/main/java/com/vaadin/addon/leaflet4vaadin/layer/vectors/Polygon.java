@@ -17,7 +17,6 @@ package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 import java.util.List;
 
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.addon.leaflet4vaadin.types.LatLngArray;
 
 /**
  * A class for drawing polygon overlays on a map. Extends Polyline. Note that
@@ -29,14 +28,10 @@ public class Polygon extends Polyline {
     private static final long serialVersionUID = -128072866378031092L;
 
     public Polygon(LatLng... latlngs) {
-        this(new LatLngArray(latlngs));
-    }
-
-    public Polygon(List<LatLng> latlngs) {
         super(latlngs);
     }
 
-    public Polygon(LatLngArray latlngs) {
+    public Polygon(List<LatLng> latlngs) {
         super(latlngs);
     }
 
