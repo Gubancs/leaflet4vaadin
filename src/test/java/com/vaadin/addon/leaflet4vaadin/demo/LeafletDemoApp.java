@@ -45,12 +45,14 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsEventPropagationExamp
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.TypeOfPathsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample;
+import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -102,6 +104,16 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 		actions.setPadding(true);
 		actions.setWidthFull();
 		actions.setJustifyContentMode(JustifyContentMode.END);
+
+		HtmlContainer donate = new Div();
+		String donateForm = "<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">"
+				+ "<input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\" />"
+				+ "<input type=\"hidden\" name=\"hosted_button_id\" value=\"8M9BEK428U6AW\" />"
+				+ "<input type=\"image\" src=\"https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif\" border=\"0\" name=\"submit\" title=\"PayPal - The safer, easier way to pay online!\" alt=\"Donate with PayPal button\" />"
+				+ "<img alt=\"\" border=\"0\" src=\"https://www.paypal.com/en_HU/i/scr/pixel.gif\" width=\"1\" height=\"1\" />"
+				+ "</form>";
+		donate.getElement().setProperty("innerHTML", donateForm);
+		actions.add(donate);
 
 		// Vaadin directory button
 		Button directoryButton = new Button("Vaddin directory", new Icon(VaadinIcon.VAADIN_H));
