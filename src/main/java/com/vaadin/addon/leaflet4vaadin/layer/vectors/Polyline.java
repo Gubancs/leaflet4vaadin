@@ -35,6 +35,10 @@ public class Polyline extends Path {
         this(new LatLngArray(latlngs));
     }
 
+    public Polyline(List<LatLng> latlngs) {
+        this.latlngs = new LatLngArray(latlngs);
+    }
+
     public Polyline(LatLngArray latlngs) {
         this.latlngs = latlngs;
     }
