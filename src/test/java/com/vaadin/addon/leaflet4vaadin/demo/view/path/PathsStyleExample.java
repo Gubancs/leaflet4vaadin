@@ -99,7 +99,7 @@ public class PathsStyleExample extends ExampleContainer {
 		fillOpacity.setMax(100);
 		fillOpacity.setWidthFull();
 		form.addFormItem(fillOpacity, "Fill opacity");
-		binder.forField(fillOpacity).bind((o) -> 1 / o.getFillOpacity(), (o, v) -> o.setFillOpacity(v / 100));
+		binder.forField(fillOpacity).bind((o) -> o.getFillOpacity() * 100, (o, v) -> o.setFillOpacity(v / 100));
 
 		Button reset = new Button("Reset to defaults");
 		reset.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
