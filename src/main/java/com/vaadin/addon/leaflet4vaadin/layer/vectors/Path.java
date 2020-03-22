@@ -67,7 +67,7 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param weight the weight of the path
 	 */
 	public void setWeight(double weight) {
-		this.setWeight(weight);
+		this.pathOptions.setWeight(weight);
 	}
 
 	public double getOpacity() {
