@@ -42,6 +42,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.path.FlyToPolygonBoundsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathSimpleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.Paths3000Example;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsEventPropagationExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.TypeOfPathsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample;
 import com.vaadin.flow.component.UI;
@@ -140,7 +141,8 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 		// Paths examples
 		AppMenuItem.create("Paths", new Icon(VaadinIcon.FILL)).addSubMenu(PathSimpleExample.class)
 				.addSubMenu(TypeOfPathsExample.class).addSubMenu(PathsEventPropagationExample.class)
-				.addSubMenu(FlyToPolygonBoundsExample.class).addSubMenu(Paths3000Example.class).addTo(appMenu);
+				.addSubMenu(FlyToPolygonBoundsExample.class).addSubMenu(Paths3000Example.class)
+				.addSubMenu(PathsStyleExample.class).addTo(appMenu);
 
 		// Controls examples
 		AppMenuItem.create("Controls", new Icon(VaadinIcon.ARROWS)).addSubMenu(RemoveDefaultControlsExample.class)
