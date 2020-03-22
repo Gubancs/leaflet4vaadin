@@ -106,14 +106,14 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 		actions.setJustifyContentMode(JustifyContentMode.END);
 
 		HtmlContainer donate = new Div();
-		String donateForm = "<form action=\"https://www.paypal.com/cgi-bin/webscr\" method=\"post\" target=\"_top\">"
+		String donateForm = "<form action=\"https://www.paypal.com/cgi-bin/webscr\" "
+				+ "method=\"post\" target=\"_top\" style=\"display:flex; align-items:center; height: 100%; \">"
 				+ "<input type=\"hidden\" name=\"cmd\" value=\"_s-xclick\" />"
 				+ "<input type=\"hidden\" name=\"hosted_button_id\" value=\"8M9BEK428U6AW\" />"
-				+ "<input type=\"image\" src=\"https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif\" border=\"0\" name=\"submit\" title=\"PayPal - The safer, easier way to pay online!\" alt=\"Donate with PayPal button\" />"
-				+ "<img alt=\"\" border=\"0\" src=\"https://www.paypal.com/en_HU/i/scr/pixel.gif\" width=\"1\" height=\"1\" />"
-				+ "</form>";
+				+ "<button type=\"submit\" style=\"border: none;font-size: 16px;color:#083469;font-weight:600;border:1px #e89740 solid; "
+				+ "box-shadow:0px 0px 5px #c1c1c1;padding: 8px 20px;background:linear-gradient(#f8e8a4,#f3a726);cursor: pointer;\" "
+				+ "title=\"PayPal - The safer, easier way to pay online!\">Donate</button>" + "</form>";
 		donate.getElement().setProperty("innerHTML", donateForm);
-		actions.add(donate);
 
 		// Vaadin directory button
 		Button directoryButton = new Button("Vaddin directory", new Icon(VaadinIcon.VAADIN_H));
@@ -126,7 +126,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 		githubButton.addClickListener(
 				(e) -> UI.getCurrent().getPage().setLocation("https://github.com/Gubancs/leaflet4vaadin"));
 		githubButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-		actions.add(directoryButton, githubButton);
+		actions.add(directoryButton, githubButton, donate);
 
 		addToNavbar(actions);
 	}
