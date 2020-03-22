@@ -19,12 +19,15 @@ import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.demo.utils.GeoJsonUtils;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -48,11 +51,22 @@ public class WorldMapFlagsExample extends ExampleContainer {
 
 		GeoJSONOptions options = new GeoJSONOptions();
 		options.style((feature) -> {
-			System.out.println("Prepare style for feature: " + feature);
-			return new PathOptions();
+			String country = (String) feature.getProperties().get("name");
+			if ("Hungary".equals(country)) {
+				PathOptions pathOptions = new PathOptions();
+				pathOptions.setColor("red");
+				pathOptions.setFillColor("red");
+				return pathOptions;
+
+			} else {
+				return new PathOptions();
+			}
 		});
 		options.onEachFeature((Feature feature, Layer layer) -> {
-			System.out.println("Prepare style for feature: " + feature);
+			layer.on(MouseEventType.click, (event) -> {
+				Notification.show("The selected country is" + feature.getProperties().get("name"), 3000,
+						Position.TOP_CENTER);
+			});
 		});
 		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
 		geoJSON.addTo(leafletMap);

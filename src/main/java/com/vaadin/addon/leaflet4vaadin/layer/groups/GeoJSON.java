@@ -41,6 +41,15 @@ import org.geojson.MultiPoint;
 import org.geojson.MultiPolygon;
 import org.geojson.Point;
 
+/**
+ * Represents a GeoJSON object or an array of GeoJSON objects. Allows you to
+ * parse GeoJSON data and display it on the map. Extends FeatureGroup.
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-03-22
+ * @version 1.0
+ */
 public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
 
     private static final long serialVersionUID = -7574772572305688052L;
@@ -165,13 +174,6 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
             layer = geometryFeatureGroup;
         }
 
-        if (layer != null) {
-            System.out.println("Convert geometry to layer: geometry type: " + geoJsonObject.getClass().getName()
-                    + ", layer type: " + layer.getClass().getName());
-        } else {
-            System.err.println("Convert geometry to layer: geometry type: " + geoJsonObject.getClass().getName()
-                    + ", layer type:  NULL");
-        }
         return layer;
     }
 
