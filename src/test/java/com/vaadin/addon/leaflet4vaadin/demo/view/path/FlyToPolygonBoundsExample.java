@@ -22,7 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.Polygon;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,24 +29,24 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/fly-to-bounds", layout = LeafletDemoApp.class)
 public class FlyToPolygonBoundsExample extends ExampleContainer {
 
-    private static final long serialVersionUID = -1011084083592421402L;
+	private static final long serialVersionUID = -1011084083592421402L;
 
-    @Override
-    protected void initMap(Div mapContainer) {
+	@Override
+	protected void initDemo() {
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(latlng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        options.setPreferCanvas(true);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(latlng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		options.setPreferCanvas(true);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        Polygon polygon = new Polygon(latlng(47.0, 17.3), latlng(47.3, 18.42), latlng(47.3, 18.82), latlng(47.5, 17.82),
-                latlng(47.0, 17.3));
-        polygon.onClick((event) -> leafletMap.flyToBounds(polygon.getBounds()));
-        polygon.addTo(leafletMap);
-
-        mapContainer.add(leafletMap);
-    }
+		Polygon polygon = new Polygon(latlng(47.0, 17.3), latlng(47.3, 18.42), latlng(47.3, 18.82), latlng(47.5, 17.82),
+				latlng(47.0, 17.3));
+		polygon.onClick((event) -> leafletMap.flyToBounds(polygon.getBounds()));
+		polygon.addTo(leafletMap);
+		
+		addToContent(leafletMap);
+	}
 
 }

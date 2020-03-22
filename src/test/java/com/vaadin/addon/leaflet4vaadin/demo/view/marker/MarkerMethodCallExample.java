@@ -21,7 +21,6 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -29,27 +28,26 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/method-call", layout = LeafletDemoApp.class)
 public class MarkerMethodCallExample extends ExampleContainer {
 
-    private static final long serialVersionUID = -217776717442416339L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(new LatLng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(new LatLng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		createMarker(options.getCenter(), leafletMap);
+		leafletMap.onClick((e) -> createMarker(e.getLatLng(), leafletMap));
 
-        createMarker(options.getCenter(), leafletMap);
-        leafletMap.onClick((e) -> createMarker(e.getLatLng(), leafletMap));
-        mapContainer.add(leafletMap);
-    }
+		addToContent(leafletMap);
+	}
 
-    private void createMarker(LatLng latLng, LeafletMap leafletMap) {
-        Marker marker = new Marker(latLng);
-        marker.bindTooltip("Hi, click me to unbind my tooltip");
-        marker.onClick((e) -> marker.unbindTooltip());
-        marker.addTo(leafletMap);
-    }
+	private void createMarker(LatLng latLng, LeafletMap leafletMap) {
+		Marker marker = new Marker(latLng);
+		marker.bindTooltip("Hi, click me to unbind my tooltip");
+		marker.onClick((e) -> marker.unbindTooltip());
+		marker.addTo(leafletMap);
+	}
 
 }

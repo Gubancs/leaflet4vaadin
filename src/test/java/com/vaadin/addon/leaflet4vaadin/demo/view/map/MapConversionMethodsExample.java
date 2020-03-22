@@ -22,8 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -31,44 +29,23 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Map conversion methods")
 @Route(value = "map/conversion", layout = LeafletDemoApp.class)
 public class MapConversionMethodsExample extends ExampleContainer {
-
 	private static final long serialVersionUID = -3659860383467926963L;
 
-	TextField latitude;
-	TextField longitude;
-	TextField locationX;
-	TextField locationY;
+	private TextField latitude;
+	private TextField longitude;
+	private TextField locationX;
+	private TextField locationY;
 
 	private LeafletMap leafletMap;
 
 	@Override
-	protected void initMap(final Div mapContainer) {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSizeFull();
-
-		FormLayout sidebar = new FormLayout();
-		sidebar.setHeightFull();
-		sidebar.setWidth("400px");
-
-		latitude = new TextField();
-		longitude = new TextField();
-		locationX = new TextField();
-		locationY = new TextField();
-
-		latitude.setReadOnly(true);
-		longitude.setReadOnly(true);
-		locationX.setReadOnly(true);
-		locationY.setReadOnly(true);
-
-		latitude.setWidthFull();
-		longitude.setWidthFull();
-		locationX.setWidthFull();
-		locationY.setWidthFull();
-
-		sidebar.addFormItem(latitude, "Latitude");
-		sidebar.addFormItem(longitude, "Longitude");
-		sidebar.addFormItem(locationX, "Location X (pixels): ");
-		sidebar.addFormItem(locationY, "Location Y (pixels):");
+	protected void initDemo() {
+		FormLayout form = new FormLayout();
+		latitude = createTextField(form, "Latitude");
+		longitude = createTextField(form, "Longitude");
+		locationX = createTextField(form, "Location X (pixels):");
+		locationY = createTextField(form, "Location Y (pixels):");
+		addToSidebar(form);
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.2041015625));
@@ -88,8 +65,7 @@ public class MapConversionMethodsExample extends ExampleContainer {
 			updateMarkerPosition(marker, event.getLatLng());
 		});
 
-		layout.add(leafletMap, sidebar);
-		mapContainer.add(layout);
+		addToContent(leafletMap);
 	}
 
 	private void updateMarkerPosition(Marker marker, LatLng latLng) {
@@ -102,6 +78,14 @@ public class MapConversionMethodsExample extends ExampleContainer {
 		});
 
 		marker.setLatLng(latLng);
+	}
+
+	private static TextField createTextField(FormLayout form, String label) {
+		TextField textField = new TextField();
+		textField.setReadOnly(true);
+		textField.setWidthFull();
+		form.addFormItem(textField, label);
+		return textField;
 	}
 
 }

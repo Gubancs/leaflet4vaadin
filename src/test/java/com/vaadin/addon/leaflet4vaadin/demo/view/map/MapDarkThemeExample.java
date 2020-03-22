@@ -22,7 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,10 +29,8 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/darktheme", layout = LeafletDemoApp.class)
 public class MapDarkThemeExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -714283376130864857L;
-
 	@Override
-	protected void initMap(final Div mapContainer) {
+	protected void initDemo() {
 
 		final MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
@@ -47,7 +44,8 @@ public class MapDarkThemeExample extends ExampleContainer {
 		marker.bindPopup("Example poup with dark theme");
 		marker.setName("Marker 1");
 		marker.addTo(leafletMap);
-		mapContainer.add(leafletMap);
+
+		addToContent(leafletMap);
 	}
 
 }

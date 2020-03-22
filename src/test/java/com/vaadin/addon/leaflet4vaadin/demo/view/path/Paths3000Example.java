@@ -23,7 +23,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.CircleMarker;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -31,30 +30,28 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/paths-3000", layout = LeafletDemoApp.class)
 public class Paths3000Example extends ExampleContainer {
 
-    private static final long serialVersionUID = -6757625262580562897L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(latlng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		options.setPreferCanvas(true);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(latlng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        options.setPreferCanvas(true);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		range(0, 3000).forEach((i) -> {
+			int radius = (int) (Math.random() * 10);
+			double lat = (Math.random() * 4) + 45;
+			double lon = (Math.random() * 7) + 16;
+			CircleMarker circleMarker = new CircleMarker(latlng(lat, lon), radius);
+			circleMarker.setWeight(0);
+			circleMarker.setFillOpacity(Math.random());
+			circleMarker.setFillColor("red");
+			circleMarker.addTo(leafletMap);
+		});
 
-        range(0, 3000).forEach((i) -> {
-            int radius = (int) (Math.random() * 10);
-            double lat = (Math.random() * 4) + 45;
-            double lon = (Math.random() * 7) + 16;
-            CircleMarker circleMarker = new CircleMarker(latlng(lat, lon), radius);
-            circleMarker.setWeight(0);
-            circleMarker.setFillOpacity(Math.random());
-            circleMarker.setFillColor("red");
-            circleMarker.addTo(leafletMap);
-        });
-
-        mapContainer.add(leafletMap);
-    }
+		addToContent(leafletMap);
+	}
 
 }

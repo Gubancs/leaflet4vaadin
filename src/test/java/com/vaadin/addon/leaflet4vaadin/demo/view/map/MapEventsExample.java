@@ -21,11 +21,8 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -36,24 +33,15 @@ import com.vaadin.flow.router.RouteAlias;
 @Route(value = "map/events", layout = LeafletDemoApp.class)
 public class MapEventsExample extends ExampleContainer {
 
-	private static final long serialVersionUID = 6608207938871245065L;
-
 	private TextArea eventLogs;
 
 	@Override
-	protected void initMap(final Div mapContainer) {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSizeFull();
-
-		VerticalLayout sidebar = new VerticalLayout();
-		sidebar.setHeightFull();
-		sidebar.setWidth("400px");
+	protected void initDemo() {
 		eventLogs = new TextArea();
 		eventLogs.getStyle().set("font-size", "12px");
 		eventLogs.setSizeFull();
 		eventLogs.setClearButtonVisible(true);
-
-		sidebar.add(eventLogs);
+		addToSidebar(eventLogs);
 
 		final MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
@@ -91,8 +79,7 @@ public class MapEventsExample extends ExampleContainer {
 			Notification.show("map gets initialized ", 2000, Position.TOP_CENTER);
 		});
 
-		layout.add(leafletMap, sidebar);
-		mapContainer.add(layout);
+		addToContent(leafletMap);
 	}
 
 	private void logEvent(LeafletEvent leafletEvent) {

@@ -22,7 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.Polyline;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,10 +29,8 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/simple", layout = LeafletDemoApp.class)
 public class PathSimpleExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -3987504308625840763L;
-
 	@Override
-	protected void initMap(Div mapContainer) {
+	protected void initDemo() {
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(latlng(47.07, 19.20));
@@ -44,8 +41,11 @@ public class PathSimpleExample extends ExampleContainer {
 		Polyline polyline = new Polyline(latlng(47.2, 18.3), latlng(47.3, 17.42));
 		polyline.addTo(leafletMap);
 
-		leafletMap.fitBounds(polyline.getBounds());
+		addToContent(leafletMap);
 
-		mapContainer.add(leafletMap);
+		leafletMap.whenReady((event) -> {
+			leafletMap.fitBounds(polyline.getBounds());
+		});
+
 	}
 }

@@ -17,6 +17,8 @@ package com.vaadin.addon.leaflet4vaadin.types;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Represents a rectangular area in pixel coordinates.
  * 
@@ -47,6 +49,7 @@ public class Bounds implements LeafletClass {
      * 
      * @return the bottom-left point of the bounds.
      */
+    @JsonIgnore
     public Point getBottomLeft() {
         return new Point(this.min.getX(), this.max.getY());
     }
@@ -56,6 +59,7 @@ public class Bounds implements LeafletClass {
      * 
      * @return the bottom-left point of the bounds.
      */
+    @JsonIgnore
     public Point getTopRight() {
         return new Point(this.max.getX(), this.min.getY());
     }

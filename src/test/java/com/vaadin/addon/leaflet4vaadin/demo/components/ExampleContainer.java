@@ -40,6 +40,8 @@ public abstract class ExampleContainer extends VerticalLayout {
 	private Map<Tab, Component> tabsToPages = new HashMap<>();
 	private Set<Component> pagesShown;
 	private final String gitHubDir = "https://raw.githubusercontent.com/Gubancs/leaflet4vaadin/master/src/test/java/";
+	private VerticalLayout contentLayout;
+	private VerticalLayout sidebarLayout;
 
 	protected ExampleContainer() {
 		super();
@@ -68,7 +70,10 @@ public abstract class ExampleContainer extends VerticalLayout {
 		tabs.addSelectedChangeListener(onPageChange());
 
 		add(tabs, demoLayout, sourceContent);
+
 	}
+
+	protected abstract void initDemo();
 
 	private ComponentEventListener<SelectedChangeEvent> onPageChange() {
 		return event -> {
@@ -90,14 +95,34 @@ public abstract class ExampleContainer extends VerticalLayout {
 	protected Component initDemoLayout() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSizeFull();
-		Div demoContent = new Div();
-		demoContent.setSizeFull();
-		initMap(demoContent);
-		layout.add(demoContent);
+		contentLayout = new VerticalLayout();
+		contentLayout.setSizeFull();
+		contentLayout.setPadding(false);
+		layout.add(contentLayout);
+
+		sidebarLayout = new VerticalLayout();
+		sidebarLayout.setPadding(false);
+		sidebarLayout.setSpacing(false);
+		sidebarLayout.setHeightFull();
+		sidebarLayout.setAlignItems(Alignment.STRETCH);
+		sidebarLayout.setWidth("400px");
+
+		initDemo();
+
+		if (sidebarLayout.getComponentCount() > 0) {
+			layout.add(sidebarLayout);
+		}
+
 		return layout;
 	}
 
-	protected abstract void initMap(Div mapContainer);
+	protected void addToContent(Component... components) {
+		this.contentLayout.add(components);
+	}
+
+	protected void addToSidebar(Component... components) {
+		this.sidebarLayout.add(components);
+	}
 
 	private String getGitHubURL() {
 		return gitHubDir + getClass().getName().replaceAll("\\.", "/") + ".java";

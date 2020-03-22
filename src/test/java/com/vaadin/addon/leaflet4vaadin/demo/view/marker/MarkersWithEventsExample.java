@@ -21,7 +21,6 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.router.PageTitle;
@@ -31,10 +30,8 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/map-events", layout = LeafletDemoApp.class)
 public class MarkersWithEventsExample extends ExampleContainer {
 
-	private static final long serialVersionUID = 5192876579950862599L;
-
 	@Override
-	protected void initMap(Div mapContainer) {
+	protected void initDemo() {
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.2041015625));
@@ -49,6 +46,6 @@ public class MarkersWithEventsExample extends ExampleContainer {
 			marker.addTo(leafletMap);
 		});
 
-		mapContainer.add(leafletMap);
+		addToContent(leafletMap);
 	}
 }

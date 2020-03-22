@@ -22,10 +22,8 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
@@ -35,23 +33,18 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/simple", layout = LeafletDemoApp.class)
 public class MarkersSimpleExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -2604214754789085086L;
-
 	@Override
-	protected void initMap(Div mapContainer) {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSizeFull();
+	protected void initDemo() {
 
-		FormLayout sidebar = new FormLayout();
-		sidebar.setHeightFull();
-		sidebar.setWidth("400px");
+		FormLayout form = new FormLayout();
 		TextField latitude = new TextField();
 		TextField longitude = new TextField();
 		longitude.setWidthFull();
 		latitude.setWidthFull();
 
-		sidebar.addFormItem(latitude, "Latitude");
-		sidebar.addFormItem(longitude, "Longitude");
+		form.addFormItem(latitude, "Latitude");
+		form.addFormItem(longitude, "Longitude");
+		addToSidebar(form);
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.2041015625));
@@ -76,7 +69,6 @@ public class MarkersSimpleExample extends ExampleContainer {
 		leafletMap.addLayer(marker);
 
 
-		layout.add(leafletMap, sidebar);
-		mapContainer.add(layout);
+		addToContent(leafletMap);
 	}
 }

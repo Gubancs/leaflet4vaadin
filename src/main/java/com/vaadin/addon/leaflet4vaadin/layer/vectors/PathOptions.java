@@ -1,37 +1,35 @@
-// Copyright 2020 Gabor Kokeny and contributors
-// 
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-// 
-//     http://www.apache.org/licenses/LICENSE-2.0
-// 
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
-import com.vaadin.addon.leaflet4vaadin.layer.InteractiveLayer;
+import java.io.Serializable;
 
 /**
- * An abstract class that contains options and constants shared between vector
- * overlays (Polygon, Polyline, Circle). Do not use it directly. Extends
- * InteractiveLayer
+ * Contains options shared between vector overlays (Polygon, Polyline, Circle).
+ * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * 
+ * @since 2020-03-22
+ * @version 1.0
  */
-public abstract class Path extends InteractiveLayer implements PathFunctions {
+public class PathOptions implements Serializable {
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 8625609400908426994L;
-
-	private final PathOptions pathOptions = new PathOptions();
+	private static final long serialVersionUID = -7714457256248051646L;
+	private boolean stroke = true;
+	private String color = "#3388ff";
+	private double weight = 3;
+	private double opacity = 1.0;
+	private String lineCap = "round";
+	private String lineJoin = "round";
+	private String dashArray;
+	private String dashOffset;
+	private boolean fill = true;
+	private String fillColor = "#3388ff";
+	private double fillOpacity = 0.2;
+	private String fillRule = "evenodd";
+	private String className;
 
 	public boolean isStroke() {
-		return pathOptions.isStroke();
+		return stroke;
 	}
 
 	/**
@@ -41,11 +39,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param stroke Set it to false to disable borders on polygons or circles.
 	 */
 	public void setStroke(boolean stroke) {
-		this.pathOptions.setStroke(stroke);
+		this.stroke = stroke;
 	}
 
 	public String getColor() {
-		return pathOptions.getColor();
+		return color;
 	}
 
 	/**
@@ -54,11 +52,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param color the color of the stroke
 	 */
 	public void setColor(String color) {
-		this.pathOptions.setColor(color);
+		this.color = color;
 	}
 
 	public double getWeight() {
-		return pathOptions.getWeight();
+		return weight;
 	}
 
 	/**
@@ -67,11 +65,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param weight the weight of the path
 	 */
 	public void setWeight(double weight) {
-		this.setWeight(weight);
+		this.weight = weight;
 	}
 
 	public double getOpacity() {
-		return pathOptions.getOpacity();
+		return opacity;
 	}
 
 	/**
@@ -80,11 +78,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param opacity the opacity of the path
 	 */
 	public void setOpacity(double opacity) {
-		this.pathOptions.setOpacity(opacity);
+		this.opacity = opacity;
 	}
 
 	public String getLineCap() {
-		return pathOptions.getLineCap();
+		return lineCap;
 	}
 
 	/**
@@ -93,11 +91,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param lineCap shape to be used at the end of the stroke
 	 */
 	public void setLineCap(String lineCap) {
-		this.pathOptions.setLineCap(lineCap);
+		this.lineCap = lineCap;
 	}
 
 	public String getLineJoin() {
-		return pathOptions.getLineJoin();
+		return lineJoin;
 	}
 
 	/**
@@ -106,11 +104,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param lineJoin shape to be used at the corners of the stroke
 	 */
 	public void setLineJoin(String lineJoin) {
-		this.pathOptions.setLineJoin(lineJoin);
+		this.lineJoin = lineJoin;
 	}
 
 	public String getDashArray() {
-		return pathOptions.getDashArray();
+		return dashArray;
 	}
 
 	/**
@@ -120,11 +118,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param dashArray efines the stroke dash pattern
 	 */
 	public void setDashArray(String dashArray) {
-		this.pathOptions.setDashArray(dashArray);
+		this.dashArray = dashArray;
 	}
 
 	public String getDashOffset() {
-		return pathOptions.getDashOffset();
+		return dashOffset;
 	}
 
 	/**
@@ -135,11 +133,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 *                   dash
 	 */
 	public void setDashOffset(String dashOffset) {
-		this.pathOptions.setDashOffset(dashOffset);
+		this.dashOffset = dashOffset;
 	}
 
 	public boolean isFill() {
-		return pathOptions.isFill();
+		return fill;
 	}
 
 	/**
@@ -149,11 +147,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param fill Set it to false to disable filling on polygons or circles
 	 */
 	public void setFill(boolean fill) {
-		this.pathOptions.setFill(fill);
+		this.fill = fill;
 	}
 
 	public String getFillColor() {
-		return pathOptions.getFillColor();
+		return fillColor;
 	}
 
 	/**
@@ -162,11 +160,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param fillColor the fill color of the path
 	 */
 	public void setFillColor(String fillColor) {
-		this.pathOptions.setFillColor(fillColor);
+		this.fillColor = fillColor;
 	}
 
 	public double getFillOpacity() {
-		return pathOptions.getFillOpacity();
+		return fillOpacity;
 	}
 
 	/**
@@ -175,11 +173,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param fillOpacity the fill opacity (0 between 1)
 	 */
 	public void setFillOpacity(double fillOpacity) {
-		this.pathOptions.setFillOpacity(fillOpacity);
+		this.fillOpacity = fillOpacity;
 	}
 
 	public String getFillRule() {
-		return pathOptions.getFillRule();
+		return fillRule;
 	}
 
 	/**
@@ -189,11 +187,11 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 *                 determined
 	 */
 	public void setFillRule(String fillRule) {
-		this.pathOptions.setFillRule(fillRule);
+		this.fillRule = fillRule;
 	}
 
 	public String getClassName() {
-		return pathOptions.getClassName();
+		return className;
 	}
 
 	/**
@@ -202,7 +200,7 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 	 * @param className the class name set on an element
 	 */
 	public void setClassName(String className) {
-		this.pathOptions.setClassName(className);
+		this.className = className;
 	}
 
 }

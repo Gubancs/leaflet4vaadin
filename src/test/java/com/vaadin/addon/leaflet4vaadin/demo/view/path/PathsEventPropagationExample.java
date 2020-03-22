@@ -22,7 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.CircleMarker;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,37 +29,36 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/events", layout = LeafletDemoApp.class)
 public class PathsEventPropagationExample extends ExampleContainer {
 
-    private static final long serialVersionUID = -7149589289506704016L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(latlng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		options.setPreferCanvas(true);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(latlng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        options.setPreferCanvas(true);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		for (int i = 0; i < 100; i++) {
+			int radius = (int) (Math.random() * 20);
+			double lat = (Math.random() * 10) + 40;
+			double lon = (Math.random() * 10) + 10;
+			String fillColor = "rgb(" + (int) (Math.random() * 255) + "," + (int) (Math.random() * 255) + ","
+					+ (int) (Math.random() * 255) + ")";
+			CircleMarker circleMarker = new CircleMarker(latlng(lat, lon), radius);
+			circleMarker.setWeight(0);
+			circleMarker.setFillColor(fillColor);
+			circleMarker.setFillOpacity(Math.random());
+			circleMarker.bindTooltip("<strong>Radius: </strong>" + circleMarker.getRadius()
+					+ "<br/><strong>Opacity: </strong>" + circleMarker.getOpacity()
+					+ "<br/><strong>Fill color: </strong>" + circleMarker.getFillColor()
+					+ "<br/><strong>Latitude: </strong>" + circleMarker.getLatlng().getLat()
+					+ "<br/><strong>Longitude: </strong>" + circleMarker.getLatlng().getLng());
+			circleMarker.addTo(leafletMap);
+		}
 
-        for (int i = 0; i < 100; i++) {
-            int radius = (int) (Math.random() * 20);
-            double lat = (Math.random() * 10) + 40;
-            double lon = (Math.random() * 10) + 10;
-            String fillColor = "rgb(" + (int) (Math.random() * 255) + "," + (int) (Math.random() * 255) + ","
-                    + (int) (Math.random() * 255) + ")";
-            CircleMarker circleMarker = new CircleMarker(latlng(lat, lon), radius);
-            circleMarker.setWeight(0);
-            circleMarker.setFillColor(fillColor);
-            circleMarker.setFillOpacity(Math.random());
-            circleMarker.bindTooltip("<strong>Radius: </strong>" + circleMarker.getRadius()
-                    + "<br/><strong>Opacity: </strong>" + circleMarker.getOpacity()
-                    + "<br/><strong>Fill color: </strong>" + circleMarker.getFillColor()
-                    + "<br/><strong>Latitude: </strong>" + circleMarker.getLatlng().getLat()
-                    + "<br/><strong>Longitude: </strong>" + circleMarker.getLatlng().getLng());
-            circleMarker.addTo(leafletMap);
-        }
+		addToContent(leafletMap);
 
-        mapContainer.add(leafletMap);
-    }
+	}
 
 }

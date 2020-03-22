@@ -14,6 +14,8 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.mixed;
 
+import org.geojson.FeatureCollection;
+
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -22,24 +24,19 @@ import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-import org.geojson.FeatureCollection;
 
 @PageTitle("World map flags")
 @Route(value = "mixed/word-map-flags", layout = LeafletDemoApp.class)
 public class WorldMapFlagsExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -5044756740892920650L;
-
 	@Override
-	protected void initMap(Div mapContainer) {
+	protected void initDemo() {
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.2041015625));
-		options.setZoom(7);
+		options.setZoom(3);
 		LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
@@ -47,6 +44,6 @@ public class WorldMapFlagsExample extends ExampleContainer {
 		GeoJSON geoJSON = new GeoJSON(featureCollection);
 		geoJSON.addTo(leafletMap);
 
-		mapContainer.add(leafletMap);
+		addToContent(leafletMap);
 	}
 }

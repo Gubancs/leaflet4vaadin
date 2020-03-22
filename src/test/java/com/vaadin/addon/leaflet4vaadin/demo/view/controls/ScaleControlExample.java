@@ -22,7 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,22 +29,20 @@ import com.vaadin.flow.router.Route;
 @Route(value = "controls/scale-control", layout = LeafletDemoApp.class)
 public class ScaleControlExample extends ExampleContainer {
 
-    private static final long serialVersionUID = -1551177549650182745L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(new LatLng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(new LatLng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		ScaleControl scaleControl = new ScaleControl();
+		scaleControl.setMaxWidth(500);
+		scaleControl.setPosition(ControlPosition.bottomleft);
+		scaleControl.addTo(leafletMap);
 
-        ScaleControl scaleControl = new ScaleControl();
-        scaleControl.setMaxWidth(500);
-        scaleControl.setPosition(ControlPosition.bottomleft);
-        scaleControl.addTo(leafletMap);
-
-        mapContainer.add(leafletMap);
-    }
+		addToContent(leafletMap);
+	}
 }

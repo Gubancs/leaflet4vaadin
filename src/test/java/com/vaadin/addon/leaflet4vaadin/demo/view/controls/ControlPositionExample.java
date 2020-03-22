@@ -22,7 +22,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -30,23 +29,22 @@ import com.vaadin.flow.router.Route;
 @Route(value = "controls/positioning", layout = LeafletDemoApp.class)
 public class ControlPositionExample extends ExampleContainer {
 
-    private static final long serialVersionUID = 4742537288905986507L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(new LatLng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		options.setAttributionControl(false);
+		options.setZoomControl(false);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(new LatLng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        options.setAttributionControl(false);
-        options.setZoomControl(false);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		ZoomControl zoomControl = new ZoomControl();
+		zoomControl.setPosition(ControlPosition.bottomleft);
+		zoomControl.addTo(leafletMap);
 
-        ZoomControl zoomControl = new ZoomControl();
-        zoomControl.setPosition(ControlPosition.bottomleft);
-        zoomControl.addTo(leafletMap);
+		addToContent(leafletMap);
+	}
 
-        mapContainer.add(leafletMap);
-    }
 }

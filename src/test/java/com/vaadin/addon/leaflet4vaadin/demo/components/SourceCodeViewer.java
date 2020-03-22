@@ -20,7 +20,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Pre;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
 public class SourceCodeViewer extends VerticalLayout {
@@ -39,12 +41,26 @@ public class SourceCodeViewer extends VerticalLayout {
 	protected SourceCodeViewer(String urlSpec) {
 		super();
 		this.urlSpec = urlSpec;
+		setPadding(false);
 		setSpacing(false);
-		setPadding(true);
-		setSizeFull();
-		getStyle().set("background", "rgb(52, 52, 52)");
-		getStyle().set("box-shadow", "inset 0 0 61px #5a5a5a");
-		getStyle().set("overflow", "auto");
+		setHeightFull();
+
+		HorizontalLayout header = new HorizontalLayout();
+		header.setWidthFull();
+		header.setPadding(true);
+		header.getStyle().set("background", "rgb(57, 57, 57)");
+		Anchor sourceUrl = new Anchor(urlSpec, urlSpec);
+		sourceUrl.getStyle().set("color", "#fff");
+		header.add(sourceUrl);
+
+		// Code layout
+		VerticalLayout codeLayout = new VerticalLayout();
+		codeLayout.setSpacing(false);
+		codeLayout.setPadding(true);
+		codeLayout.setSizeFull();
+		codeLayout.getStyle().set("background", "rgb(52, 52, 52)");
+		codeLayout.getStyle().set("box-shadow", "rgb(33, 33, 33) 0px 0px 12px inset");
+		codeLayout.getStyle().set("overflow", "auto");
 
 		Pre code = new Pre();
 		code.getStyle().set("margin", "0px");
@@ -59,8 +75,9 @@ public class SourceCodeViewer extends VerticalLayout {
 			getElement().setProperty("innerHTML", "Unable to get source code from GitHub. :(");
 			e.printStackTrace();
 		}
+		codeLayout.add(code);
 
-		add(code);
+		add(header, codeLayout);
 	}
 
 	private String getSourceCode() throws Exception {

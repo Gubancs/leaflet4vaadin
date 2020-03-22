@@ -22,10 +22,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -33,20 +30,13 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/events", layout = LeafletDemoApp.class)
 public class MarkersEventsExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -9185254069257875170L;
-	
 	private Label eventLabel;
 
 	@Override
-	protected void initMap(Div mapContainer) {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
+	protected void initDemo() {
 
-		FormLayout toolbar = new FormLayout();
-		toolbar.setWidthFull();
 		eventLabel = new Label();
 		eventLabel.getStyle().set("font-weight", "bold");
-		toolbar.add(eventLabel);
 
 		MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.2041015625));
@@ -73,8 +63,7 @@ public class MarkersEventsExample extends ExampleContainer {
 		marker.onMouseUp(this::logEvent);
 		marker.addTo(leafletMap);
 
-		layout.add(toolbar, leafletMap);
-		mapContainer.add(layout);
+		addToContent(eventLabel, leafletMap);
 	}
 
 	protected void logEvent(LeafletEvent leafletEvent) {

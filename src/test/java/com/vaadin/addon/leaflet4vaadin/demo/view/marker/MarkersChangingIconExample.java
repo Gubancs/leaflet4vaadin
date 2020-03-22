@@ -20,8 +20,8 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
+import com.vaadin.addon.leaflet4vaadin.types.Icon;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -29,26 +29,22 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/changing-the-icons", layout = LeafletDemoApp.class)
 public class MarkersChangingIconExample extends ExampleContainer {
 
-    private static final long serialVersionUID = 7094280184463472668L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(new LatLng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(new LatLng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		Marker marker = new Marker(new LatLng(46.470121823, 18.3041015625));
+		marker.bindTooltip("Hey, I'm a draggable marker with custom icon");
+		marker.setDraggable(true);
+		marker.setIcon(new Icon("images/marker-icon-demo.png", 41));
+		marker.addTo(leafletMap);
 
-        Marker marker = new Marker(new LatLng(46.470121823, 18.3041015625));
-        marker.bindTooltip("Hey, I'm a draggable marker with custom icon");
-        marker.setDraggable(true);
-        com.vaadin.addon.leaflet4vaadin.types.Icon icon = new com.vaadin.addon.leaflet4vaadin.types.Icon(
-                "images/marker-icon-demo.png", 41);
-        marker.setIcon(icon);
-        marker.addTo(leafletMap);
-
-        mapContainer.add(leafletMap);
-    }
+		addToContent(leafletMap);
+	}
 
 }

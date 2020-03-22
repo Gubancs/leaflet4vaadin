@@ -25,11 +25,9 @@ import com.vaadin.addon.leaflet4vaadin.options.LocateOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -40,9 +38,7 @@ public class MapGeolocationExample extends ExampleContainer {
 	private static final long serialVersionUID = -3956839422711312002L;
 
 	@Override
-	protected void initMap(final Div mapContainer) {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
+	protected void initDemo() {
 
 		Button locateButton = new Button("Find my location");
 
@@ -80,8 +76,7 @@ public class MapGeolocationExample extends ExampleContainer {
 		});
 		toolbar.add(locateButton);
 
-		layout.add(toolbar, leafletMap);
-		mapContainer.add(layout);
+		addToContent(locateButton, leafletMap);
 	}
 
 }

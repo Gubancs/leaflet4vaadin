@@ -32,8 +32,8 @@ public class LatLng implements LeafletClass {
 	}
 
 	public LatLng(double lat, double lng) {
-		this.lng = lng;
 		this.lat = lat;
+		this.lng = lng;
 	}
 
 	public Double getLng() {

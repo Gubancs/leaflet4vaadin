@@ -21,10 +21,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.options.ZoomOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -32,18 +29,11 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/functions", layout = LeafletDemoApp.class)
 public class MapFunctionsExample extends ExampleContainer {
 
-	private static final long serialVersionUID = 1221500534388495912L;
-
 	@Override
-	protected void initMap(final Div mapContainer) {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSizeFull();
+	protected void initDemo() {
 
-		FormLayout toolbar = new FormLayout();
-		toolbar.setWidthFull();
 		Label eventLabel = new Label("Click on map to fly to a coordinate or right-click to fit World");
 		eventLabel.getStyle().set("font-weight", "bold");
-		toolbar.add(eventLabel);
 
 		final MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
@@ -57,8 +47,8 @@ public class MapFunctionsExample extends ExampleContainer {
 		leafletMap.onContextMenuOpened((event) -> {
 			leafletMap.fitWorld();
 		});
-		layout.add(toolbar, leafletMap);
-		mapContainer.add(layout);
+
+		addToContent(eventLabel, leafletMap);
 	}
 
 }

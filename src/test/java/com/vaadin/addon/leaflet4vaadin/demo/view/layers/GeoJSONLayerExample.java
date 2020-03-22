@@ -14,6 +14,12 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 
+import org.geojson.GeometryCollection;
+import org.geojson.LineString;
+import org.geojson.LngLatAlt;
+import org.geojson.Point;
+import org.geojson.Polygon;
+
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
@@ -21,24 +27,15 @@ import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-import org.geojson.GeometryCollection;
-import org.geojson.LineString;
-import org.geojson.LngLatAlt;
-import org.geojson.Point;
-import org.geojson.Polygon;
 
 @PageTitle("GeoJSON layer")
 @Route(value = "layers/geojson", layout = LeafletDemoApp.class)
 public class GeoJSONLayerExample extends ExampleContainer {
 
-	private static final long serialVersionUID = 7955888151715306558L;
-
 	@Override
-	protected void initMap(final Div mapContainer) {
+	protected void initDemo() {
 
 		final MapOptions options = new DefaultMapOptions();
 		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
@@ -60,7 +57,7 @@ public class GeoJSONLayerExample extends ExampleContainer {
 		GeoJSON geoJSON = new GeoJSON(geoJson);
 		geoJSON.addTo(leafletMap);
 
-		mapContainer.add(leafletMap);
+		addToContent(leafletMap);
 	}
 
 }

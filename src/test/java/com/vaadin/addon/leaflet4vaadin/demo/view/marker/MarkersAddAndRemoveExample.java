@@ -23,11 +23,8 @@ import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -35,58 +32,49 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/add-and-remove-markers", layout = LeafletDemoApp.class)
 public class MarkersAddAndRemoveExample extends ExampleContainer {
 
-    private static final long serialVersionUID = -5769568472203107171L;
+	@Override
+	protected void initDemo() {
 
-    @Override
-    protected void initMap(Div mapContainer) {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSizeFull();
+		Button addButton = new Button("Add markers");
+		addButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+		addButton.setEnabled(false);
+		Button removeButton = new Button("Remove markers");
+		removeButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
+		addToSidebar(addButton, removeButton);
 
-        FormLayout sidebar = new FormLayout();
-        sidebar.setHeightFull();
-        sidebar.setWidth("400px");
-        Button addButton = new Button("Add markers");
-        addButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        addButton.setEnabled(false);
-        sidebar.add(addButton);
-        Button removeButton = new Button("Remove markers");
-        removeButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        sidebar.add(removeButton);
+		MapOptions options = new DefaultMapOptions();
+		options.setCenter(new LatLng(47.070121823, 19.2041015625));
+		options.setZoom(7);
+		LeafletMap leafletMap = new LeafletMap(options);
+		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-        MapOptions options = new DefaultMapOptions();
-        options.setCenter(new LatLng(47.070121823, 19.2041015625));
-        options.setZoom(7);
-        LeafletMap leafletMap = new LeafletMap(options);
-        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+		addMarkers(leafletMap);
 
-        addMarkers(leafletMap);
+		removeButton.addClickListener((event) -> {
+			leafletMap.removeAllLayers();
+			removeButton.setEnabled(false);
+			addButton.setEnabled(true);
+		});
+		addButton.addClickListener((event) -> {
+			this.addMarkers(leafletMap);
+			removeButton.setEnabled(true);
+			addButton.setEnabled(false);
+		});
 
-        removeButton.addClickListener((event) -> {
-            leafletMap.removeAllLayers();
-            removeButton.setEnabled(false);
-            addButton.setEnabled(true);
-        });
-        addButton.addClickListener((event) -> {
-            this.addMarkers(leafletMap);
-            removeButton.setEnabled(true);
-            addButton.setEnabled(false);
-        });
+		addToContent(leafletMap);
+	}
 
-        layout.add(leafletMap, sidebar);
-        mapContainer.add(layout);
-    }
+	private void addMarkers(LeafletMap leafletMap) {
+		Marker draggableMarker = new Marker(new LatLng(47.070121823, 19.2041015625));
+		draggableMarker.setDraggable(true);
+		draggableMarker.bindPopup("Hey, drag me if you want");
+		draggableMarker.addTo(leafletMap);
 
-    private void addMarkers(LeafletMap leafletMap) {
-        Marker draggableMarker = new Marker(new LatLng(47.070121823, 19.2041015625));
-        draggableMarker.setDraggable(true);
-        draggableMarker.bindPopup("Hey, drag me if you want");
-        draggableMarker.addTo(leafletMap);
+		Marker staticMarker = new Marker(new LatLng(46.470121823, 18.3041015625));
+		staticMarker.bindPopup("Hey, I'm a static marker");
+		staticMarker.addTo(leafletMap);
 
-        Marker staticMarker = new Marker(new LatLng(46.470121823, 18.3041015625));
-        staticMarker.bindPopup("Hey, I'm a static marker");
-        staticMarker.addTo(leafletMap);
-
-        Notification.show("Your markers has been added to map.", 3000, Position.TOP_CENTER);
-    }
+		Notification.show("Your markers has been added to map.", 3000, Position.TOP_CENTER);
+	}
 
 }
