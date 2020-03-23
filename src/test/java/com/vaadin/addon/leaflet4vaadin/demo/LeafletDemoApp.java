@@ -19,7 +19,10 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.RemoveDefaultControlsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONEventsExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONFilterExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONLayerExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapConversionMethodsExample;
@@ -148,7 +151,9 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 
 		// Layers examples
 		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL)).addSubMenu(TileLayerExample.class)
-				.addSubMenu(MultipleBaseLayersExample.class).addSubMenu(GeoJSONLayerExample.class).addTo(appMenu);
+				.addSubMenu(MultipleBaseLayersExample.class).addSubMenu(GeoJSONLayerExample.class)
+				.addSubMenu(GeoJSONFilterExample.class).addSubMenu(GeoJSONStyleExample.class)
+				.addSubMenu(GeoJSONEventsExample.class).addTo(appMenu);
 
 		// Paths examples
 		AppMenuItem.create("Paths", new Icon(VaadinIcon.FILL)).addSubMenu(PathSimpleExample.class)

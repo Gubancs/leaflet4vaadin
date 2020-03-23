@@ -22,12 +22,17 @@ import java.util.stream.Collectors;
 import com.vaadin.addon.leaflet4vaadin.layer.HasStyle;
 import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
+import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions.CoordsToLatLngHandler;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions.OnEachFeatureHandler;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions.PointToLayerHandler;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions.StyleHandler;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.MultiPolygon.MultiPolygonStructure;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.MultiPolyline;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.Polygon;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.Polyline;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.LatLngArray;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.MultiLatLngArray;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 
 import org.geojson.Feature;
@@ -120,7 +125,6 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
         return feature;
     }
 
-
     /**
      * Creates a Layer from a given GeoJsonObject object. Can use a custom
      * pointToLayer and/or coordsToLatLng functions if provided as options.
@@ -133,6 +137,9 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
     public static Layer geometryToLayer(GeoJsonObject geoJsonObject, GeoJSONOptions options) {
         Layer layer = null;
 
+        CoordsToLatLngHandler coordsToLatLng = options.coordsToLatLngHandler() != null ? options.coordsToLatLngHandler()
+                : GeoJSON::coordinateToLatLng;
+
         if (geoJsonObject instanceof Feature) {
             Feature feature = (Feature) geoJsonObject;
             return geometryToLayer(feature.getGeometry(), options);
@@ -144,23 +151,33 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
         } else if (geoJsonObject instanceof MultiPoint) {
             MultiPoint multiPoint = (MultiPoint) geoJsonObject;
             FeatureGroup featureGroup = new FeatureGroup();
-            multiPoint.getCoordinates().stream().map(GeoJSON::coordinateToLatLng)
+            multiPoint.getCoordinates().stream().map(coordsToLatLng::convert)
                     .map((latLng) -> pointToLayer(options.pointToLayer(), multiPoint, latLng))
                     .forEach((l) -> l.addTo(featureGroup));
             layer = featureGroup;
         } else if (geoJsonObject instanceof LineString) {
             LineString lineString = (LineString) geoJsonObject;
-            List<LatLng> latLngs = lineString.getCoordinates().stream().map(GeoJSON::coordinateToLatLng)
+            List<LatLng> latLngs = lineString.getCoordinates().stream().map(coordsToLatLng::convert)
                     .collect(Collectors.toList());
             layer = new Polyline(latLngs);
         } else if (geoJsonObject instanceof MultiLineString) {
+            MultiLineString multiLineString = (MultiLineString) geoJsonObject;
+            MultiLatLngArray latLngs = multiCoordinateToLatLng(multiLineString.getCoordinates(), coordsToLatLng);
+            layer = new MultiPolyline(latLngs);
         } else if (geoJsonObject instanceof org.geojson.Polygon) {
             org.geojson.Polygon polygon = (org.geojson.Polygon) geoJsonObject;
-            List<LatLng> latLngs = polygon.getExteriorRing().stream().map(GeoJSON::coordinateToLatLng)
+            List<LatLng> exteriorLatlngs = polygon.getExteriorRing().stream().map(coordsToLatLng::convert)
                     .collect(Collectors.toList());
-            layer = new Polygon(latLngs);
+            MultiLatLngArray interiorLatLngs = multiCoordinateToLatLng(polygon.getInteriorRings(), coordsToLatLng);
+            layer = new Polygon(exteriorLatlngs, interiorLatLngs);
         } else if (geoJsonObject instanceof MultiPolygon) {
-            // FIXME not implemented yet
+            MultiPolygon multiPolygon = (MultiPolygon) geoJsonObject;
+
+            MultiPolygonStructure multiPolygonStructure = new MultiPolygonStructure();
+            for (List<List<LngLatAlt>> polygonCoordinates : multiPolygon.getCoordinates()) {
+                multiPolygonStructure.add(multiCoordinateToLatLng(polygonCoordinates, coordsToLatLng));
+            }
+            layer = new com.vaadin.addon.leaflet4vaadin.layer.vectors.MultiPolygon(multiPolygonStructure);
         } else if (geoJsonObject instanceof GeometryCollection) {
             FeatureGroup geometryFeatureGroup = new FeatureGroup();
             GeometryCollection geometryCollection = (GeometryCollection) geoJsonObject;
@@ -172,8 +189,14 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
         return layer;
     }
 
-    public static List<LatLng> coordinateToLatLng(List<LngLatAlt> latAlt) {
-        return latAlt.stream().map(GeoJSON::coordinateToLatLng).collect(Collectors.toList());
+    private static MultiLatLngArray multiCoordinateToLatLng(List<List<LngLatAlt>> multiLngLatAlts,
+            CoordsToLatLngHandler coordsToLatLng) {
+        MultiLatLngArray multiLatLngArray = new MultiLatLngArray();
+        for (List<LngLatAlt> coords : multiLngLatAlts) {
+            List<LatLng> latLngs = coords.stream().map(coordsToLatLng::convert).collect(Collectors.toList());
+            multiLatLngArray.add(new LatLngArray(latLngs));
+        }
+        return multiLatLngArray;
     }
 
     public static LatLng coordinateToLatLng(LngLatAlt latAlt) {

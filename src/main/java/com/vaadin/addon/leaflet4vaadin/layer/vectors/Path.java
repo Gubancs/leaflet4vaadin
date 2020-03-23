@@ -26,7 +26,7 @@ public abstract class Path extends InteractiveLayer implements HasStyle, PathFun
 
 	private static final long serialVersionUID = 8625609400908426994L;
 
-	private  PathOptions pathOptions = new PathOptions();
+	private PathOptions pathOptions = new PathOptions();
 
 	public boolean isStroke() {
 		return pathOptions.isStroke();

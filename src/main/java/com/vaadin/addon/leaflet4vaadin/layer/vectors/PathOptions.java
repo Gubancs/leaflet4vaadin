@@ -28,6 +28,14 @@ public class PathOptions implements Serializable {
 	private String fillRule = "evenodd";
 	private String className;
 
+	public PathOptions() {
+	}
+
+	public PathOptions(String color) {
+		this.color = color;
+		this.fillColor = color;
+	}
+
 	public boolean isStroke() {
 		return stroke;
 	}

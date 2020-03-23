@@ -162,6 +162,10 @@ public class LatLngBounds implements LeafletClass {
 	}
 
 	public void extend(LatLng... latlngs) {
+		extend(Arrays.asList(latlngs));
+	}
+
+	public void extend(List<LatLng> latlngs) {
 		for (LatLng latlng : latlngs) {
 			northEast.setLat(Math.max(northEast.getLat(), latlng.getLat()));
 			northEast.setLng(Math.max(northEast.getLng(), latlng.getLng()));
@@ -173,5 +177,17 @@ public class LatLngBounds implements LeafletClass {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+
+	/**
+	 * Extend the bounds to contain the given bounds
+	 * 
+	 * @param bounds the bounds
+	 */
+	public void extend(LatLngBounds bounds) {
+		northEast.setLat(Math.max(northEast.getLat(), bounds.getSouthWest().getLat()));
+		northEast.setLng(Math.max(northEast.getLng(), bounds.getSouthWest().getLng()));
+		southWest.setLat(Math.min(southWest.getLat(), bounds.getNorthEast().getLat()));
+		southWest.setLng(Math.min(southWest.getLng(), bounds.getNorthEast().getLng()));
 	}
 }

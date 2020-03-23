@@ -17,44 +17,44 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
+import com.vaadin.addon.leaflet4vaadin.demo.utils.GeoJsonUtils;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
+import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import org.geojson.GeometryCollection;
-import org.geojson.LineString;
-import org.geojson.LngLatAlt;
-import org.geojson.Point;
-import org.geojson.Polygon;
+import org.geojson.FeatureCollection;
 
-@PageTitle("GeoJSON layer")
-@Route(value = "layers/geojson", layout = LeafletDemoApp.class)
-public class GeoJSONLayerExample extends ExampleContainer {
+@PageTitle("GeoJSON style")
+@Route(value = "layers/geojson-style", layout = LeafletDemoApp.class)
+public class GeoJSONStyleExample extends ExampleContainer {
 
 	@Override
 	protected void initDemo() {
 
-		final MapOptions options = new DefaultMapOptions();
-		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-		options.setZoom(7);
-		options.setPreferCanvas(true);
-		final LeafletMap leafletMap = new LeafletMap(options);
+		final MapOptions mapOptions = new DefaultMapOptions();
+		mapOptions.setCenter(new LatLng(47.070121823, 19.204101562500004));
+		mapOptions.setZoom(3);
+		mapOptions.setPreferCanvas(true);
+		final LeafletMap leafletMap = new LeafletMap(mapOptions);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		Point point = new Point(17.80, 47.5);
-		LineString line = new LineString(new LngLatAlt(17.80, 47.5), new LngLatAlt(17.20, 47.8));
-		Polygon polygon = new Polygon(new LngLatAlt(19.20, 47.0), new LngLatAlt(19.20, 47.25),
-				new LngLatAlt(18.50, 47.3), new LngLatAlt(19.20, 47.0));
+		FeatureCollection featureCollection = GeoJsonUtils.loadFeatureCollection("json/countries.geo.json");
 
-		GeometryCollection geoJson = new GeometryCollection();
-		geoJson.add(point);
-		geoJson.add(line);
-		geoJson.add(polygon);
+		GeoJSONOptions options = new GeoJSONOptions();
+		options.style((feature) -> {
+			PathOptions pathOptions = new PathOptions();
+			pathOptions.setWeight(1);
+			pathOptions.setColor("#123456");
+			pathOptions.setFillColor("#123456");
+			return pathOptions;
+		});
 
-		GeoJSON geoJSON = new GeoJSON(geoJson);
+		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
 		geoJSON.addTo(leafletMap);
 
 		addToContent(leafletMap);

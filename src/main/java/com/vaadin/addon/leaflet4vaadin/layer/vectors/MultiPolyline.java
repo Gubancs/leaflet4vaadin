@@ -14,42 +14,28 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.GeometryStructure;
-import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.LatLngArray;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.MultiLatLngArray;
-import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 
 /**
- * A class for drawing polygon overlays on a map. Extends Polyline. Note that
- * points you pass when creating a polygon shouldn't have an additional last
- * point equal to the first one — it's better to filter out such points.
+ * A class for drawing multi polyline overlays on a map.
  */
-public class Polygon extends Polyline {
+public class MultiPolyline extends Polyline {
 
-    private static final long serialVersionUID = -128072866378031092L;
-
+    private static final long serialVersionUID = 1274901686872790896L;
     private final MultiLatLngArray latlngs;
 
-    public Polygon(LatLng... latLngs) {
-        this(Arrays.asList(latLngs));
-    }
-
-    public Polygon(List<LatLng> exteriorLatlngs) {
-        latlngs = new MultiLatLngArray();
-        latlngs.add(new LatLngArray(exteriorLatlngs));
-    }
-
-    public Polygon(List<LatLng> exteriorLatlngs, MultiLatLngArray interiorRings) {
-        latlngs = new MultiLatLngArray();
-        latlngs.add(new LatLngArray(exteriorLatlngs));
-        latlngs.addAll(interiorRings);
+    public MultiPolyline(MultiLatLngArray latlngs) {
+        this.latlngs = latlngs;
     }
 
     @Override
     public GeometryStructure getLatlngs() {
         return this.latlngs;
+    }
+
+    @Override
+    public String getLeafletType() {
+        return Polyline.class.getSimpleName();
     }
 }

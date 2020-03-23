@@ -23,6 +23,7 @@ import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 
 import org.geojson.Feature;
 import org.geojson.GeoJsonObject;
+import org.geojson.LngLatAlt;
 
 /**
  * GeoJSON methods
@@ -41,14 +42,32 @@ public class GeoJSONOptions implements Serializable {
     private transient StyleHandler styleHandler;
     private transient PointToLayerHandler pointToLayerHandler;
     private transient OnEachFeatureHandler onEachFeatureHandler;
+    private transient CoordsToLatLngHandler coordsToLatLngHandler;
 
     public GeoJSONOptions() {
     }
 
     /**
+     * @return the coordsToLatLngHandler
+     */
+    CoordsToLatLngHandler coordsToLatLngHandler() {
+        return coordsToLatLngHandler;
+    }
+
+    /**
+     * A Function that will be used for converting GeoJSON coordinates to LatLngs.
+     * The default is the coordsToLatLng static method.
+     * 
+     * @param coordsToLatLngHandler the coordsToLatLngHandler to set
+     */
+    public void setCoordsToLatLngHandler(CoordsToLatLngHandler coordsToLatLngHandler) {
+        this.coordsToLatLngHandler = coordsToLatLngHandler;
+    }
+
+    /**
      * @return the markersInheritOptions
      */
-    public boolean isMarkersInheritOptions() {
+    boolean isMarkersInheritOptions() {
         return markersInheritOptions;
     }
 
@@ -64,7 +83,7 @@ public class GeoJSONOptions implements Serializable {
     /**
      * @return the styleHandler
      */
-    public StyleHandler style() {
+    StyleHandler style() {
         return styleHandler;
     }
 
@@ -86,7 +105,7 @@ public class GeoJSONOptions implements Serializable {
      * 
      * @return the pointToLayerHandler
      */
-    public PointToLayerHandler pointToLayer() {
+    PointToLayerHandler pointToLayer() {
         return pointToLayerHandler;
     }
 
@@ -100,7 +119,7 @@ public class GeoJSONOptions implements Serializable {
     /**
      * @return the filter
      */
-    public Predicate<GeoJsonObject> filter() {
+    Predicate<GeoJsonObject> filter() {
         return filter;
     }
 
@@ -119,7 +138,7 @@ public class GeoJSONOptions implements Serializable {
     /**
      * @return the onEachFeatureHandler
      */
-    public OnEachFeatureHandler onEachFeature() {
+    OnEachFeatureHandler onEachFeature() {
         return onEachFeatureHandler;
     }
 
@@ -136,17 +155,25 @@ public class GeoJSONOptions implements Serializable {
 
     @FunctionalInterface
     public static interface PointToLayerHandler {
-        public Layer pointToLayer(GeoJsonObject geoJson, LatLng latLng);
+        Layer pointToLayer(GeoJsonObject geoJson, LatLng latLng);
     }
 
     @FunctionalInterface
     public static interface OnEachFeatureHandler {
-        public void onEachFeature(Feature feature, Layer layer);
+        void onEachFeature(Feature feature, Layer layer);
     }
 
     @FunctionalInterface
     public static interface StyleHandler {
-        public PathOptions style(Feature feature);
+        PathOptions style(Feature feature);
     }
 
+    /**
+     * Callback function that will be used for converting GeoJSON coordinates to
+     * LatLngs.
+     */
+    @FunctionalInterface
+    public static interface CoordsToLatLngHandler {
+        LatLng convert(LngLatAlt coordinate);
+    }
 }
