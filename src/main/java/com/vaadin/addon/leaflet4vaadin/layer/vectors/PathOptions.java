@@ -36,6 +36,12 @@ public class PathOptions implements Serializable {
 		this.fillColor = color;
 	}
 
+	public PathOptions(String color, double weight) {
+		this.color = color;
+		this.fillColor = color;
+		this.weight = weight;
+	}
+
 	public boolean isStroke() {
 		return stroke;
 	}

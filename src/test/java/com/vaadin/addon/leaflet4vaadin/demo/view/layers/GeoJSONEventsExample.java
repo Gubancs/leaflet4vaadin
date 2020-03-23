@@ -39,8 +39,8 @@ import org.geojson.FeatureCollection;
 @Route(value = "layers/geojson-events", layout = LeafletDemoApp.class)
 public class GeoJSONEventsExample extends ExampleContainer {
 
-	static PathOptions defaultStyle = new PathOptions();
-	static PathOptions hoverStyle = new PathOptions("red");
+	static PathOptions defaultStyle = new PathOptions("blue", 0.5);
+	static PathOptions hoverStyle = new PathOptions("red", 0.5);
 
 	@Override
 	protected void initDemo() {
@@ -57,6 +57,7 @@ public class GeoJSONEventsExample extends ExampleContainer {
 		options.onEachFeature(this::onEachCountries);
 
 		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
+		geoJSON.setStyle(defaultStyle);
 		geoJSON.addTo(leafletMap);
 
 		addToContent(leafletMap);

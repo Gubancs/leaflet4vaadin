@@ -148,6 +148,11 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
             LngLatAlt coordinates = point.getCoordinates();
             LatLng latLng = new LatLng(coordinates.getLatitude(), coordinates.getLongitude());
             layer = pointToLayer(options.pointToLayer(), point, latLng);
+        } else if (geoJsonObject instanceof LineString) {
+            LineString lineString = (LineString) geoJsonObject;
+            List<LatLng> latLngs = lineString.getCoordinates().stream().map(coordsToLatLng::convert)
+                    .collect(Collectors.toList());
+            layer = new Polyline(latLngs);
         } else if (geoJsonObject instanceof MultiPoint) {
             MultiPoint multiPoint = (MultiPoint) geoJsonObject;
             FeatureGroup featureGroup = new FeatureGroup();
@@ -155,11 +160,6 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
                     .map((latLng) -> pointToLayer(options.pointToLayer(), multiPoint, latLng))
                     .forEach((l) -> l.addTo(featureGroup));
             layer = featureGroup;
-        } else if (geoJsonObject instanceof LineString) {
-            LineString lineString = (LineString) geoJsonObject;
-            List<LatLng> latLngs = lineString.getCoordinates().stream().map(coordsToLatLng::convert)
-                    .collect(Collectors.toList());
-            layer = new Polyline(latLngs);
         } else if (geoJsonObject instanceof MultiLineString) {
             MultiLineString multiLineString = (MultiLineString) geoJsonObject;
             MultiLatLngArray latLngs = multiCoordinateToLatLng(multiLineString.getCoordinates(), coordsToLatLng);

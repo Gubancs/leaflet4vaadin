@@ -30,7 +30,7 @@ import org.geojson.LngLatAlt;
 import org.geojson.Point;
 import org.geojson.Polygon;
 
-@PageTitle("GeoJSON layer")
+@PageTitle("GeoJSON types")
 @Route(value = "layers/geojson", layout = LeafletDemoApp.class)
 public class GeoJSONLayerExample extends ExampleContainer {
 
@@ -44,13 +44,15 @@ public class GeoJSONLayerExample extends ExampleContainer {
 		final LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		Point point = new Point(17.80, 47.5);
-		LineString line = new LineString(new LngLatAlt(17.80, 47.5), new LngLatAlt(17.20, 47.8));
+		Point point1 = new Point(17.80, 47.5);
+		Point point2 = new Point(16.90, 47.8);
+		LineString line = new LineString(point1.getCoordinates(), point2.getCoordinates());
 		Polygon polygon = new Polygon(new LngLatAlt(19.20, 47.0), new LngLatAlt(19.20, 47.25),
 				new LngLatAlt(18.50, 47.3), new LngLatAlt(19.20, 47.0));
 
 		GeometryCollection geoJson = new GeometryCollection();
-		geoJson.add(point);
+		geoJson.add(point1);
+		geoJson.add(point2);
 		geoJson.add(line);
 		geoJson.add(polygon);
 

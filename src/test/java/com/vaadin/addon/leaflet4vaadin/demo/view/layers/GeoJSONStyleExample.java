@@ -33,6 +33,9 @@ import org.geojson.FeatureCollection;
 @Route(value = "layers/geojson-style", layout = LeafletDemoApp.class)
 public class GeoJSONStyleExample extends ExampleContainer {
 
+	static final PathOptions defaultStyle = new PathOptions("gray", 0.5);
+	static final PathOptions filteredStyle = new PathOptions("red", 0.5);
+
 	@Override
 	protected void initDemo() {
 
@@ -47,11 +50,8 @@ public class GeoJSONStyleExample extends ExampleContainer {
 
 		GeoJSONOptions options = new GeoJSONOptions();
 		options.style((feature) -> {
-			PathOptions pathOptions = new PathOptions();
-			pathOptions.setWeight(1);
-			pathOptions.setColor("#123456");
-			pathOptions.setFillColor("#123456");
-			return pathOptions;
+			String countryName = (String) feature.getProperties().get("name");
+			return countryName.startsWith("H") ? filteredStyle : defaultStyle;
 		});
 
 		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
