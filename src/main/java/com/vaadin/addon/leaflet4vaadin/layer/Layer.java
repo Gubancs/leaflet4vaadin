@@ -29,6 +29,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.layer.events.Evented;
@@ -52,8 +54,10 @@ import com.vaadin.addon.leaflet4vaadin.types.LeafletClass;
  * @since 2020-02-06
  * @version 1.0
  */
+@JsonInclude(Include.NON_NULL)
 @JsonIgnoreProperties(value = { "json" })
-public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
+public abstract class Layer
+		implements Evented, LeafletClass, LayerFunctions, LayerPopupFunctions, LayerTooltipFunctions {
 
 	private static final long serialVersionUID = -1803411573095089760L;
 
@@ -86,13 +90,13 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 
 	@Override
 	public void unbindTooltip() {
-		LayerFunctions.super.unbindTooltip();
+		LayerTooltipFunctions.super.unbindTooltip();
 		this.tooltip = null;
 	}
 
 	@Override
 	public void unbindPopup() {
-		LayerFunctions.super.unbindPopup();
+		LayerPopupFunctions.super.unbindPopup();
 		this.popup = null;
 	}
 
@@ -211,6 +215,7 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 		this.pane = pane;
 	}
 
+	@Override
 	public Popup getPopup() {
 		return this.popup;
 	}

@@ -33,18 +33,4 @@ public interface LayerFunctions extends ExecutableFunctions {
     default void remove() {
         execute("remove");
     }
-
-    /**
-     * Removes the tooltip previously bound with bindTooltip.
-     */
-    default void unbindTooltip() {
-        execute("unbindTooltip");
-    }
-
-    /**
-     * Removes the popup previously bound with bindPopup.
-     */
-    default void unbindPopup() {
-        execute("unbindPopup");
-    }
 }

@@ -14,8 +14,11 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.groups;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
+import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
  * FeatureGroup methods
@@ -38,4 +41,27 @@ public interface FeatureGroupFunctions extends ExecutableFunctions {
         execute("setStyle", pathOptions);
     }
 
+    /**
+     * Brings the layer group to the top of all other layers
+     */
+    default void bringToFront() {
+        execute("bringToFront");
+    }
+
+    /**
+     * Brings the layer group to the back of all other layers
+     */
+    default void bringToBack() {
+        execute("bringToBack");
+    }
+
+    /**
+     * Returns the LatLngBounds of the Feature Group (created from bounds and
+     * coordinates of its children).
+     * 
+     * @return the LatLngBounds of the Feature Group
+     */
+    default CompletableFuture<LatLngBounds> getBounds() {
+        return call("getBounds", LatLngBounds.class);
+    }
 }
