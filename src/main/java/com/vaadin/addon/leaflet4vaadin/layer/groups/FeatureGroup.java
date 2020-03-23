@@ -16,9 +16,11 @@ package com.vaadin.addon.leaflet4vaadin.layer.groups;
 
 import java.util.List;
 
+import com.vaadin.addon.leaflet4vaadin.layer.HasStyle;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsLayerEvents;
 import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsMouseEvents;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 
 /**
  * Extended LayerGroup that makes it easier to do the same thing to all its
@@ -30,12 +32,11 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsMouseEvents
  * @since 2020-02-06
  * @version 1.0
  */
-public class FeatureGroup extends LayerGroup implements SupportsMouseEvents, SupportsLayerEvents {
+public class FeatureGroup extends LayerGroup
+		implements HasStyle, SupportsMouseEvents, SupportsLayerEvents, FeatureGroupFunctions {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 4315847050612014255L;
+	private PathOptions pathOptions = new PathOptions();
 
 	public FeatureGroup() {
 		super();
@@ -49,4 +50,16 @@ public class FeatureGroup extends LayerGroup implements SupportsMouseEvents, Sup
 		super(layers);
 	}
 
+	@Override
+	public void setStyle(PathOptions pathOptions) {
+		FeatureGroupFunctions.super.setStyle(pathOptions);
+		this.pathOptions = pathOptions;
+		this.getLayers().stream().filter(layer -> layer instanceof HasStyle).map(HasStyle.class::cast)
+				.forEach(layer -> layer.setStyle(pathOptions));
+	}
+
+	@Override
+	public PathOptions getStyle() {
+		return pathOptions;
+	}
 }

@@ -12,25 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer;
+package com.vaadin.addon.leaflet4vaadin.layer.groups;
 
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
 
+import org.geojson.GeoJsonObject;
+
 /**
- * A set of methods from the Layer base class that all Leaflet layers use.
- * Inherits all methods, options and events from L.Evented.
+ * GeoJSON methods
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
- * @since 2020-03-12
+ * 
+ * @since 2020-03-22
  * @version 1.0
  */
-public interface LayerFunctions extends ExecutableFunctions {
+public interface GeoJSONFunctions extends ExecutableFunctions {
 
     /**
-     * Removes the layer from the map it is currently active on.
+     * Adds a GeoJSON object to the layer.
+     * 
+     * @param geoJsonObject the geojson object
      */
-    default void remove() {
-        execute("remove");
+    GeoJSON addData(GeoJsonObject geoJsonObject);
+
+    /**
+     * Resets the style of all features in the current layer is reset.
+     */
+    default void resetStyle() {
+        execute("resetStyle");
     }
+
 }

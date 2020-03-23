@@ -16,8 +16,9 @@ package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
 import java.util.List;
 
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.GeometryStructure;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.LatLngArray;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
-import com.vaadin.addon.leaflet4vaadin.types.LatLngArray;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
@@ -35,6 +36,10 @@ public class Polyline extends Path {
         this(new LatLngArray(latlngs));
     }
 
+    public Polyline(List<LatLng> latlngs) {
+        this(new LatLngArray(latlngs));
+    }
+
     public Polyline(LatLngArray latlngs) {
         this.latlngs = latlngs;
     }
@@ -45,7 +50,7 @@ public class Polyline extends Path {
      * @return true if it has no coordinates
      */
     public boolean isEmpty() {
-        return this.latlngs == null || this.latlngs.size() == 0;
+        return getLatlngs().isEmpty();
     }
 
     /**
@@ -54,7 +59,7 @@ public class Polyline extends Path {
      * @return the bounds of the polyline
      */
     public LatLngBounds getBounds() {
-        return new LatLngBounds(this.latlngs);
+        return getLatlngs().getBounds();
     }
 
     public double getSmoothFactor() {
@@ -84,7 +89,7 @@ public class Polyline extends Path {
         this.noClip = noClip;
     }
 
-    public List<LatLng> getLatlngs() {
+    public GeometryStructure getLatlngs() {
         return latlngs;
     }
 

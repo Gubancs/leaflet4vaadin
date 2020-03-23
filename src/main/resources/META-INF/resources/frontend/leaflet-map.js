@@ -194,23 +194,22 @@ class LeafletMap extends PolymerElement {
   }
 
   findLayer(head, uuid) {
-    console.log("LeafletMap - findLayer() ", { head: head, uuid: uuid });
-    let found;
-    if (head.options.uuid === uuid) {
-      found = head;
+    if (head.options && head.options.uuid === uuid) {
+      console.log("LeafletMap - findLayer() result", head);
+      return head;
     } else {
-      head.eachLayer(child => {
-        if (child.options.uuid === uuid) {
-          found = child;
-          return;
+      if(head.eachLayer) {
+        let found;
+        head.eachLayer((child) => {
+          if(!found){
+            found = this.findLayer(child, uuid);
+          }
+        });
+        if (found) {
+          return found;
         }
-        if (child.eachLayer) {
-          found = findLayer(child, uuid);
-        }
-      });
+      }
     }
-    console.log("LeafletMap - findLayer() result", found);
-    return found;
   }
 
   /**
@@ -235,8 +234,12 @@ class LeafletMap extends PolymerElement {
   }
 
   applyEventListeners(layer, options) {
+    console.log("LeafletMap - applyEventListeners()", layer, options);
     if (options.events) {
       options.events.forEach(event => this.registerEventListener(layer, event));
+    }
+    if (layer.eachLayer) {
+      layer.eachLayer(child => this.applyEventListeners(child, child.options));
     }
   }
 

@@ -12,36 +12,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.types;
+package com.vaadin.addon.leaflet4vaadin.layer.vectors.structure;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
+
+import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
- * Represents a list of LatLng objects
+ * Represents list of LatLng coordinates
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
- * @since 2020-03-21
+ * @since 2020-03-23
  * @version 1.0
  */
-public class LatLngArray extends ArrayList<LatLng> {
+public class LatLngArray extends ArrayList<LatLng> implements GeometryStructure {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 7307109618930960313L;
+	private static final long serialVersionUID = -909287963967251959L;
 
-    public LatLngArray() {
-    }
+	public LatLngArray(LatLng[] latlngs) {
+		this(Arrays.asList(latlngs));
+	}
 
-    public LatLngArray(LatLng... latLngs) {
-        this(Arrays.asList(latLngs));
-    }
+	public LatLngArray(List<LatLng> latlngs) {
+		addAll(latlngs);
+	}
 
-    public LatLngArray(Collection<? extends LatLng> c) {
-        super(c);
-    }
+	@Override
+	public LatLngBounds getBounds() {
+		LatLngBounds bounds = new LatLngBounds(get(0));
+		forEach((latlng) -> bounds.extend(latlng));
+		return bounds;
+	}
 
 }

@@ -12,25 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer;
+package com.vaadin.addon.leaflet4vaadin.layer.vectors.structure;
 
-import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
+import java.util.ArrayList;
+
+import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
- * A set of methods from the Layer base class that all Leaflet layers use.
- * Inherits all methods, options and events from L.Evented.
+ * Represents multi dimensional list of LatLng coordinates
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
- * @since 2020-03-12
+ * @since 2020-03-23
  * @version 1.0
  */
-public interface LayerFunctions extends ExecutableFunctions {
+public class MultiLatLngArray extends ArrayList<LatLngArray> implements GeometryStructure {
 
-    /**
-     * Removes the layer from the map it is currently active on.
-     */
-    default void remove() {
-        execute("remove");
-    }
+	private static final long serialVersionUID = 7453345091992067182L;
+
+	public MultiLatLngArray() {
+	}
+
+	@Override
+	public LatLngBounds getBounds() {
+		LatLngBounds bounds = new LatLngBounds(get(0));
+		forEach((latlng) -> bounds.extend(latlng));
+		return bounds;
+	}
+
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.demo.view.mixed;
+package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
@@ -35,9 +35,12 @@ import com.vaadin.flow.router.Route;
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
 
-@PageTitle("World map flags")
-@Route(value = "mixed/word-map-flags", layout = LeafletDemoApp.class)
-public class WorldMapFlagsExample extends ExampleContainer {
+@PageTitle("GeoJSON events")
+@Route(value = "layers/geojson-events", layout = LeafletDemoApp.class)
+public class GeoJSONEventsExample extends ExampleContainer {
+
+	static PathOptions defaultStyle = new PathOptions("blue", 0.5);
+	static PathOptions hoverStyle = new PathOptions("red", 0.5);
 
 	@Override
 	protected void initDemo() {
@@ -52,7 +55,9 @@ public class WorldMapFlagsExample extends ExampleContainer {
 
 		GeoJSONOptions options = new GeoJSONOptions();
 		options.onEachFeature(this::onEachCountries);
+
 		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
+		geoJSON.setStyle(defaultStyle);
 		geoJSON.addTo(leafletMap);
 
 		addToContent(leafletMap);
@@ -61,20 +66,17 @@ public class WorldMapFlagsExample extends ExampleContainer {
 	public void onEachCountries(Feature feature, Layer layer) {
 		InteractiveLayer interactiveLayer = (InteractiveLayer) layer;
 		interactiveLayer.onClick((event) -> {
-			Notification.show("The selected country is: " + feature.getProperties().get("name"), 3000,
+			Notification.show("You selected the following country: " + feature.getProperties().get("name"), 3000,
 					Position.TOP_CENTER);
 		});
 		interactiveLayer.onMouseOver((event) -> {
 			Path layerWithStyle = (Path) layer;
-			PathOptions pathOptions = new PathOptions();
-			pathOptions.setColor("blue");
-			pathOptions.setFillColor("blue");
-			layerWithStyle.setStyle(pathOptions);
+			layerWithStyle.setStyle(hoverStyle);
 			layerWithStyle.bringToFront();
 		});
 		interactiveLayer.onMouseOut((event) -> {
 			Path layerWithStyle = (Path) layer;
-			layerWithStyle.setStyle(new PathOptions());
+			layerWithStyle.setStyle(defaultStyle);
 		});
 	}
 }

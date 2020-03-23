@@ -14,6 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
+import com.vaadin.addon.leaflet4vaadin.layer.HasStyle;
 import com.vaadin.addon.leaflet4vaadin.layer.InteractiveLayer;
 
 /**
@@ -21,14 +22,11 @@ import com.vaadin.addon.leaflet4vaadin.layer.InteractiveLayer;
  * overlays (Polygon, Polyline, Circle). Do not use it directly. Extends
  * InteractiveLayer
  */
-public abstract class Path extends InteractiveLayer implements PathFunctions {
+public abstract class Path extends InteractiveLayer implements HasStyle, PathFunctions {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 8625609400908426994L;
 
-	private final PathOptions pathOptions = new PathOptions();
+	private PathOptions pathOptions = new PathOptions();
 
 	public boolean isStroke() {
 		return pathOptions.isStroke();
@@ -205,4 +203,14 @@ public abstract class Path extends InteractiveLayer implements PathFunctions {
 		this.pathOptions.setClassName(className);
 	}
 
+	@Override
+	public PathOptions getStyle() {
+		return pathOptions;
+	}
+
+	@Override
+	public void setStyle(PathOptions pathOptions) {
+		this.pathOptions = pathOptions;
+		PathFunctions.super.setStyle(pathOptions);
+	}
 }

@@ -14,23 +14,21 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer;
 
-import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 
 /**
- * A set of methods from the Layer base class that all Leaflet layers use.
- * Inherits all methods, options and events from L.Evented.
+ * Common interface of the leaflet layers which have style.
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
  * @since 2020-03-12
  * @version 1.0
+ * 
+ * @see PathOptions
  */
-public interface LayerFunctions extends ExecutableFunctions {
+public interface HasStyle {
 
-    /**
-     * Removes the layer from the map it is currently active on.
-     */
-    default void remove() {
-        execute("remove");
-    }
+    PathOptions getStyle();
+
+    void setStyle(PathOptions pathOptions);
 }

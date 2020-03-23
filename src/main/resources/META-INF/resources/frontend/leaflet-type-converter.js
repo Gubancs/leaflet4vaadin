@@ -44,7 +44,9 @@ export class LeafletTypeConverter {
     } else if (layer.leafletType === "TileLayer") {
       leafletLayer = L.tileLayer(layer.urlTemplate, layer);
     } else if (layer.leafletType === "GeoJSON") {
-      leafletLayer = L.geoJSON(layer.geoJson, layer);
+      let layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
+      leafletLayer = L.geoJSON(null, layer);
+      leafletLayer._layers = layers;
     } else {
       throw "Unsupported object type : " + layer.leafletType;
     }

@@ -17,46 +17,43 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
+import com.vaadin.addon.leaflet4vaadin.demo.utils.GeoJsonUtils;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
+import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import org.geojson.GeometryCollection;
-import org.geojson.LineString;
-import org.geojson.LngLatAlt;
-import org.geojson.Point;
-import org.geojson.Polygon;
+import org.geojson.Feature;
+import org.geojson.FeatureCollection;
 
-@PageTitle("GeoJSON types")
-@Route(value = "layers/geojson", layout = LeafletDemoApp.class)
-public class GeoJSONLayerExample extends ExampleContainer {
+@PageTitle("GeoJSON filtering")
+@Route(value = "layers/geojson-filter", layout = LeafletDemoApp.class)
+public class GeoJSONFilterExample extends ExampleContainer {
 
 	@Override
 	protected void initDemo() {
 
-		final MapOptions options = new DefaultMapOptions();
-		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-		options.setZoom(7);
-		options.setPreferCanvas(true);
-		final LeafletMap leafletMap = new LeafletMap(options);
+		final MapOptions mapOptions = new DefaultMapOptions();
+		mapOptions.setCenter(new LatLng(47.070121823, 19.204101562500004));
+		mapOptions.setZoom(3);
+		mapOptions.setPreferCanvas(true);
+		final LeafletMap leafletMap = new LeafletMap(mapOptions);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		Point point1 = new Point(17.80, 47.5);
-		Point point2 = new Point(16.90, 47.8);
-		LineString line = new LineString(point1.getCoordinates(), point2.getCoordinates());
-		Polygon polygon = new Polygon(new LngLatAlt(19.20, 47.0), new LngLatAlt(19.20, 47.25),
-				new LngLatAlt(18.50, 47.3), new LngLatAlt(19.20, 47.0));
+		FeatureCollection featureCollection = GeoJsonUtils.loadFeatureCollection("json/countries.geo.json");
 
-		GeometryCollection geoJson = new GeometryCollection();
-		geoJson.add(point1);
-		geoJson.add(point2);
-		geoJson.add(line);
-		geoJson.add(polygon);
+		GeoJSONOptions options = new GeoJSONOptions();
 
-		GeoJSON geoJSON = new GeoJSON(geoJson);
+		options.filter(geoJson -> {
+			Feature feature = GeoJSON.asFeature(geoJson);
+			String countryName = (String) feature.getProperties().get("name");
+			return countryName.startsWith("H");
+		});
+
+		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
 		geoJSON.addTo(leafletMap);
 
 		addToContent(leafletMap);

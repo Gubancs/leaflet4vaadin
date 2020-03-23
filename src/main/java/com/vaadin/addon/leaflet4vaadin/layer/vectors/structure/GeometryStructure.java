@@ -12,25 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.vaadin.addon.leaflet4vaadin.layer;
+package com.vaadin.addon.leaflet4vaadin.layer.vectors.structure;
 
-import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
+import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
- * A set of methods from the Layer base class that all Leaflet layers use.
- * Inherits all methods, options and events from L.Evented.
+ * Core interface to geometry structures
  * 
  * @author <strong>Gabor Kokeny</strong> Email:
  *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
- * @since 2020-03-12
+ * @since 2020-03-23
  * @version 1.0
  */
-public interface LayerFunctions extends ExecutableFunctions {
+public interface GeometryStructure {
 
-    /**
-     * Removes the layer from the map it is currently active on.
-     */
-    default void remove() {
-        execute("remove");
-    }
+	/**
+	 * Returns true if the geometry structure has no LatLngs.
+	 */
+	boolean isEmpty();
+
+	/**
+	 * Calculate the boundary of this geometry structure
+	 * 
+	 * @return
+	 */
+	LatLngBounds getBounds();
 }

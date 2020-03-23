@@ -110,6 +110,8 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 
 	private final MapLayer mapLayer = new MapLayer();
 
+	private boolean ready = false;
+
 	public LeafletMap() {
 		this(new DefaultMapOptions());
 	}
@@ -130,7 +132,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@EventHandler
 	private void onBaseEventHandler(@EventData("event.target.options.uuid") String layerId,
 			@EventData("event.type") String event) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new LeafletEvent(layer, EventTypeRegistry.valueOf(event));
 		fireEvent(layer, leafletEvent);
 	}
@@ -150,7 +152,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 			@EventData("event.layerPoint.y") int layerPointY, @EventData("event.containerPoint.x") int containerPointX,
 			@EventData("event.containerPoint.y") int containerPointY) {
 
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LatLng latLng = new LatLng(latitude, longitude);
 		Point layerPoint = Point.of(layerPointX, layerPointY);
 		Point containerPoint = Point.of(containerPointX, containerPointY);
@@ -174,7 +176,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 			@EventData("event.latlng.lng") Double newLng, @EventData("event.oldLatLng.lat") Double oldLat,
 			@EventData("event.oldLatLng.lng") Double oldLng) {
 
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LatLng latLng = new LatLng(newLat, newLng);
 		LatLng oldLatLng = new LatLng(oldLat, oldLng);
 
@@ -197,7 +199,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 			@EventData("event.originalEvent.shiftKey") boolean shiftKey,
 			@EventData("event.originalEvent.altKey") boolean altKey,
 			@EventData("event.originalEvent.ctrlKey") boolean ctrlKey) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new KeyboardEvent(layer, KeyboardEventType.valueOf(eventType), key, code, keyCode,
 				shiftKey, altKey, ctrlKey);
 		fireEvent(layer, leafletEvent);
@@ -219,7 +221,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 			@EventData("event.heading") Double heading, @EventData("event.speed") Double speed,
 			@EventData("event.timestamp") Double timestamp) {
 		LatLng latlng = new LatLng(latitude, longitude);
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new LocationEvent(layer, LocationEventType.valueOf(eventType), latlng, null,
 				accuracy, altitude, altitudeAccuracy, heading, speed, timestamp);
 		fireEvent(layer, leafletEvent);
@@ -236,7 +238,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	private void onErrorEventHandler(@EventData("target.options.uuid") String layerId,
 			@EventData("event.type") String event, @EventData("event.message") String message,
 			@EventData("event.code") int code) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		ErrorEvent errorEvent = new ErrorEvent(layer, EventTypeRegistry.valueOf(event), message, code);
 		fireEvent(layer, errorEvent);
 	}
@@ -263,7 +265,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@EventHandler
 	private void onLayerEventHandler(@EventData("target.options.uuid") String layerId,
 			@EventData("event.type") String eventType) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new LayerEvent(layer, LayerEventType.valueOf(eventType), null);
 		fireEvent(layer, leafletEvent);
 	}
@@ -280,7 +282,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	private void onTileEventHandler(@EventData("target.options.uuid") String layerId,
 			@EventData("event.type") String eventType, @EventData("event.coords.x") Double coordsX,
 			@EventData("event.coords.y") Double coordsY) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		Point coords = Point.of(coordsX, coordsY);
 		LeafletEvent leafletEvent = new TileEvent(layer, TileEventType.valueOf(eventType), coords);
 		fireEvent(layer, leafletEvent);
@@ -298,7 +300,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	private void onTileErrorEventHandler(@EventData("target.options.uuid") String layerId,
 			@EventData("event.type") String eventType, @EventData("event.coords.x") Double coordsX,
 			@EventData("event.coords.y") Double coordsY) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		Point coords = Point.of(coordsX, coordsY);
 		LeafletEvent leafletEvent = new TileErrorEvent(layer, TileEventType.valueOf(eventType), coords);
 		fireEvent(layer, leafletEvent);
@@ -317,7 +319,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 			@EventData("event.type") String eventType, @EventData("event.oldSize.x") Double oldSizeX,
 			@EventData("event.oldSize.y") Double oldSizeY, @EventData("event.newSize.x") Double newSizeX,
 			@EventData("event.newSize.y") Double newSizeY) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new ResizeEvent(layer, Point.of(oldSizeX, oldSizeY), Point.of(newSizeX, newSizeY));
 		fireEvent(layer, leafletEvent);
 	}
@@ -344,7 +346,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@EventHandler
 	private void onPopupEventHandler(@EventData("event.target.options.uuid") String layerId,
 			@EventData("event.type") String eventType) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new PopupEvent(layer, PopupEventType.valueOf(eventType), null);
 		fireEvent(layer, leafletEvent);
 	}
@@ -360,7 +362,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@EventHandler
 	private void onTooltipEventHandler(@EventData("event.target.options.uuid") String layerId,
 			@EventData("event.type") String eventType) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent leafletEvent = new TooltipEvent(layer, TooltipEventType.valueOf(eventType), null);
 		fireEvent(layer, leafletEvent);
 	}
@@ -376,7 +378,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@EventHandler
 	private void onDragEndEventHandler(@EventData("event.target.options.uuid") String layerId,
 			@EventData("event.type") String eventType, @EventData("event.distance") double distance) {
-		Layer layer = getLayer(layerId);
+		Layer layer = findLayer(layerId);
 		LeafletEvent event = new DragEndEvent(layer, DragEventType.valueOf(eventType), distance);
 		fireEvent(layer, event);
 	}
@@ -420,6 +422,10 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	 */
 	public Layer getLayer(String layerId) {
 		return this.mapLayer.getLayer(layerId).orElse(this.mapLayer);
+	}
+
+	public Layer findLayer(String layerId) {
+		return this.mapLayer.findLayer(layerId).orElse(this.mapLayer);
 	}
 
 	/**
@@ -494,6 +500,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@EventHandler
 	private void onMapReadyEventHandler() {
 		logger.info("Leaflet map gets initialized on client side.");
+		this.ready = true;
 		fireEvent(new MapReadyEvent(this));
 	}
 
@@ -508,35 +515,39 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 
 	@Override
 	public void execute(Identifiable target, String functionName, Serializable... arguments) {
-		logger.info("Execute leaflet function: {}", functionName);
-		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
-		getElement().callJsFunction("callLeafletFunction", JsonSerializer.toJson(leafletOperation));
+		if (ready) {
+			logger.info("Execute leaflet function: {}", functionName);
+			LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
+			getElement().callJsFunction("callLeafletFunction", JsonSerializer.toJson(leafletOperation));
+		}
 	}
 
 	@Override
 	public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName,
 			Class<T> resultType, Serializable... arguments) {
-		logger.info("Call leaflet function: {}", functionName);
-		LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
-		PendingJavaScriptResult javascriptResult = getElement().callJsFunction("callLeafletFunction",
-				JsonSerializer.toJson(leafletOperation));
+		if (ready) {
+			logger.info("Call leaflet function: {}", functionName);
+			LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
+			PendingJavaScriptResult javascriptResult = getElement().callJsFunction("callLeafletFunction",
+					JsonSerializer.toJson(leafletOperation));
 
-
-		CompletableFuture<T> completableFuture = new CompletableFuture<>();
-		javascriptResult.then(value -> {
-			try {
-				ObjectMapper objectMapper = new ObjectMapper();
-				T result = objectMapper.readValue(value.toString(), resultType);
-				completableFuture.complete(result);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to parse javascript result", e);
-			}
-		}, errorValue -> {
-			JavaScriptException exception = new JavaScriptException(errorValue);
-			completableFuture.completeExceptionally(exception);
-		});
-
-		return completableFuture;
+			CompletableFuture<T> completableFuture = new CompletableFuture<>();
+			javascriptResult.then(value -> {
+				try {
+					ObjectMapper objectMapper = new ObjectMapper();
+					T result = objectMapper.readValue(value.toString(), resultType);
+					completableFuture.complete(result);
+				} catch (IOException e) {
+					throw new RuntimeException("Failed to parse javascript result", e);
+				}
+			}, errorValue -> {
+				JavaScriptException exception = new JavaScriptException(errorValue);
+				completableFuture.completeExceptionally(exception);
+			});
+			return completableFuture;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -566,6 +577,13 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	@Override
 	public boolean hasEventListeners(LeafletEventType eventType) {
 		return this.mapLayer.hasEventListeners(eventType);
+	}
+
+	/**
+	 * @return the ready
+	 */
+	public boolean isReady() {
+		return ready;
 	}
 
 	/**
