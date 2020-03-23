@@ -235,8 +235,12 @@ class LeafletMap extends PolymerElement {
   }
 
   applyEventListeners(layer, options) {
+    console.log("LeafletMap - applyEventListeners()", layer, options);
     if (options.events) {
       options.events.forEach(event => this.registerEventListener(layer, event));
+    }
+    if (layer.eachLayer) {
+      layer.eachLayer(child => this.applyEventListeners(child, child.options));
     }
   }
 

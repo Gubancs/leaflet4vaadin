@@ -33,6 +33,7 @@ import com.vaadin.flow.router.Route;
 
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
+import org.geojson.GeoJsonObject;
 
 @PageTitle("World map flags")
 @Route(value = "mixed/word-map-flags", layout = LeafletDemoApp.class)
@@ -50,28 +51,38 @@ public class WorldMapFlagsExample extends ExampleContainer {
 		FeatureCollection featureCollection = GeoJsonUtils.loadFeatureCollection("json/countries.geo.json");
 
 		GeoJSONOptions options = new GeoJSONOptions();
-		options.style((feature) -> {
-			String country = (String) feature.getProperties().get("name");
-			if ("Hungary".equals(country)) {
-				PathOptions pathOptions = new PathOptions();
-				pathOptions.setColor("red");
-				pathOptions.setFillColor("red");
-				return pathOptions;
-
-			} else {
-				return new PathOptions();
-			}
-		});
-		options.onEachFeature((Feature feature, Layer layer) -> {
-			layer.on(MouseEventType.click, (event) -> {
-				Notification.show("The selected country is" + feature.getProperties().get("name"), 3000,
-						Position.TOP_CENTER);
-			});
-		});
+		options.style(this::styleCountries);
+		options.filter(this::filterCountries);
+		options.onEachFeature(this::onEachCountries);
 		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
 		geoJSON.addTo(leafletMap);
 
 		addToContent(leafletMap);
 	}
 
+	public boolean filterCountries(GeoJsonObject geoJson) {
+		Feature feature = GeoJSON.asFeature(geoJson);
+		String country = (String) feature.getProperties().get("name");
+		return country.contains("n");
+	}
+
+	public PathOptions styleCountries(Feature feature) {
+		String country = (String) feature.getProperties().get("name");
+		if ("Hungary".equals(country)) {
+			PathOptions pathOptions = new PathOptions();
+			pathOptions.setColor("red");
+			pathOptions.setFillColor("red");
+			return pathOptions;
+
+		} else {
+			return new PathOptions();
+		}
+	}
+
+	public void onEachCountries(Feature feature, Layer layer) {
+		layer.on(MouseEventType.click, (event) -> {
+			Notification.show("The selected country is: " + feature.getProperties().get("name"), 3000,
+					Position.TOP_CENTER);
+		});
+	}
 }

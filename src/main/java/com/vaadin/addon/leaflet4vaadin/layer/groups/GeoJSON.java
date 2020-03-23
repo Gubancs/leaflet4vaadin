@@ -85,7 +85,7 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
             return;
         }
 
-        Feature feature = asFeature(geoJson);
+        Feature feature = asFeature(geoJsonObject);
         layerFeatureMap.put(layer, feature);
 
         if (options.style() != null) {
@@ -120,6 +120,9 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
      * @param the geoJson to be converted to Feature
      */
     public static Feature asFeature(GeoJsonObject geoJson) {
+        if (geoJson instanceof Feature) {
+            return (Feature) geoJson;
+        }
         Feature feature = new Feature();
         feature.setGeometry(geoJson);
         return feature;
@@ -158,7 +161,6 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
                     .collect(Collectors.toList());
             layer = new Polyline(latLngs);
         } else if (geoJsonObject instanceof MultiLineString) {
-            // FIXME not implemented yet
         } else if (geoJsonObject instanceof org.geojson.Polygon) {
             org.geojson.Polygon polygon = (org.geojson.Polygon) geoJsonObject;
             List<LatLng> latLngs = polygon.getExteriorRing().stream().map(GeoJSON::coordinateToLatLng)

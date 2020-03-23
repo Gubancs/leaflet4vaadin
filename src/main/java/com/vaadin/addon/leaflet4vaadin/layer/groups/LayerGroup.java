@@ -33,7 +33,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.Layer;
  * @since 2020-02-06
  * @version 1.1
  */
-public class LayerGroup extends Layer {
+public class LayerGroup extends Layer implements LayerGroupFunctions {
 
 	private static final long serialVersionUID = 439247482151898231L;
 	private List<Layer> layers = new ArrayList<>();
@@ -64,55 +64,36 @@ public class LayerGroup extends Layer {
 	 * @param layer the layer to be add
 	 */
 	public void addLayer(Layer layer) {
+		LayerGroupFunctions.super.addLayer(layer);
 		this.getLayers().add(layer);
 	}
 
-	/**
-	 * Removes the given layer from the group.
-	 * 
-	 * @param layer the layer to be remove
-	 */
+	@Override
 	public void removeLayer(Layer layer) {
+		LayerGroupFunctions.super.removeLayer(layer);
 		this.removeLayer(layer.getUuid());
 	}
 
-	/**
-	 * Removes the layer with the given internal ID from the group.
-	 * 
-	 * @param layerId the id of the layer should remove
-	 */
+	@Override
 	public void removeLayer(String layerId) {
+		LayerGroupFunctions.super.removeLayer(layerId);
 		getLayer(layerId).ifPresent(l -> getLayers().remove(l));
 	}
 
-	/**
-	 * Returns true if the given layer is currently added to the group.
-	 * 
-	 * @param layer layer to be check
-	 * @return true if the given layer is currently added to the group.
-	 * 
-	 * 
-	 */
+	@Override
 	public boolean hasLayer(Layer layer) {
 		return hasLayer(layer.getUuid());
 	}
 
-	/**
-	 * Returns true if the given internal ID is currently added to the group.
-	 * 
-	 * @param layerId layer to be check
-	 * @return true if the given internal ID is currently added to the group.
-	 */
+	@Override
 	public boolean hasLayer(String layerId) {
 		return getLayer(layerId).isPresent();
 	}
 
-	/**
-	 * Removes all the layers from the group.
-	 */
+	@Override
 	public void clearLayers() {
+		LayerGroupFunctions.super.clearLayers();
 		this.layers.clear();
-		execute(this, "clearLayers");
 	}
 
 	/**
@@ -148,6 +129,21 @@ public class LayerGroup extends Layer {
 	 */
 	public Optional<Layer> getLayer(String layerId) {
 		return this.layers.stream().filter(layer -> layer.getUuid().equals(layerId)).findFirst();
+	}
+
+	public Optional<Layer> findLayer(String layerId) {
+		Optional<Layer> result = Optional.empty();
+		for (Layer child : layers) {
+			if (child instanceof LayerGroup) {
+				result = ((LayerGroup) child).findLayer(layerId);
+				if (result.isPresent()) {
+					break;
+				}
+			} else if (child.getUuid().equals(layerId)) {
+				result = Optional.of(child);
+			}
+		}
+		return result;
 	}
 
 	/**

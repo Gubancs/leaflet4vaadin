@@ -25,8 +25,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
@@ -81,11 +82,6 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 	}
 
 	protected void configureObjectMapper(final ObjectMapper objectMapper) {
-	}
-
-	@JsonIgnore
-	protected boolean isInitialized() {
-		return functionDelegate != null;
 	}
 
 	@Override
@@ -271,7 +267,13 @@ public abstract class Layer implements Evented, LeafletClass, LayerFunctions {
 		if (functionDelegate instanceof ExecutableFunctions) {
 			return functionDelegate.call(target, functionName, resultType, arguments);
 		} else {
-			throw new RuntimeException("Failed to execute leaflet function " + functionName);
+			return null;
+		}
+	}
+
+	public <T> void set(Supplier<CompletableFuture<T>> futureResult, Consumer<T> handler) {
+		if (futureResult.get() != null) {
+			futureResult.get().thenAccept((result) -> handler.accept(result));
 		}
 	}
 

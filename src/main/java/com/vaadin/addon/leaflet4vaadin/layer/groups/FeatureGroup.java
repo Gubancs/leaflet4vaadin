@@ -52,9 +52,7 @@ public class FeatureGroup extends LayerGroup
 
 	@Override
 	public void setStyle(PathOptions pathOptions) {
-		if (isInitialized()) {
-			FeatureGroupFunctions.super.setStyle(pathOptions);
-		}
+		FeatureGroupFunctions.super.setStyle(pathOptions);
 		this.pathOptions = pathOptions;
 		this.getLayers().stream().filter(layer -> layer instanceof HasStyle).map(HasStyle.class::cast)
 				.forEach(layer -> layer.setStyle(pathOptions));

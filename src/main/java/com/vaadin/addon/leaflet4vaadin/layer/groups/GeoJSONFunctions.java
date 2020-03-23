@@ -33,7 +33,7 @@ public interface GeoJSONFunctions extends ExecutableFunctions {
     /**
      * Adds a GeoJSON object to the layer.
      * 
-     * @param geoJsonObject
+     * @param geoJsonObject the geojson object
      */
     default void addData(GeoJsonObject geoJsonObject) {
         execute("addData", geoJsonObject);
