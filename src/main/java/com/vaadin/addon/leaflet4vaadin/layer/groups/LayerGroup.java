@@ -133,14 +133,18 @@ public class LayerGroup extends Layer implements LayerGroupFunctions {
 
 	public Optional<Layer> findLayer(String layerId) {
 		Optional<Layer> result = Optional.empty();
-		for (Layer child : layers) {
-			if (child instanceof LayerGroup) {
-				result = ((LayerGroup) child).findLayer(layerId);
-				if (result.isPresent()) {
-					break;
+		if (this.getUuid().equals(layerId)) {
+			return Optional.of(this);
+		} else {
+			for (Layer child : layers) {
+				if (child instanceof LayerGroup) {
+					result = ((LayerGroup) child).findLayer(layerId);
+					if (result.isPresent()) {
+						break;
+					}
+				} else if (child.getUuid().equals(layerId)) {
+					result = Optional.of(child);
 				}
-			} else if (child.getUuid().equals(layerId)) {
-				result = Optional.of(child);
 			}
 		}
 		return result;

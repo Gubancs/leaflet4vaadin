@@ -15,7 +15,6 @@
 package com.vaadin.addon.leaflet4vaadin.layer.groups;
 
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
-import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 
 import org.geojson.GeoJsonObject;
 
@@ -35,18 +34,7 @@ public interface GeoJSONFunctions extends ExecutableFunctions {
      * 
      * @param geoJsonObject the geojson object
      */
-    default void addData(GeoJsonObject geoJsonObject) {
-        execute("addData", geoJsonObject);
-    }
-
-    /**
-     * Changes styles of GeoJSON vector layers with the given style function.
-     * 
-     * @param pathOptions the new style options
-     */
-    default void setStyle(PathOptions pathOptions) {
-        execute("setStyle", pathOptions);
-    }
+    GeoJSON addData(GeoJsonObject geoJsonObject);
 
     /**
      * Resets the style of all features in the current layer is reset.

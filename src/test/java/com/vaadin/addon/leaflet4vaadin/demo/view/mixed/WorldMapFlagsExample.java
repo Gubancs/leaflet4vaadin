@@ -18,12 +18,13 @@ import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.demo.utils.GeoJsonUtils;
+import com.vaadin.addon.leaflet4vaadin.layer.InteractiveLayer;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
-import com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSON;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GeoJSONOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.vectors.Path;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.notification.Notification;
@@ -33,7 +34,6 @@ import com.vaadin.flow.router.Route;
 
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
-import org.geojson.GeoJsonObject;
 
 @PageTitle("World map flags")
 @Route(value = "mixed/word-map-flags", layout = LeafletDemoApp.class)
@@ -51,8 +51,6 @@ public class WorldMapFlagsExample extends ExampleContainer {
 		FeatureCollection featureCollection = GeoJsonUtils.loadFeatureCollection("json/countries.geo.json");
 
 		GeoJSONOptions options = new GeoJSONOptions();
-		options.style(this::styleCountries);
-		options.filter(this::filterCountries);
 		options.onEachFeature(this::onEachCountries);
 		GeoJSON geoJSON = new GeoJSON(featureCollection, options);
 		geoJSON.addTo(leafletMap);
@@ -60,29 +58,23 @@ public class WorldMapFlagsExample extends ExampleContainer {
 		addToContent(leafletMap);
 	}
 
-	public boolean filterCountries(GeoJsonObject geoJson) {
-		Feature feature = GeoJSON.asFeature(geoJson);
-		String country = (String) feature.getProperties().get("name");
-		return country.contains("n");
-	}
-
-	public PathOptions styleCountries(Feature feature) {
-		String country = (String) feature.getProperties().get("name");
-		if ("Hungary".equals(country)) {
-			PathOptions pathOptions = new PathOptions();
-			pathOptions.setColor("red");
-			pathOptions.setFillColor("red");
-			return pathOptions;
-
-		} else {
-			return new PathOptions();
-		}
-	}
-
 	public void onEachCountries(Feature feature, Layer layer) {
-		layer.on(MouseEventType.click, (event) -> {
+		InteractiveLayer interactiveLayer = (InteractiveLayer) layer;
+		interactiveLayer.onClick((event) -> {
 			Notification.show("The selected country is: " + feature.getProperties().get("name"), 3000,
 					Position.TOP_CENTER);
+		});
+		interactiveLayer.onMouseOver((event) -> {
+			Path layerWithStyle = (Path) layer;
+			PathOptions pathOptions = new PathOptions();
+			pathOptions.setColor("blue");
+			pathOptions.setFillColor("blue");
+			layerWithStyle.setStyle(pathOptions);
+			layerWithStyle.bringToFront();
+		});
+		interactiveLayer.onMouseOut((event) -> {
+			Path layerWithStyle = (Path) layer;
+			layerWithStyle.setStyle(new PathOptions());
 		});
 	}
 }

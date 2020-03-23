@@ -54,7 +54,6 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
 
     private static final long serialVersionUID = -7574772572305688052L;
 
-    private final GeoJsonObject geoJson;
     private final GeoJSONOptions options;
     private final Map<Identifiable, Feature> layerFeatureMap = new HashMap<>();
 
@@ -63,26 +62,25 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
     }
 
     public GeoJSON(GeoJsonObject geoJson, GeoJSONOptions options) {
-        this.geoJson = geoJson;
         this.options = options;
         this.addData(geoJson);
     }
 
     @Override
-    public void addData(GeoJsonObject geoJsonObject) {
+    public GeoJSON addData(GeoJsonObject geoJsonObject) {
         if (geoJsonObject instanceof FeatureCollection) {
             FeatureCollection featureCollection = (FeatureCollection) geoJsonObject;
             featureCollection.getFeatures().forEach((feature) -> addData(feature));
-            return;
+            return this;
         }
 
         if (options.filter() != null && !options.filter().test(geoJsonObject)) {
-            return;
+            return this;
         }
 
         Layer layer = GeoJSON.geometryToLayer(geoJsonObject, options);
         if (layer == null) {
-            return;
+            return this;
         }
 
         Feature feature = asFeature(geoJsonObject);
@@ -98,6 +96,7 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
         }
 
         layer.addTo(this);
+        return this;
     }
 
     private void setLayerStyle(Layer layer, StyleHandler styleHandler) {
@@ -105,13 +104,6 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
             Feature feature = layerFeatureMap.get(layer);
             ((HasStyle) layer).setStyle(styleHandler.style(feature));
         }
-    }
-
-    /**
-     * @return the geoJson
-     */
-    public GeoJsonObject getGeoJson() {
-        return geoJson;
     }
 
     /**
@@ -127,6 +119,7 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
         feature.setGeometry(geoJson);
         return feature;
     }
+
 
     /**
      * Creates a Layer from a given GeoJsonObject object. Can use a custom
