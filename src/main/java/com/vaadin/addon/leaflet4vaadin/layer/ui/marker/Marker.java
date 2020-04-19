@@ -46,7 +46,12 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 	private boolean riseOnHover = false;
 	private int riseOffset = 250;
 	private int autoPanSpeed = 10;
-
+	
+	/**
+	 * Allow to associate a user object to the marker
+	 */
+	private Object object;
+	
 	public Marker() {
 		super();
 		setBubblingMouseEvents(false);
@@ -169,6 +174,14 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 		this.autoPanPadding = autoPanPadding;
 	}
 
+	public Object getObject() {
+		return object;
+	}
+
+	public void setObject(Object object) {
+		this.object = object;
+	}
+	
 	public String getAlt() {
 		return alt;
 	}
