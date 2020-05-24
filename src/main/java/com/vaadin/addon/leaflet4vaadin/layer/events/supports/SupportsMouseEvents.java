@@ -18,6 +18,7 @@ import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.
 import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.contextmenu;
 import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.dblclick;
 import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mousedown;
+import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mousemove;
 import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mouseout;
 import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mouseover;
 import static com.vaadin.addon.leaflet4vaadin.layer.events.types.MouseEventType.mouseup;
@@ -81,6 +82,15 @@ public interface SupportsMouseEvents extends Evented {
 	default void onMouseOut(LeafletEventListener<MouseEvent> listener) {
 		on(mouseout, listener);
 	}
+	
+	/**
+     * Fired while the mouse moves over the layeyr.
+     * 
+     * @param listener the listener to call when the event occurs, not {@code null}
+     */
+    default void onMouseMove(LeafletEventListener<MouseEvent> listener) {
+        on(mousemove, listener);
+    }
 
 	/**
 	 * Fired when the user right-clicks on the layer, prevents default browser

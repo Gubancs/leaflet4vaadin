@@ -24,41 +24,59 @@ package com.vaadin.addon.leaflet4vaadin.types;
  * @version 1.0
  */
 public class LatLng implements LeafletClass {
-	private static final long serialVersionUID = 8519525431224154852L;
-	private double lng;
-	private double lat;
+    private static final long serialVersionUID = 8519525431224154852L;
+    private double lng;
+    private double lat;
+    private double altitude;
 
-	public LatLng() {
-	}
+    public LatLng() {
+    }
 
-	public LatLng(double lat, double lng) {
-		this.lat = lat;
-		this.lng = lng;
-	}
+    public LatLng(double lat, double lng) {
+        this.lat = lat;
+        this.lng = lng;
+    }
 
-	public Double getLng() {
-		return lng;
-	}
+    public LatLng(double lat, double lng, double altitude) {
+        this(lat, lng);
+        this.altitude = altitude;
+    }
 
-	public void setLng(Double lng) {
-		this.lng = lng;
-	}
+    public Double getLng() {
+        return lng;
+    }
 
-	public Double getLat() {
-		return lat;
-	}
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
 
-	public void setLat(Double lat) {
-		this.lat = lat;
-	}
+    public Double getLat() {
+        return lat;
+    }
 
-	@Override
-	public String toString() {
-		return lat + "," + lng;
-	}
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
 
-	public static LatLng latlng(double lat, double lng) {
-		return new LatLng(lat, lng);
-	}
+    public double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
+
+    @Override
+    public String toString() {
+        return lat + "," + lng;
+    }
+
+    public static LatLng latlng(double lat, double lng) {
+        return new LatLng(lat, lng);
+    }
+
+    public static LatLng latlng(double lat, double lng, double altitude) {
+        return new LatLng(lat, lng, altitude);
+    }
 
 }

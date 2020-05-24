@@ -47,7 +47,11 @@ export class LeafletTypeConverter {
       let layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
       leafletLayer = L.geoJSON(null, layer);
       leafletLayer._layers = layers;
-    } else {
+    } else if (layer.leafletType === "HeatLayer") {
+        leafletLayer = L.heatLayer(layer.latLngs, layer);
+        leafletLayer.setOptions(layer.options);
+    }
+    else {
       throw "Unsupported object type : " + layer.leafletType;
     }
     this._applyOptions(leafletLayer, layer);
@@ -113,7 +117,7 @@ export class LeafletTypeConverter {
    * Convert the given JsonObject to Leaflet LatLng
    */
   toLatLng(latLng) {
-    return latLng ? L.latLng(latLng.lat, latLng.lng) : latLng;
+    return latLng ? L.latLng(latLng.lat, latLng.lng, latLng.altitude) : latLng;
   }
 
   /**

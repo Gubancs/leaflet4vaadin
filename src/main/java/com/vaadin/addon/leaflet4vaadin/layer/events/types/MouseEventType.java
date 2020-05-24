@@ -45,6 +45,11 @@ public enum MouseEventType implements LeafletEventType {
 	 * Fired when the mouse leaves the layer.
 	 */
 	mouseout,
+	
+    /**
+     * Fired while the mouse moves over the layer.
+     */
+	mousemove,
 
 	/**
 	 * Fired when the user right-clicks on the layer, prevents default browser

@@ -21,6 +21,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
@@ -83,13 +86,12 @@ import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.internal.JsonSerializer;
 import com.vaadin.flow.shared.Registration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @Tag("leaflet-map")
 @NpmPackage(value = "leaflet", version = "1.6.0")
+@NpmPackage(value = "leaflet.heat", version = "0.2.0")
 @JsModule("./leaflet-map.js")
 @JsModule("leaflet/dist/leaflet-src.js")
+@JsModule("leaflet.heat/dist/leaflet-heat.js")
 @CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
 public final class LeafletMap extends PolymerTemplate<LeafletModel> implements MapModifyStateFunctions,

@@ -48,6 +48,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsEventPropagationExamp
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.path.TypeOfPathsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.HeatmapPluginExample;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -170,6 +171,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 
 		// Plugins examples
 		AppMenuItem.create("Plugins", new Icon(VaadinIcon.PLUG)).addSubMenu(FullScreenPluginExample.class)
+		        .addSubMenu(HeatmapPluginExample.class)
 				.addTo(appMenu);
 
 		addToDrawer(appMenu);
