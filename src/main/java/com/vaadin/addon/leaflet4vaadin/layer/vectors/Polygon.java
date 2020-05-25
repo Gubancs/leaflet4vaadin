@@ -17,6 +17,7 @@ package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 import java.util.Arrays;
 import java.util.List;
 
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.GeometryStructure;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.LatLngArray;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.MultiLatLngArray;
@@ -31,6 +32,7 @@ public class Polygon extends Polyline {
 
     private static final long serialVersionUID = -128072866378031092L;
 
+	@LeafletArgument
     private final MultiLatLngArray latlngs;
 
     public Polygon(LatLng... latLngs) {
@@ -52,4 +54,5 @@ public class Polygon extends Polyline {
     public GeometryStructure getLatlngs() {
         return this.latlngs;
     }
+
 }

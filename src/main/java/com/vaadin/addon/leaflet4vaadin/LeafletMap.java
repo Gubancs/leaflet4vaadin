@@ -88,10 +88,8 @@ import com.vaadin.flow.shared.Registration;
 
 @Tag("leaflet-map")
 @NpmPackage(value = "leaflet", version = "1.6.0")
-@NpmPackage(value = "leaflet.heat", version = "0.2.0")
 @JsModule("./leaflet-map.js")
 @JsModule("leaflet/dist/leaflet-src.js")
-@JsModule("leaflet.heat/dist/leaflet-heat.js")
 @CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
 public final class LeafletMap extends PolymerTemplate<LeafletModel> implements MapModifyStateFunctions,

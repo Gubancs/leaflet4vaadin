@@ -22,12 +22,14 @@ import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
-import com.vaadin.addon.leaflet4vaadin.plugins.HeatLayer;
-import com.vaadin.addon.leaflet4vaadin.plugins.HeatLayerOptions;
+import com.vaadin.addon.leaflet4vaadin.plugins.heatmap.HeatLayer;
+import com.vaadin.addon.leaflet4vaadin.plugins.heatmap.HeatLayerOptions;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.value.ValueChangeMode;
@@ -38,6 +40,7 @@ import com.vaadin.flow.router.Route;
 @Route(value = "plugins/heatmap", layout = LeafletDemoApp.class)
 public class HeatmapPluginExample extends ExampleContainer {
 
+    private static final long serialVersionUID = 7554022663956386641L;
     private Binder<HeatLayerOptions> binder;
     private HeatLayer heatLayer;
 
@@ -57,7 +60,13 @@ public class HeatmapPluginExample extends ExampleContainer {
             e.getLatLng().setAltitude(0.1);
             heatLayer.addLatLng(e.getLatLng());
         });
-        addToContent(leafletMap);
+
+        Anchor pluginRepository = new Anchor();
+        pluginRepository.setHref("https://github.com/Leaflet/Leaflet.heat");
+        pluginRepository.setText("Leaflet.heat plugin: https://github.com/Leaflet/Leaflet.heat");
+        pluginRepository.setTarget("_blank");
+
+        addToContent(pluginRepository, leafletMap);
         
         binder = new Binder<>(HeatLayerOptions.class);
         createFormControls();
@@ -92,6 +101,17 @@ public class HeatmapPluginExample extends ExampleContainer {
         max.setValueChangeMode(ValueChangeMode.EAGER);
         form.addFormItem(max, "Maximum point intensity");
         binder.forField(max).bind("max");
+
+        // zoom level where the points reach maximum intensity
+        IntegerField maxZoom = new IntegerField();
+        maxZoom.setHasControls(true);
+        maxZoom.setMin(1);
+        maxZoom.setMax(18);
+        maxZoom.setStep(1);
+        maxZoom.setWidthFull();
+        maxZoom.setValueChangeMode(ValueChangeMode.EAGER);
+        form.addFormItem(maxZoom, "Maximum zoom");
+        binder.forField(maxZoom).bind("maxZoom");
         
      // radius of each "point" of the heatmap,
         NumberField radius = new NumberField();

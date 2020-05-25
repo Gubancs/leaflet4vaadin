@@ -20,6 +20,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.GeometryStructure
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.structure.LatLngArray;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 
 /**
  * A class for drawing polyline overlays on a map. Extends Path.
@@ -30,6 +31,7 @@ public class Polyline extends Path {
     private static final long serialVersionUID = -2430760430165501877L;
     private double smoothFactor = 1.0;
     private boolean noClip;
+    @LeafletArgument
     private final LatLngArray latlngs;
 
     public Polyline(LatLng... latlngs) {

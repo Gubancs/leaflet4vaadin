@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 
 /**
@@ -36,6 +37,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 public class LayerGroup extends Layer implements LayerGroupFunctions {
 
 	private static final long serialVersionUID = 439247482151898231L;
+	@LeafletArgument
 	private List<Layer> layers = new ArrayList<>();
 
 	public LayerGroup(Layer... layers) {

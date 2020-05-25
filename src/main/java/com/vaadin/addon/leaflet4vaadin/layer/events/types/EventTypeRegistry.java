@@ -26,7 +26,7 @@ public class EventTypeRegistry {
 
     static {
         register(DragEventType.class);
-        register(Layer.Events.class);
+        register(Layer.LayerEventType.class);
         register(MapEventType.class);
         register(MouseEventType.class);
         register(PopupEventType.class);

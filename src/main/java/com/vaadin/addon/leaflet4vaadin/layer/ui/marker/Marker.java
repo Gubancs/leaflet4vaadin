@@ -14,6 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.ui.marker;
 
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 import com.vaadin.addon.leaflet4vaadin.layer.InteractiveLayer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.supports.SupportsDragEvents;
 import com.vaadin.addon.leaflet4vaadin.types.Icon;
@@ -34,6 +35,7 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 
 	private static final long serialVersionUID = 5997712572773708479L;
 	private Icon icon = Icon.DEFAULT_ICON;
+	@LeafletArgument
 	private LatLng latLng;
 	private String title = "";
 	private String alt = "";
@@ -176,5 +178,4 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 	public void setAlt(String alt) {
 		this.alt = alt;
 	}
-
 }

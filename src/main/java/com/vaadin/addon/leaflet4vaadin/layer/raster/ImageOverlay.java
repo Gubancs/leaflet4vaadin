@@ -15,10 +15,12 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.raster;
 
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 import com.vaadin.addon.leaflet4vaadin.layer.InteractiveLayer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
+import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
 
 /**
  * Used to load and display a single image over specific bounds of the map.
@@ -36,7 +38,10 @@ public class ImageOverlay extends InteractiveLayer {
     }
 
     private static final long serialVersionUID = 4991481613331548678L;
+    @LeafletArgument(index = 0)
     private String imageUrl;
+    @LeafletArgument(index = 1)
+    private LatLngBounds bounds;
     private double opacity = 1.0;
     private String alt;
     private String crossOrigin;
@@ -178,5 +183,19 @@ public class ImageOverlay extends InteractiveLayer {
      */
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    /**
+     * @return the bounds
+     */
+    public LatLngBounds getBounds() {
+        return bounds;
+    }
+
+    /**
+     * @param bounds the bounds to set
+     */
+    public void setBounds(LatLngBounds bounds) {
+        this.bounds = bounds;
     }
 }

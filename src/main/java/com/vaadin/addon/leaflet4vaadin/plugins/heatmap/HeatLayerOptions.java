@@ -1,11 +1,33 @@
-package com.vaadin.addon.leaflet4vaadin.plugins;
+package com.vaadin.addon.leaflet4vaadin.plugins.heatmap;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Possible heatmap options
+ * 
+ * <ul>
+ * <li><b>minOpacity</b> - the minimum opacity the heat will start at</li>
+ * <li><b>maxZoom</b> - zoom level where the points reach maximum intensity (as
+ * intensity scales with zoom), equals maxZoom of the map by default</li>
+ * <li><b>max</b> - maximum point intensity, 1.0 by default</li>
+ * <li><b>radius</b> - radius of each "point" of the heatmap, 25 by default</li>
+ * <li><b>blur</b> - amount of blur, 15 by default</li>
+ * <li><b>gradient</b> - color gradient config, e.g. {0.4: 'blue', 0.65: 'lime',
+ * 1: 'red'}</li>
+ * </ul>
+ * 
+ *  * 
+ * @author <strong>Gabor Kokeny</strong> Email:
+ *         <a href='mailto=kokeny19@gmail.com'>kokeny19@gmail.com</a>
+ * @since 2020-05-25
+ * @version 1.0
+ * @see HeatLayer
+ */
 public class HeatLayerOptions implements Serializable {
 
+    private static final long serialVersionUID = -7123861846052946645L;
     private double minOpacity = 0.5;
     private int maxZoom = 18;
     private double max = 1.0;
@@ -69,6 +91,12 @@ public class HeatLayerOptions implements Serializable {
 
     public Map<Double, String> getGradient() {
         return gradient;
+    }
+
+    @Override
+    public String toString() {
+        return "HeatLayerOptions [blur=" + blur + ", gradient=" + gradient + ", max=" + max + ", maxZoom=" + maxZoom
+                + ", minOpacity=" + minOpacity + ", radius=" + radius + "]";
     }
 
 }

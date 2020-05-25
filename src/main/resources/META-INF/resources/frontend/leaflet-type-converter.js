@@ -16,47 +16,42 @@ import * as L from "leaflet/dist/leaflet-src.js";
 
 export class LeafletTypeConverter {
   /**
-   * Convert the given jsonObject to Leaflet Object based on 'leafletType' attribute
+   * Convert the given jsonObject to a Leaflet Object
    */
   toLeafletLayer(layer) {
+    console.log("LeafletTypeConverter - toLeafletLayer() leafletType", {leafletType: layer.leafletType});
     let leafletLayer;
-    if (layer.leafletType === "Marker") {
+    
+    if(layer.icon){
       layer.icon = this.convert(layer.icon);
-      leafletLayer = L.marker(layer.latLng, layer);
-    } else if (layer.leafletType === "LayerGroup") {
-      let layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
-      leafletLayer = L.layerGroup(layers, layer);
-    } else if (layer.leafletType === "FeatureGroup") {
-      let layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
-      leafletLayer = L.featureGroup(layers, layer);
-    } else if (layer.leafletType === "Polyline") {
-      leafletLayer = L.polyline(layer.latlngs, layer);
-    } else if (layer.leafletType === "Polygon") {
-      leafletLayer = L.polygon(layer.latlngs, layer);
-    } else if (layer.leafletType === "Rectangle") {
-      leafletLayer = L.rectangle(layer.latlngs, layer);
-    } else if (layer.leafletType === "CircleMarker") {
-      leafletLayer = L.circleMarker(layer.latlng, layer);
-    } else if (layer.leafletType === "Circle") {
-      leafletLayer = L.circle(layer.latlng, layer);
-    } else if (layer.leafletType === "GridLayer") {
-      leafletLayer = L.gridLayer(layer);
-    } else if (layer.leafletType === "TileLayer") {
-      leafletLayer = L.tileLayer(layer.urlTemplate, layer);
-    } else if (layer.leafletType === "GeoJSON") {
-      let layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
+    } else if(layer.layers){
+      layer.layers = layer.layers.slice().map(l => this.toLeafletLayer(l));
+    }
+
+    if (layer.leafletType === "GeoJSON") {
       leafletLayer = L.geoJSON(null, layer);
-      leafletLayer._layers = layers;
-    } else if (layer.leafletType === "HeatLayer") {
-        leafletLayer = L.heatLayer(layer.latLngs, layer);
-        leafletLayer.setOptions(layer.options);
+      leafletLayer._layers = layer.layers;
+    } else {
+      let factoryFn = this.getFactoryFn(layer.leafletType);
+      console.log("LeafletTypeConverter - toLeafletLayer() factoryFn", factoryFn);
+      if(layer.constructorArgumentNames){
+        console.log("LeafletTypeConverter - toLeafletLayer() constructorArgumentNames", layer.constructorArgumentNames);
+        let initArgs = layer.constructorArgumentNames.map(argName => layer[argName]);
+        initArgs.push(layer);
+        console.log("LeafletTypeConverter - toLeafletLayer() initArgs", initArgs);
+        leafletLayer = factoryFn.apply(null, initArgs);
+      } else {
+        leafletLayer = factoryFn.call(layer);
+      }
     }
-    else {
-      throw "Unsupported object type : " + layer.leafletType;
-    }
+
     this._applyOptions(leafletLayer, layer);
     console.log("LeafletTypeConverter - toLeafletLayer() result", leafletLayer);
     return leafletLayer;
+  }
+
+  getFactoryFn(leafletType){
+      return L[leafletType.charAt(0).toLowerCase() + leafletType.slice(1)];
   }
 
   toLeafletControl(control) {

@@ -14,6 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.raster;
 
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.GridLayer;
 
 /**
@@ -31,6 +32,7 @@ public class TileLayer extends GridLayer {
      *
      */
     private static final long serialVersionUID = 7333804905034746145L;
+    @LeafletArgument
     private String urlTemplate;
     private String[] subdomains = { "a", "b", "c" };
     private String errorTileUrl;

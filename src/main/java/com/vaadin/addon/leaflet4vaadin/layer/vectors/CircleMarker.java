@@ -14,6 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.vectors;
 
+import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 
 /**
@@ -25,6 +26,8 @@ public class CircleMarker extends Path {
      *
      */
     private static final long serialVersionUID = 8294051897899342825L;
+
+    @LeafletArgument
     private final LatLng latlng;
     private final double radius;
 
@@ -64,4 +67,5 @@ public class CircleMarker extends Path {
     public double getRadius() {
         return radius;
     }
+
 }
