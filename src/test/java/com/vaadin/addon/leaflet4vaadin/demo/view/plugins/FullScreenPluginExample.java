@@ -15,42 +15,43 @@
 package com.vaadin.addon.leaflet4vaadin.demo.view.plugins;
 
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
-import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.plugins.fullscreen.FullScreenControl;
+import com.vaadin.addon.leaflet4vaadin.plugins.fullscreen.WithFullScreenControl;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("Full screen example")
-// @NpmPackage(value = "leaflet.fullscreen", version = "1.6.0")
-// @JsModule("leaflet.fullscreen/Control.Fullscreen.js")
 @Route(value = "plugins/fullscreen", layout = LeafletDemoApp.class)
 public class FullScreenPluginExample extends ExampleContainer {
 
-	@Override
-	protected void initDemo() {
+    @Override
+    protected void initDemo() {
 
-		MapOptions options = new DefaultMapOptions();
-		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-		options.setZoom(7);
+        MapOptions options = new DefaultMapOptions();
+        options.setCenter(new LatLng(47.070121823, 19.204101562500004));
+        options.setZoom(7);
 
-		LeafletMap leafletMap = new LeafletMap(options);
-		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+        LeafletMap leafletMap = new LeafletMap(options);
+        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		FullScreenControl fullScreenControl = new FullScreenControl();
-		fullScreenControl.addTo(leafletMap);
+        FullScreenControl fullScreenControl = new FullScreenControl();
+        fullScreenControl.addTo(leafletMap);
 
-		addToContent(leafletMap);
-	}
+        WithFullScreenControl mapWithFullScreenControl = FullScreenControl.wrap(leafletMap);
+        mapWithFullScreenControl.onEnterFullscreen((e) -> {
+            Notification.show("Map entered to fullscreen mode.", 3000, Position.MIDDLE);
+        });
+        mapWithFullScreenControl.onExitFullscreen((e) -> {
+            Notification.show("Map exited from fullscreen mode.", 3000, Position.MIDDLE);
+        });
+        addToContent(leafletMap);
+    }
 
-	public class FullScreenControl extends LeafletControl {
-
-		public FullScreenControl() {
-			super("fullscreen");
-		}
-
-	}
 }

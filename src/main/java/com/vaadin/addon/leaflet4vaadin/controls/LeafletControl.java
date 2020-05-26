@@ -27,87 +27,87 @@ import com.vaadin.flow.templatemodel.ModelEncoder;
 
 public abstract class LeafletControl implements LeafletClass, ExecutableFunctions {
 
-	private static final long serialVersionUID = -2562236800599480357L;
+    private static final long serialVersionUID = -2562236800599480357L;
 
-	public static enum ControlPosition {
-		topleft, topright, bottomleft, bottomright;
-	}
+    public static enum ControlPosition {
+        topleft, topright, bottomleft, bottomright;
+    }
 
-	private final String uuid;
-	private final String controlType;
-	private ControlPosition position = ControlPosition.topright;
-	private ExecutableFunctions functionDelegate;
+    private final String uuid;
+    private final String controlType;
+    private ControlPosition position = ControlPosition.topright;
+    private LeafletMap leafletMap;
 
-	public LeafletControl(String controlType) {
-		this.controlType = controlType;
-		this.uuid = UUID.randomUUID().toString();
-	}
+    public LeafletControl(String controlType) {
+        this.controlType = controlType;
+        this.uuid = UUID.randomUUID().toString();
+    }
 
-	@Override
-	public String getUuid() {
-		return uuid;
-	}
+    @Override
+    public String getUuid() {
+        return uuid;
+    }
 
-	public ControlPosition getPosition() {
-		return position;
-	}
+    public ControlPosition getPosition() {
+        return position;
+    }
 
-	@Override
-	public String getLeafletType() {
-		return controlType;
-	}
+    @Override
+    public String getLeafletType() {
+        return controlType;
+    }
 
-	@Encode(value = ControlPositionModelEncoder.class)
-	public void setPosition(ControlPosition position) {
-		this.position = position;
-	}
+    @Encode(value = ControlPositionModelEncoder.class)
+    public void setPosition(ControlPosition position) {
+        this.position = position;
+    }
 
-	/**
-	 * Adds the control to the given map.
-	 * 
-	 * @param leafletMap add this control to the given leaflet map
-	 */
-	public void addTo(LeafletMap leafletMap) {
-		this.functionDelegate = leafletMap;
-		leafletMap.addControl(this);
-	}
+    /**
+     * Adds the control to the given map.
+     * 
+     * @param leafletMap
+     *            add this control to the given leaflet map
+     */
+    public void addTo(LeafletMap leafletMap) {
+        this.leafletMap = leafletMap;
+        leafletMap.addControl(this);
+    }
 
-	public static class ControlPositionModelEncoder implements ModelEncoder<ControlPosition, String> {
+    public static class ControlPositionModelEncoder implements ModelEncoder<ControlPosition, String> {
 
-		/**
-		 *
-		 */
-		private static final long serialVersionUID = -2149055629014677547L;
+        /**
+         *
+         */
+        private static final long serialVersionUID = -2149055629014677547L;
 
-		@Override
-		public String encode(ControlPosition value) {
-			return value.name();
-		}
+        @Override
+        public String encode(ControlPosition value) {
+            return value.name();
+        }
 
-		@Override
-		public ControlPosition decode(String value) {
-			return ControlPosition.valueOf(value);
-		}
+        @Override
+        public ControlPosition decode(String value) {
+            return ControlPosition.valueOf(value);
+        }
 
-	}
+    }
 
-	@Override
-	public void execute(Identifiable target, String functionName, Serializable... arguments) {
-		if (functionDelegate != null) {
-			functionDelegate.execute(target, functionName, arguments);
-		} else {
-			throw new RuntimeException("Unable to execute leaflet function " + functionName);
-		}
-	}
+    @Override
+    public void execute(Identifiable target, String functionName, Serializable... arguments) {
+        if (leafletMap != null) {
+            leafletMap.execute(target, functionName, arguments);
+        } else {
+            throw new RuntimeException("Unable to execute leaflet function " + functionName);
+        }
+    }
 
-	@Override
-	public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName,
-			Class<T> resultType, Serializable... arguments) {
-		if (functionDelegate != null) {
-			return functionDelegate.call(target, functionName, resultType, arguments);
-		} else {
-			throw new RuntimeException("Unable to call leaflet function " + functionName);
-		}
-	}
+    @Override
+    public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType, Serializable... arguments) {
+        if (leafletMap != null) {
+            return leafletMap.call(target, functionName, resultType, arguments);
+        } else {
+            throw new RuntimeException("Unable to call leaflet function " + functionName);
+        }
+    }
 
 }

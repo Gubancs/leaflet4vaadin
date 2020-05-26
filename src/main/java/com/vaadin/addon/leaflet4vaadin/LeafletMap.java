@@ -74,6 +74,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.HasSize;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.HasTheme;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -90,11 +91,11 @@ import com.vaadin.flow.shared.Registration;
 @NpmPackage(value = "leaflet", version = "1.6.0")
 @JsModule("./leaflet-map.js")
 @JsModule("leaflet/dist/leaflet-src.js")
-@CssImport(value = "leaflet/dist/leaflet.css", id = "leaflet-css")
-@CssImport(value = "./styles/leaflet-lumo-theme.css", id = "lumo-leaflet-map")
+@CssImport(value = "leaflet/dist/leaflet.css", themeFor = "leaflet-map")
+@CssImport(value = "./styles/leaflet-lumo-theme.css", themeFor = "leaflet-map")
 public final class LeafletMap extends PolymerTemplate<LeafletModel> implements MapModifyStateFunctions,
 		MapGetStateFunctions, GeolocationFunctions, MapConversionFunctions, SupportsMouseEvents, SupportsMapEvents,
-		SupportsLocationEvents, SupportsKeyboardEvents, SupportsLayerEvents, HasSize, HasTheme {
+		SupportsLocationEvents, SupportsKeyboardEvents, SupportsLayerEvents, HasSize, HasTheme, HasStyle {
 
 	private static final long serialVersionUID = 3789693345308589828L;
 

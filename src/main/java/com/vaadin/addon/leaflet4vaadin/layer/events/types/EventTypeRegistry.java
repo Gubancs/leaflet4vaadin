@@ -34,7 +34,7 @@ public class EventTypeRegistry {
         register(LocationEventType.class);
     }
 
-    static <T extends Enum<T> & LeafletEventType> void register(Class<T> eventType) {
+    public static <T extends Enum<T> & LeafletEventType> void register(Class<T> eventType) {
         EnumSet.allOf(eventType).forEach(e -> eventMap.put(e.getLeafletEvent(), e));
     }
 

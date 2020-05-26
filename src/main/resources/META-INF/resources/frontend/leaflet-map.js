@@ -13,13 +13,13 @@
 // limitations under the License.
 
 import { html, PolymerElement } from "@polymer/polymer/polymer-element.js";
+import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import * as L from "leaflet/dist/leaflet-src.js";
 import { LeafletTypeConverter } from "./leaflet-type-converter.js";
 
-class LeafletMap extends PolymerElement {
+class LeafletMap extends ThemableMixin(PolymerElement) {
   static get template() {
     return html`
-      <style include="leaflet-css lumo-leaflet-map"></style>
       <div id="map" style="position: relative; width: 100%; height: 100%;"></div>
     `;
   }
@@ -342,6 +342,10 @@ class LeafletMap extends PolymerElement {
   onErrorEventHandler(event) {
     console.info("LeafletMap - onErrorEventHandler()", event);
   }
+  onBaseEventHandler(event) {
+    console.info("LeafletMap - onBaseEventHandler()", event);
+  }
+  
 }
 
 customElements.define(LeafletMap.is, LeafletMap);
