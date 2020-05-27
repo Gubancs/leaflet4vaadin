@@ -22,6 +22,8 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.plugins.fullscreen.FullScreenControl;
 import com.vaadin.addon.leaflet4vaadin.plugins.fullscreen.WithFullScreenControl;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.router.PageTitle;
@@ -51,7 +53,16 @@ public class FullScreenPluginExample extends ExampleContainer {
         mapWithFullScreenControl.onExitFullscreen((e) -> {
             Notification.show("Map exited from fullscreen mode.", 3000, Position.MIDDLE);
         });
-        addToContent(leafletMap);
+        
+        Button toogleFullscreen = new Button("Toggle fullscreen");
+        toogleFullscreen.addClickListener((e)-> mapWithFullScreenControl.toggleFullscreen());
+        
+        Anchor pluginRepository = new Anchor();
+        pluginRepository.setHref("https://github.com/brunob/leaflet.fullscreen");
+        pluginRepository.setText("Plugin: https://github.com/brunob/leaflet.fullscreen");
+        pluginRepository.setTarget("_blank");
+
+        addToContent(toogleFullscreen, leafletMap, pluginRepository);
     }
 
 }
