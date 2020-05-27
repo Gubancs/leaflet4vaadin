@@ -21,6 +21,6 @@ public interface WithFullScreenControl {
      */
     void onExitFullscreen(LeafletEventListener<LeafletEvent> listener);
 
-    void toggleFullScreen();
+    void toggleFullscreen();
 
 }

@@ -23,8 +23,8 @@ class LeafletMapFullScreenAdapter implements WithFullScreenControl {
     }
 
     @Override
-    public void toggleFullScreen() {
-        leafletMap.execute("toggleFullScreen");
+    public void toggleFullscreen() {
+        leafletMap.execute("toggleFullscreen");
     }
 
 }
