@@ -84,10 +84,10 @@ public class FullScreenControl extends LeafletControl {
 
     public static enum FullScreenEventType implements LeafletEventType {
         enterFullscreen, exitFullscreen;
-    }
 
-    static {
-        EventTypeRegistry.register(FullScreenEventType.class);
+        static {
+            EventTypeRegistry.register(FullScreenEventType.class);
+        }
     }
 
     public FullScreenControl() {

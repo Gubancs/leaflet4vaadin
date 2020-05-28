@@ -52,14 +52,12 @@ public class MarkerClusterOptions implements Serializable {
     private boolean animate = true;
     private boolean animateAddingMarkers = false;
     private double spiderfyDistanceMultiplier = 1;
-    // TODO init defaults
-    private PathOptions spiderLegPolylineOptions = new PathOptions();
+    private PathOptions spiderLegPolylineOptions;
 
     private boolean chunkedLoading = false;
     private int chunkInterval = 200;
     private int chunkDelay = 50;
-    // TODO init defaults
-    private PathOptions polygonOptions = new PathOptions();
+    private PathOptions polygonOptions;
 
     public int getMaxClusterRadius() {
         return maxClusterRadius;

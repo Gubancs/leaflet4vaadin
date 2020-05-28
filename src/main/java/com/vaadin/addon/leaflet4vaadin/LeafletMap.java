@@ -516,11 +516,11 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 
 	@Override
 	public void execute(Identifiable target, String functionName, Serializable... arguments) {
-		if (ready) {
+//		if (ready) {
 			logger.info("Execute leaflet function: {}", functionName);
 			LeafletOperation leafletOperation = new LeafletOperation(target, functionName, arguments);
 			getElement().callJsFunction("callLeafletFunction", JsonSerializer.toJson(leafletOperation));
-		}
+//		}
 	}
 
 	@Override

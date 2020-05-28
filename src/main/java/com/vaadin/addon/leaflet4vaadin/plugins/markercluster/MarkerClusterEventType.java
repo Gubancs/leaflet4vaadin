@@ -1,5 +1,6 @@
 package com.vaadin.addon.leaflet4vaadin.plugins.markercluster;
 
+import com.vaadin.addon.leaflet4vaadin.layer.events.types.EventTypeRegistry;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 
 public enum MarkerClusterEventType implements LeafletEventType {
@@ -35,4 +36,8 @@ public enum MarkerClusterEventType implements LeafletEventType {
      * markers attributes)
      */
     unspiderfied;
+    
+    static {
+        EventTypeRegistry.register(MarkerClusterEventType.class);
+    }
 }

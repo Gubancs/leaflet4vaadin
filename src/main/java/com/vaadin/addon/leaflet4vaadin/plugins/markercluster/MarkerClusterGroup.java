@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
 import com.vaadin.addon.leaflet4vaadin.layer.events.MouseEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.FeatureGroup;
@@ -60,12 +61,63 @@ public class MarkerClusterGroup extends FeatureGroup {
      * @param listener
      *            the listener to call when the event occurs, not {@code null}
      */
-    public void onClusterClick(LeafletEventListener<MouseEvent> listener) {
+    public void onClusterClick(LeafletEventListener<LeafletEvent> listener) {
         on(MarkerClusterEventType.clusterclick, listener);
     }
     
+    /**
+     * Fired when the mouse enters the marker cluster
+     * 
+     * @param listener
+     *            the listener to call when the event occurs, not {@code null}
+     */
+    public void onClusterMouseOver(LeafletEventListener<LeafletEvent> listener) {
+        on(MarkerClusterEventType.clustermouseover, listener);
+    }
+    
+    /**
+     * Fired when the mouse leaves the marker cluster
+     * 
+     * @param listener
+     *            the listener to call when the event occurs, not {@code null}
+     */
+    public void onClusterMouseOut(LeafletEventListener<LeafletEvent> listener) {
+        on(MarkerClusterEventType.clustermouseout, listener);
+    }
+
+    /**
+     * Fires when marker clustering/unclustering animation has completed
+     * 
+     * @param listener
+     *            the listener to call when the event occurs, not {@code null}
+     */
+    public void onAnimationEnd(LeafletEventListener<LeafletEvent> listener) {
+        on(MarkerClusterEventType.animationend, listener);
+    }
+    
+
+    /**
+     * Fires when overlapping markers get spiderified (Contains cluster and markers attributes)
+     * 
+     * @param listener
+     *            the listener to call when the event occurs, not {@code null}
+     */
+    public void onSpiderfied(LeafletEventListener<LeafletEvent> listener) {
+        on(MarkerClusterEventType.spiderfied, listener);
+    }
+    
+    /**
+     * Fires when overlapping markers get unspiderified (Contains cluster and markers attributes)
+     * 
+     * @param listener
+     *            the listener to call when the event occurs, not {@code null}
+     */
+    public void onUnspiderfied(LeafletEventListener<LeafletEvent> listener) {
+        on(MarkerClusterEventType.unspiderfied, listener);
+    }
+    
     @Override
-    protected List<String> getConstructorArgumentNames() {
+    public List<String> getConstructorArgumentNames() {
         return Collections.emptyList();
     }
     
@@ -137,4 +189,5 @@ public class MarkerClusterGroup extends FeatureGroup {
     public PathOptions getPolygonOptions() {
         return options.getPolygonOptions();
     }
+    
 }
