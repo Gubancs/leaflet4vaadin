@@ -52,16 +52,19 @@ export class LeafletTypeConverter {
   }
   
   getControlFactoryFn(leafletType){
-      return L.control[control.leafletType];
+      return L.control[leafletType];
   }
 
   toLeafletControl(control) {
-    let controlFn = this.getControlFactoryFn(control.leafletType);
-    if (!controlFn) {
-      throw "Unsupported control type : " + control.leafletType;
-    }
-    let leafletControl = controlFn(control);
-    console.log("LeafletTypeConverter --- toLeafletControl() result", leafletControl);
+	let leafletControl = control;
+	if(control){
+	    let controlFn = this.getControlFactoryFn(control.leafletType);
+	    if (!controlFn) {
+	      throw "Unsupported control type : " + control.leafletType;
+	    }
+	    leafletControl = controlFn(control);
+	    console.log("LeafletTypeConverter --- toLeafletControl() result", leafletControl);
+	}
     return leafletControl;
   }
 
@@ -71,7 +74,7 @@ export class LeafletTypeConverter {
 	    if (this.isBasicType(object.leafletType)) {
 	    	converted = this.convertBasicType(object);
 	    }
-	    else if(this.isLeafleLayer(object.leafletType)){
+	    else if(this.isLeafletLayer(object.leafletType)){
 	    	converted = this.toLeafletLayer(object);
 	    }
 	    else if(this.isLeafletControl(object.leafletType)){
@@ -112,9 +115,9 @@ export class LeafletTypeConverter {
     return result;
   }
   
-  isLeafleLayer(object) {
+  isLeafletLayer(object) {
     let result = this.getFactoryFn(object) != null;
-    console.trace("LeafletTypeConverter --- isLeafleLayer() result", result);
+    console.trace("LeafletTypeConverter --- isLeafletLayer() result", result);
     return result;
   }
 
