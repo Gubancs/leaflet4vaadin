@@ -19,15 +19,13 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
+import com.vaadin.addon.leaflet4vaadin.LeafletObject;
 import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
-import com.vaadin.addon.leaflet4vaadin.types.LeafletClass;
 import com.vaadin.flow.templatemodel.Encode;
 import com.vaadin.flow.templatemodel.ModelEncoder;
 
-public abstract class LeafletControl implements LeafletClass, ExecutableFunctions {
-
-    private static final long serialVersionUID = -2562236800599480357L;
+public abstract class LeafletControl extends LeafletObject implements ExecutableFunctions {
 
     public static enum ControlPosition {
         topleft, topright, bottomleft, bottomright;

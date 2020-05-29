@@ -61,10 +61,8 @@ public class TypeOfPathsExample extends ExampleContainer {
 		Button btn = new Button(path.getClass().getSimpleName());
 		btn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		btn.addClickListener((event) -> {
-			leafletMap.removeAllLayers();
 			path.bindTooltip("Hi, I'am a " + path.getClass().getSimpleName());
 			path.addTo(leafletMap);
-
 		});
 		return btn;
 	}

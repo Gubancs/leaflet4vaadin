@@ -24,7 +24,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONFilterExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapConversionMethodsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
@@ -152,7 +151,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addSubMenu(MarkerMethodCallExample.class).addTo(appMenu);
 
 		// Layers examples
-		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL)).addSubMenu(TileLayerExample.class)
+		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL))
 				.addSubMenu(MultipleBaseLayersExample.class).addSubMenu(GeoJSONLayerExample.class)
 				.addSubMenu(GeoJSONFilterExample.class).addSubMenu(GeoJSONStyleExample.class)
 				.addSubMenu(GeoJSONEventsExample.class).addTo(appMenu);

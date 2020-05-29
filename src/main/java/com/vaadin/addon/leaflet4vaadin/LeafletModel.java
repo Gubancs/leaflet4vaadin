@@ -29,10 +29,6 @@ public interface LeafletModel extends TemplateModel {
 
 	void setMapOptions(MapOptions mapOptions);
 
-	String getBaseUrl();
-
-	void setBaseUrl(String baseUrl);
-
 	default List<LeafletControl> getControls() {
 		return new ArrayList<>();
 	}

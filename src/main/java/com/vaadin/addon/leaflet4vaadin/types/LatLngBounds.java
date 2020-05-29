@@ -17,10 +17,10 @@ package com.vaadin.addon.leaflet4vaadin.types;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Represents a rectangular geographical area on a map.
@@ -30,7 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @since 2020-03-21
  * @version 1.0
  */
-public class LatLngBounds implements LeafletClass {
+public class LatLngBounds implements BasicType {
 	private static final long serialVersionUID = -7421430446913242834L;
 
 	@JsonProperty("_southWest")

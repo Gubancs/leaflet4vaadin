@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * @since 2020-03-21
  * @version 1.0
  */
-public class Bounds implements LeafletClass {
+public class Bounds implements BasicType {
     private static final long serialVersionUID = 181166727523469617L;
     private Point max = new Point();
     private Point min = new Point();

@@ -68,6 +68,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapGetStateFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.functions.MapModifyStateFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
+import com.vaadin.addon.leaflet4vaadin.layer.raster.TileLayer;
 import com.vaadin.addon.leaflet4vaadin.operations.LeafletOperation;
 import com.vaadin.addon.leaflet4vaadin.types.LatLng;
 import com.vaadin.addon.leaflet4vaadin.types.Point;
@@ -464,7 +465,7 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	}
 
 	public void setBaseUrl(String baseUrl) {
-		getModel().setBaseUrl(baseUrl);
+		addLayer(new TileLayer(baseUrl));
 	}
 
 	/**
@@ -483,11 +484,6 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 	 */
 	public void removeControl(LeafletControl leafletControl) {
 		getModel().getControls().remove(leafletControl);
-	}
-
-	public void removeAllLayers() {
-		getModel().getLayers().clear();
-		this.mapLayer.getLayers().clear();
 	}
 
 	/**

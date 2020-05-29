@@ -29,18 +29,6 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
   }
 
   /**
-   * Complex observers are declared in the observers array.
-   * Complex observers can monitor one or more paths.
-   * These paths are called the observer's dependencies.
-   *
-   * Each item of observers array is a method name followed by
-   * a comma-separated list of one or more dependencies.
-   */
-  static get observers() {
-    return ["updateMapListeners(events.splices)", "updateLayers(layers.splices)"];
-  }
-
-  /**
    * Called when the element is added to a document.
    * Can be called multiple times during the lifetime of an element.
    * Uses include adding document-level event listeners.
@@ -76,13 +64,6 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
 
     // init leaflet map
     let map = this.toLeafletMap(this.mapOptions);
-    this.leafletLayers = [];
-    this.overlays = {};
-
-    // init map event listeners
-    // map.on("click", this.onClicked, this);
-    // map.on("zoom", this.onZoomChanged, this);
-
     this.map = map;
   }
 
@@ -105,75 +86,46 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
   }
 
   initMap() {
-    console.log("LeafletMap - initMap() baseUrl: {}", this.baseUrl);
-      if (this.baseUrl) {
-        L.tileLayer(this.baseUrl).addTo(this.map);
-      }
-
-      console.log("LeafletMap - initMap() layer control options: {}", this.layerControlOptions);
-      if (this.layers) {
-        this.overlayControl = L.control.layers({}, this.overlays, this.layerControlOptions);
-        this.overlayControl.addTo(this.map);
-      }
-      console.log("LeafletMap - initMap() initial bounds: {}", this.mapOptions.bounds);
+      console.log("LeafletMap - initMap() initial bounds", this.mapOptions.bounds);
       if (this.mapOptions.bounds) {
         this.fitBounds(this.mapOptions.bounds);
       }
-      console.log("LeafletMap - initMap() initial layers: {}", this.layers);
+      console.log("LeafletMap - initMap() initial layers", this.layers);
       this.layers.forEach(layer => this.addLayerToMap(layer));
-
-      console.log("LeafletMap - initMap() initial controls: {}", this.controls);
-      this.controls.forEach(control => {
-        console.log("LeafletMap --- add control to map: {}", control);
-        this.leafletConverter.toLeafletControl(control).addTo(this.map);
-      });
+      
+      console.log("LeafletMap - initMap() initial controls", this.controls);
+      this.controls.forEach(control => this.addControlToMap(control));
+      
       this.mapInitialized = true;
   }
 
+  addControlToMap(control) {
+      console.log("LeafletMap - addControlToMap(): {}", control);
+      let controlOptions = JSON.parse(control.json);
+      controlOptions.nodeId = control.nodeId;
+
+      console.log("LeafletMap - addControlToMap() controlOptions",  controlOptions);
+      let leafletControl = this.leafletConverter.toLeafletControl(controlOptions);
+      
+      leafletControl.addTo(this.map);
+      console.log("LeafletMap - '" + control.leafletType + "' control has been added to map", leafletControl);
+      
+      return leafletControl;
+  }
+  
   addLayerToMap(layer) {
-    console.log("LeafletMap - add layer to map", layer);
+    console.log("LeafletMap - addLayerToMap()", layer);
     let layerOptions = JSON.parse(layer.json);
     layerOptions.nodeId = layer.nodeId;
+
+    console.log("LeafletMap - addLayerToMap() layerOptions",  layerOptions);
     let leafletLayer = this.leafletConverter.toLeafletLayer(layerOptions);
+    
     this.applyEventListeners(leafletLayer, layerOptions);
     leafletLayer.addTo(this.map);
-    this.leafletLayers.push(leafletLayer);
-    if (layer.name) {
-      this.overlayControl.addBaseLayer(leafletLayer, layer.name);
-    }
-    console.log("LeafletMap - " + layer.leafletType + " has been added to map", leafletLayer);
-  }
-
-  updateMapListeners(changeRecord) {
-    console.log("LeafletMap - Map listeners has been changed", changeRecord);
-  }
-  /**
-   * Called when when marker item is added or deleted.
-   */
-  updateLayers(changeRecord) {
-    console.log("LeafletMap - layers property changed", changeRecord);
-    console.log("LeafletMap - layers", this.layers);
-    if (changeRecord) {
-      changeRecord.indexSplices.forEach(function(indexSplice) {
-        indexSplice.removed.forEach(layer => {
-          this.leafletLayers
-            .slice()
-            .filter(l => l.options.uuid === layer.uuid)
-            .forEach(l => {
-              this.map.removeLayer(l);
-              if (l.options.name) {
-                this.overlayControl.removeLayer(l);
-              }
-              console.log("LeafletMap - layer has been removed from map", layer);
-            });
-        });
-        for (var i = 0; i < indexSplice.addedCount; i++) {
-          var index = indexSplice.index + i;
-          var newLayer = indexSplice.object[index];
-          this.addLayerToMap(newLayer);
-        }
-      }, this);
-    }
+    
+    console.log("LeafletMap - '" + layer.leafletType + "' layer has been added to map", leafletLayer);
+    return leafletLayer;
   }
 
   callLeafletFunction(operation) {

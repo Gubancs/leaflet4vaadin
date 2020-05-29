@@ -35,48 +35,57 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/locate-user", layout = LeafletDemoApp.class)
 public class MapGeolocationExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -3956839422711312002L;
+    private static final long serialVersionUID = -3956839422711312002L;
 
-	@Override
-	protected void initDemo() {
+    private Marker userLocation;
+    private Circle circle;
 
-		Button locateButton = new Button("Find my location");
+    @Override
+    protected void initDemo() {
 
-		// leaflet map
-		final MapOptions options = new DefaultMapOptions();
-		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-		options.setZoom(7);
-		final LeafletMap leafletMap = new LeafletMap(options);
-		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+        Button locateButton = new Button("Find my location");
 
-		leafletMap.onLocationError((event) -> {
-			Notification.show("Unable to locate your location: " + event.getMessage(), 2000, Position.TOP_CENTER);
-			locateButton.setEnabled(true);
-		});
-		leafletMap.onLocationFound((event) -> {
-			Marker userLocation = new Marker(event.getLatlng());
-			userLocation.bindTooltip("Your approximate location. Accuracy: " + event.getAccuracy() + " meters.");
-			userLocation.addTo(leafletMap);
-			Circle circle = new Circle(event.getLatlng(), event.getAccuracy());
-			circle.addTo(leafletMap);
-			locateButton.setEnabled(true);
-		});
+        // leaflet map
+        final MapOptions options = new DefaultMapOptions();
+        options.setCenter(new LatLng(47.070121823, 19.204101562500004));
+        options.setZoom(7);
+        final LeafletMap leafletMap = new LeafletMap(options);
+        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		// toolbar
-		HorizontalLayout toolbar = new HorizontalLayout();
-		toolbar.setWidthFull();
-		locateButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-		locateButton.addClickListener((event) -> {
-			leafletMap.removeAllLayers();
-			locateButton.setEnabled(false);
-			LocateOptions locateOptions = new LocateOptions();
-			locateOptions.setSetView(true);
-			locateOptions.setEnableHighAccuracy(true);
-			leafletMap.locate(locateOptions);
-		});
-		toolbar.add(locateButton);
+        leafletMap.onLocationError((event) -> {
+            Notification.show("Unable to locate your location: " + event.getMessage(), 2000, Position.TOP_CENTER);
+            locateButton.setEnabled(true);
+        });
 
-		addToContent(locateButton, leafletMap);
-	}
+        leafletMap.onLocationFound((event) -> {
+            userLocation = new Marker(event.getLatlng());
+            userLocation.bindTooltip("Your approximate location. Accuracy: " + event.getAccuracy() + " meters.");
+            userLocation.addTo(leafletMap);
+            circle = new Circle(event.getLatlng(), event.getAccuracy());
+            circle.addTo(leafletMap);
+            locateButton.setEnabled(true);
+        });
+
+        // toolbar
+        HorizontalLayout toolbar = new HorizontalLayout();
+        toolbar.setWidthFull();
+        locateButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        locateButton.addClickListener((event) -> {
+            if (userLocation != null) {
+                leafletMap.removeLayer(userLocation);
+            }
+            if (circle != null) {
+                leafletMap.removeLayer(circle);
+            }
+            locateButton.setEnabled(false);
+            LocateOptions locateOptions = new LocateOptions();
+            locateOptions.setSetView(true);
+            locateOptions.setEnableHighAccuracy(true);
+            leafletMap.locate(locateOptions);
+        });
+        toolbar.add(locateButton);
+
+        addToContent(locateButton, leafletMap);
+    }
 
 }

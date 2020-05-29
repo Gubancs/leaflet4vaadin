@@ -51,7 +51,7 @@ public class MarkersAddAndRemoveExample extends ExampleContainer {
 		addMarkers(leafletMap);
 
 		removeButton.addClickListener((event) -> {
-			leafletMap.removeAllLayers();
+//FIXME			leafletMap.removeAllLayers();
 			removeButton.setEnabled(false);
 			addButton.setEnabled(true);
 		});

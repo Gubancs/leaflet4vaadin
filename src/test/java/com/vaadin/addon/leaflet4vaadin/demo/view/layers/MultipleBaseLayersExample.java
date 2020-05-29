@@ -14,9 +14,14 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
+import com.vaadin.addon.leaflet4vaadin.controls.LayersControl;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
+import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.raster.TileLayer;
@@ -38,31 +43,30 @@ public class MultipleBaseLayersExample extends ExampleContainer {
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
 		TileLayer openStreetmap = new TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-		openStreetmap.setAttribution("OpenStreetmap");
-		openStreetmap.setName("OpenStreetmap default");
 		openStreetmap.setSubdomains("1");
-		openStreetmap.addTo(leafletMap);
 
 		TileLayer mapQuest = new TileLayer("http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png");
 		mapQuest.setAttribution("Tiles courtesy of MapQuest");
-		mapQuest.setName("Mapquest layer");
 		mapQuest.setSubdomains("1");
-		mapQuest.addTo(leafletMap);
 
 		TileLayer wikimedia = new TileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png");
 		wikimedia.setAttribution("Wikimedia Maps");
-		wikimedia.setName("Wikimedia Maps");
-		wikimedia.addTo(leafletMap);
 
 		TileLayer openCycleMap = new TileLayer("http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png");
 		openCycleMap.setAttribution("OpenCycleMap");
-		openCycleMap.setName("OpenCycleMap");
-		openCycleMap.addTo(leafletMap);
 
 		TileLayer grayscale = new TileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png");
 		grayscale.setAttribution("wmflabs OSM B&W mapnik map grayscale");
-		grayscale.setName("Mapnik map grayscale");
-		grayscale.addTo(leafletMap);
+		
+        Map<String, Layer> baseLayers = new HashMap<String, Layer>();
+        baseLayers.put("OpenStreetmap default", openStreetmap);
+        baseLayers.put("Mapquest layer", mapQuest);
+        baseLayers.put("Wikimedia Maps", wikimedia);
+        baseLayers.put("OpenCycleMap", openCycleMap);
+        baseLayers.put("Mapnik map grayscale", grayscale);
+
+        LayersControl layersControl = new LayersControl(baseLayers);
+        layersControl.addTo(leafletMap);
 
 		addToContent(leafletMap);
 	}

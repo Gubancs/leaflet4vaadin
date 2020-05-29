@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class LayersControlOptions implements Serializable {
 
     private static final long serialVersionUID = 1218151748533368492L;
-    private boolean collapsed = false;
+    private boolean collapsed = true;
     private boolean autoZIndex = true;
-    private boolean hideSingleBase;
-    private boolean sortLayers;
+    private boolean hideSingleBase = false;
+    private boolean sortLayers = false;
 
     public boolean isCollapsed() {
         return collapsed;

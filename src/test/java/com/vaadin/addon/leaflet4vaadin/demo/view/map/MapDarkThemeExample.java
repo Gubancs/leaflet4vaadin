@@ -38,12 +38,12 @@ public class MapDarkThemeExample extends ExampleContainer {
 		final LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("http://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png");
 		leafletMap.addThemeVariants(LeafletMapVariant.LUMO_DARK);
-
-		Marker marker = new Marker(options.getCenter());
-		marker.bindTooltip("Example tooltip with dark theme");
-		marker.bindPopup("Example poup with dark theme");
-		marker.setName("Marker 1");
-		marker.addTo(leafletMap);
+//
+//		Marker marker = new Marker(options.getCenter());
+//		marker.bindTooltip("Example tooltip with dark theme");
+//		marker.bindPopup("Example poup with dark theme");
+//		marker.setName("Marker 1");
+//		marker.addTo(leafletMap);
 
 		addToContent(leafletMap);
 	}

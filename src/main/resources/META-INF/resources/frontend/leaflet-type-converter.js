@@ -37,7 +37,7 @@ export class LeafletTypeConverter {
       let factoryFn = this.getFactoryFn(layer.leafletType);
       if(layer.constructorArgumentNames){
         console.log("LeafletTypeConverter - toLeafletLayer() constructorArgumentNames", layer.constructorArgumentNames);
-        let initArgs = layer.constructorArgumentNames.map(argName => layer[argName]);
+        let initArgs = layer.constructorArgumentNames.map(argName => this.convert(layer[argName]));
         initArgs.push(layer);
         console.log("LeafletTypeConverter - toLeafletLayer() initArgs", initArgs);
         leafletLayer = factoryFn.apply(null, initArgs);
@@ -66,8 +66,17 @@ export class LeafletTypeConverter {
 	    if (!controlFn) {
 	      throw "Unsupported control type : " + control.leafletType;
 	    }
-	    leafletControl = controlFn(control);
-	    console.log("LeafletTypeConverter --- toLeafletControl() result", leafletControl);
+	    if(control.constructorArgumentNames){
+	        console.log("LeafletTypeConverter - toLeafletControl() constructorArgumentNames", control.constructorArgumentNames);
+	        let initArgs = control.constructorArgumentNames.map(argName => this.convert(control[argName]));
+	        initArgs.push(control);
+	        console.log("LeafletTypeConverter - toLeafletControl() initArgs", initArgs);
+	        leafletControl = controlFn.apply(null, initArgs);
+	      }
+	    else {
+	    	leafletControl = controlFn(control);
+	    }
+	    console.log("LeafletTypeConverter - toLeafletControl() result", leafletControl);
 	}
     return leafletControl;
   }
@@ -85,7 +94,15 @@ export class LeafletTypeConverter {
 	    	converted = this.toLeafletControl(object);
 	    }
     }
-    console.log("LeafletTypeConverter --- convert() result", converted);
+    else if(object instanceof Object){
+    	Object.keys(object).forEach((key, index) => {
+    		if(this.isLeafletType(object[key])) {
+    			converted[key] = this.convert(object[key]);
+    		}
+    	});
+    }
+    
+    console.log("LeafletTypeConverter - convert() result", converted);
     return converted;
   }
   
@@ -103,7 +120,7 @@ export class LeafletTypeConverter {
 	  } else if (basicType.leafletType === "Icon") {
 	    converted = this.toIcon(basicType);
 	  }
-	console.log("LeafletTypeConverter --- convertBasicType() result", converted);
+	console.trace("LeafletTypeConverter - convertBasicType() result", converted);
     return converted;
   }
   
