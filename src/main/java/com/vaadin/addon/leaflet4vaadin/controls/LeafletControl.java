@@ -36,7 +36,7 @@ public abstract class LeafletControl implements LeafletClass, ExecutableFunction
     private final String uuid;
     private final String controlType;
     private ControlPosition position = ControlPosition.topright;
-    private LeafletMap leafletMap;
+    protected LeafletMap leafletMap;
 
     public LeafletControl(String controlType) {
         this.controlType = controlType;

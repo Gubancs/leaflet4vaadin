@@ -288,6 +288,10 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
           handler: this.onLayerEventHandler
         },
         {
+          events: ["baselayerchange", "overlayadd", "overlayremove"],
+          handler: this.onLayersControlEventHandler
+        },
+        {
           events: ["move"],
           condition: layer => layer.options.leafletType === "Marker",
           handler: this.onMoveEventHandler
@@ -345,6 +349,9 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
   }
   onErrorEventHandler(event) {
     console.info("LeafletMap - onErrorEventHandler()", event);
+  }
+  onLayersControlEventHandler(event) {
+    console.info("LeafletMap - onLayersControlEventHandler()", event);
   }
   onBaseEventHandler(event) {
     console.info("LeafletMap - onBaseEventHandler()", event);

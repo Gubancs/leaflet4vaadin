@@ -77,7 +77,6 @@ public abstract class Layer
 
 	public static final String DEFAULT_PANE = "overlayPane";
 	private String uuid;
-	private String name;
 	private String json;
 	private String pane = DEFAULT_PANE;
 	private String attribution;
@@ -203,14 +202,6 @@ public abstract class Layer
 
 	public String getUuid() {
 		return uuid;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getPane() {

@@ -16,6 +16,10 @@ import * as L from "leaflet/dist/leaflet-src.js";
 
 export class LeafletTypeConverter {
 	
+	constructor(){
+		this.basicTypes = ["Point", "Bounds", "LatLng", "LatLngBounds", "Icon"];
+	}
+	
   toLeafletLayer(layer) {
     console.log("LeafletTypeConverter - toLeafletLayer() leafletType", {leafletType: layer.leafletType});
     let leafletLayer;
@@ -70,7 +74,7 @@ export class LeafletTypeConverter {
 
   convert(object) {
     let converted = object;
-    if(object){
+    if(this.isLeafletType(object)){
 	    if (this.isBasicType(object.leafletType)) {
 	    	converted = this.convertBasicType(object);
 	    }
@@ -103,22 +107,21 @@ export class LeafletTypeConverter {
     return converted;
   }
   
+
+  isLeafletType(object) {
+	  return object && typeof(object.leafletType) !== "undefined"; 
+  }
+  
   isBasicType(object) {
-    let result = ["Point", "Bounds", "LatLng", "LatLngBounds", "Icon"].indexOf(object) >= 0;
-    console.trace("LeafletTypeConverter --- isBasicType() result", result);
-    return result;
+	  return this.basicTypes.indexOf(object) >= 0;
   }
   
   isLeafletControl(object) {
-    let result = this.getControlFactoryFn(object) != null;
-    console.trace("LeafletTypeConverter --- isLeafletControl() result", result);
-    return result;
+	  return this.getControlFactoryFn(object) != null;
   }
   
   isLeafletLayer(object) {
-    let result = this.getFactoryFn(object) != null;
-    console.trace("LeafletTypeConverter --- isLeafletLayer() result", result);
-    return result;
+	  return this.getFactoryFn(object) != null;
   }
 
   /**

@@ -25,6 +25,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vaadin.addon.leaflet4vaadin.controls.LayersControl.LayerControlEventType;
+import com.vaadin.addon.leaflet4vaadin.controls.LayersControlEvent;
 import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
@@ -137,6 +139,21 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 		LeafletEvent leafletEvent = new LeafletEvent(layer, EventTypeRegistry.valueOf(event));
 		fireEvent(layer, leafletEvent);
 	}
+	
+	 /**
+     * Fired when a layer is changed through the layer control.
+     * 
+     * @param layerId   the id of the layer that was added or removed.
+     * @param eventType the type of the occurred event
+     * @see LeafletEvent
+     */
+    @EventHandler
+    private void onLayersControlEventHandler(@EventData("event.target.options.uuid") String layerId,
+            @EventData("event.type") String event, @EventData("event.name") String name) {
+        Layer layer = findLayer(layerId);
+        LeafletEvent leafletEvent = new LayersControlEvent(layer, LayerControlEventType.valueOf(event), name);
+        fireEvent(layer, leafletEvent);
+    }
 
 	/**
 	 * Fired when any mouse event fired on the layer
@@ -242,17 +259,6 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 		Layer layer = findLayer(layerId);
 		ErrorEvent errorEvent = new ErrorEvent(layer, EventTypeRegistry.valueOf(event), message, code);
 		fireEvent(layer, errorEvent);
-	}
-
-	/**
-	 * @param layerId   the id of the layer where the event occurred
-	 * @param eventType the type of the occurred event
-	 */
-	@EventHandler
-	private void onLayersControlEventHandler(@EventData("target.options.uuid") String layerId,
-			@EventData("event.type") String eventType) {
-		logger.info("LayersControlEvent fired on client side: {} - {}", eventType, layerId);
-		// TODO not implemented yet
 	}
 
 	/**
