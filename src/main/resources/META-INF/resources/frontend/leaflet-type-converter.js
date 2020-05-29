@@ -81,6 +81,8 @@ export class LeafletTypeConverter {
         converted = this.toLatLngBounds(object);
       } else if (object.leafletType === "Icon") {
         converted = this.toIcon(object);
+      } else if (object.leafletType === "DivIcon") {
+        converted = this.toDivIcon(object);
       }
     }
     console.log("LeafletTypeConverter --- convert() result", converted);
@@ -99,6 +101,13 @@ export class LeafletTypeConverter {
     icon.iconSize = this.convert(iconOptions.iconSize);
     icon.shadowSize = this.convert(iconOptions.shadowSize);
     return icon;
+  }
+  
+  /**
+   * Convert the given JsonObject to Leaflet DivIcon
+   */
+  toDivIcon(divIcon) {
+	  return L.divIcon(divIcon);
   }
 
   /**

@@ -32,6 +32,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapGeolocationExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapMaxBoundsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerDivIconExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerMethodCallExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersAddAndRemoveExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersChangingIconExample;
@@ -148,7 +149,9 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addSubMenu(MarkersEventsExample.class).addSubMenu(MarkersWithEventsExample.class)
 				.addSubMenu(MarkersGroupExample.class).addSubMenu(MarkersAddAndRemoveExample.class)
 				.addSubMenu(MarkersChangingIconExample.class).addSubMenu(MarkersRemoveOnClickExample.class)
-				.addSubMenu(MarkerMethodCallExample.class).addTo(appMenu);
+				.addSubMenu(MarkerMethodCallExample.class)
+				.addSubMenu(MarkerDivIconExample.class)
+				.addTo(appMenu);
 
 		// Layers examples
 		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL)).addSubMenu(TileLayerExample.class)
