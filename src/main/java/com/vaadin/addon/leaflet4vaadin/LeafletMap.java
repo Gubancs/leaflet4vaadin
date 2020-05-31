@@ -14,6 +14,8 @@
 
 package com.vaadin.addon.leaflet4vaadin;
 
+import elemental.json.JsonType;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Optional;
@@ -536,7 +538,13 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
 			javascriptResult.then(value -> {
 				try {
 					ObjectMapper objectMapper = new ObjectMapper();
-					T result = objectMapper.readValue(value.toString(), resultType);
+					// Detect object type for value to be handled correctly (ex: getZoom)
+					JsonType type = value.getType();
+					T result;
+					if ( type.equals(JsonType.OBJECT))
+						result = objectMapper.readValue(value.toString(), resultType);
+					else
+						result = objectMapper.readValue(value.asString(), resultType);
 					completableFuture.complete(result);
 				} catch (IOException e) {
 					throw new RuntimeException("Failed to parse javascript result", e);
