@@ -17,6 +17,7 @@ package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
+import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.marker.Marker;
@@ -48,15 +49,17 @@ public class MarkersAddAndRemoveExample extends ExampleContainer {
 		LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		addMarkers(leafletMap);
-
+		LayerGroup markers = new LayerGroup();
+		createMarkers(markers);
+        markers.addTo(leafletMap);
+        
 		removeButton.addClickListener((event) -> {
-//FIXME			leafletMap.removeAllLayers();
+		    markers.clearLayers();
 			removeButton.setEnabled(false);
 			addButton.setEnabled(true);
 		});
 		addButton.addClickListener((event) -> {
-			this.addMarkers(leafletMap);
+			this.createMarkers(markers);
 			removeButton.setEnabled(true);
 			addButton.setEnabled(false);
 		});
@@ -64,15 +67,15 @@ public class MarkersAddAndRemoveExample extends ExampleContainer {
 		addToContent(leafletMap);
 	}
 
-	private void addMarkers(LeafletMap leafletMap) {
+	private void createMarkers(LayerGroup markers) {
 		Marker draggableMarker = new Marker(new LatLng(47.070121823, 19.2041015625));
 		draggableMarker.setDraggable(true);
 		draggableMarker.bindPopup("Hey, drag me if you want");
-		draggableMarker.addTo(leafletMap);
+		draggableMarker.addTo(markers);
 
 		Marker staticMarker = new Marker(new LatLng(46.470121823, 18.3041015625));
 		staticMarker.bindPopup("Hey, I'm a static marker");
-		staticMarker.addTo(leafletMap);
+		staticMarker.addTo(markers);
 
 		Notification.show("Your markers has been added to map.", 3000, Position.TOP_CENTER);
 	}

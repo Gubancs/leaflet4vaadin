@@ -73,7 +73,7 @@ public class LayerGroup extends Layer implements LayerGroupFunctions {
 	@Override
 	public void removeLayer(Layer layer) {
 		LayerGroupFunctions.super.removeLayer(layer);
-		this.removeLayer(layer.getUuid());
+        getLayer(layer.getUuid()).ifPresent(l -> getLayers().remove(l));
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class LayerGroup extends Layer implements LayerGroupFunctions {
 	 * @param functionName the function name to be invoke
 	 */
 	public void invoke(String functionName) {
-		execute(this, "invoke", functionName);
+		executeJs(this, "invoke", functionName);
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class LayerGroup extends Layer implements LayerGroupFunctions {
 	 * @param zIndex the z-index to be set on each layer
 	 */
 	public void setZIndex(int zIndex) {
-		execute(this, "setZIndex", zIndex);
+		executeJs(this, "setZIndex", zIndex);
 	}
 
 }

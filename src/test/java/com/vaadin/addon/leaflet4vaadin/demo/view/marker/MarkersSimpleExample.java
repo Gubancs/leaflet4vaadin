@@ -25,7 +25,6 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -58,13 +57,13 @@ public class MarkersSimpleExample extends ExampleContainer {
 		marker.onClick((e) -> {
 			Notification.show("You click the marker.", 3000, Position.TOP_CENTER);
 		});
-		Binder<Marker> binder = new Binder<>(Marker.class);
-		binder.forField(latitude).bind((m) -> String.valueOf(m.getLatLng().getLat()), null);
-		binder.forField(longitude).bind((m) -> String.valueOf(m.getLatLng().getLng()), null);
-		binder.readBean(marker);
 
-		marker.onMove((e) -> {
-			binder.readBean(marker);
+		latitude.setValue(marker.getLatLng().getLat().toString());
+		longitude.setValue(marker.getLatLng().getLng().toString());
+		marker.onMove((event) -> {
+			LatLng newPosition = event.getLatLng();
+            latitude.setValue(newPosition.getLat().toString());
+            longitude.setValue(newPosition.getLng().toString());
 		});
 
 		marker.addTo(leafletMap);

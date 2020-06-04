@@ -41,7 +41,7 @@ public interface MarkerFunctions extends ExecutableFunctions {
      * @param latLng the new position of the marker
      */
     default void setLatLng(LatLng latLng) {
-        execute("setLatLng", latLng);
+        executeJs("setLatLng", latLng);
     }
 
     /**
@@ -50,7 +50,7 @@ public interface MarkerFunctions extends ExecutableFunctions {
      * @param offset the zIndex offset value
      */
     default void setZIndexOffset(int offset) {
-        execute("setZIndexOffset", offset);
+        executeJs("setZIndexOffset", offset);
     }
 
     /**
@@ -66,7 +66,7 @@ public interface MarkerFunctions extends ExecutableFunctions {
      * @param icon the new icon options
      */
     default void setIcon(Icon icon) {
-        execute("setIcon", icon);
+        executeJs("setIcon", icon);
     }
 
     /**
@@ -76,6 +76,6 @@ public interface MarkerFunctions extends ExecutableFunctions {
      * @param icon the new opacity of the marker
      */
     default void setOpacity(double opacity) {
-        execute("setOpacity", opacity);
+        executeJs("setOpacity", opacity);
     }
 }

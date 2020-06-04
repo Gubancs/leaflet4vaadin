@@ -14,7 +14,6 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -38,7 +36,6 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.PopupEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.TooltipEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
-import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.popup.Popup;
 import com.vaadin.addon.leaflet4vaadin.layer.ui.tooltip.Tooltip;
 
@@ -51,7 +48,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.ui.tooltip.Tooltip;
  * @since 2020-02-06
  * @version 1.0
  */
-public abstract class Layer extends LeafletObject implements Evented, LayerFunctions, LayerPopupFunctions, LayerTooltipFunctions {
+public abstract class Layer extends LeafletObject implements Evented, LayerPopupFunctions, LayerTooltipFunctions {
 
     private static final long serialVersionUID = -1803411573095089760L;
 
@@ -62,16 +59,13 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
     private transient final Map<LeafletEventType, Set<LeafletEventListener>> eventListeners = new HashMap<>();
 
     public static final String DEFAULT_PANE = "overlayPane";
-    private String uuid;
     private String pane = DEFAULT_PANE;
     private String attribution;
     private Popup popup;
     private Tooltip tooltip;
     private List<String> events = new ArrayList<>();
-    private ExecutableFunctions functionDelegate;
 
     protected Layer() {
-        this.uuid = UUID.randomUUID().toString();
     }
 
     @Override
@@ -161,7 +155,7 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
      *            the layer group
      */
     public void addTo(LayerGroup layerGroup) {
-        this.functionDelegate = layerGroup;
+        setParent(layerGroup);
         layerGroup.addLayer(this);
     }
 
@@ -172,7 +166,7 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
      *            the leaflet map
      */
     public void addTo(LeafletMap leafletMap) {
-        this.functionDelegate = leafletMap;
+        setParent(leafletMap);
         leafletMap.addLayer(this);
     }
 
@@ -186,10 +180,6 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
 
     public void setAttribution(String attribution) {
         this.attribution = attribution;
-    }
-
-    public String getUuid() {
-        return uuid;
     }
 
     public String getPane() {
@@ -225,22 +215,6 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
         this.tooltip = tooltipOptions;
     }
 
-    @Override
-    public void execute(Identifiable target, String functionName, Serializable... arguments) {
-        if (functionDelegate instanceof ExecutableFunctions) {
-            functionDelegate.execute(target, functionName, arguments);
-        }
-    }
-
-    @Override
-    public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType, Serializable... arguments) {
-        if (functionDelegate instanceof ExecutableFunctions) {
-            return functionDelegate.call(target, functionName, resultType, arguments);
-        } else {
-            return null;
-        }
-    }
-
     public <T> void set(Supplier<CompletableFuture<T>> futureResult, Consumer<T> handler) {
         if (futureResult.get() != null) {
             futureResult.get().thenAccept((result) -> handler.accept(result));
@@ -264,7 +238,7 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
     public void clearAllEventListeners() {
         this.eventListeners.clear();
         this.events.clear();
-        execute(this, "clearAllEventListeners");
+        executeJs(this, "clearAllEventListeners");
     }
 
     @Override
@@ -277,7 +251,20 @@ public abstract class Layer extends LeafletObject implements Evented, LayerFunct
     public void removeEventListener(LeafletEventType eventType) {
         this.eventListeners.remove(eventType);
         this.events.remove(eventType.getLeafletEvent());
-        execute(this, "removeEventListener", eventType.getLeafletEvent());
+        executeJs(this, "removeEventListener", eventType.getLeafletEvent());
+    }
+   
+    /**
+     * Removes the layer from the map it is currently active on
+     */
+    public void remove() {
+        if (getParent() instanceof LeafletMap) {
+            LeafletMap map = (LeafletMap) getParent();
+            map.removeLayer(this);
+        } else if (getParent() instanceof LayerGroup) {
+            LayerGroup parentLayerGroup = (LayerGroup) getParent();
+            parentLayerGroup.removeLayer(this);
+        }
     }
 
 }

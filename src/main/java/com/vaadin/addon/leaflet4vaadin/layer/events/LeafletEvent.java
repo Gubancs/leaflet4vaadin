@@ -14,15 +14,19 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.events;
 
+import java.io.Serializable;
+
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 
 /**
  * The base event object. All other event objects contain these properties too.
  */
-public class LeafletEvent {
+public class LeafletEvent implements Serializable {
 
-	private final Layer target;
+    private static final long serialVersionUID = 6704191942717631706L;
+
+    private final Layer target;
 
 	private final LeafletEventType type;
 

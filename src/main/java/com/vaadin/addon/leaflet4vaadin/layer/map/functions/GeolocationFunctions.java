@@ -27,7 +27,7 @@ public interface GeolocationFunctions extends ExecutableFunctions {
      * and newer)
      */
     default void locate() {
-        execute("locate");
+        executeJs("locate");
     }
 
     /**
@@ -41,7 +41,7 @@ public interface GeolocationFunctions extends ExecutableFunctions {
      * @param options the locate options
      */
     default void locate(LocateOptions options) {
-        execute("locate", options);
+        executeJs("locate", options);
     }
 
     /**
@@ -49,6 +49,6 @@ public interface GeolocationFunctions extends ExecutableFunctions {
      * aborts resetting the map view if map.locate was called with {setView: true}.
      */
     default void stopLocate() {
-        execute("stopLocate");
+        executeJs("stopLocate");
     }
 }

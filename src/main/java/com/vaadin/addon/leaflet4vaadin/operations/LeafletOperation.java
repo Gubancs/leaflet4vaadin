@@ -18,6 +18,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
 import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 
 /**
@@ -33,6 +34,7 @@ public class LeafletOperation implements Serializable {
 
     private static final long serialVersionUID = -7752937288867492721L;
     private String layerId;
+    private boolean controlOperation;
     private String functionName;
     private Serializable[] arguments;
     private final ObjectMapper mapper = new ObjectMapper();
@@ -41,6 +43,7 @@ public class LeafletOperation implements Serializable {
         this.layerId = target.getUuid();
         this.functionName = functionName;
         this.arguments = arguments;
+        this.controlOperation = target instanceof LeafletControl;
     }
 
     /**
@@ -55,6 +58,11 @@ public class LeafletOperation implements Serializable {
      */
     public String getFunctionName() {
         return functionName;
+    }
+    
+    
+    public boolean isControlOperation() {
+        return controlOperation;
     }
 
     /**

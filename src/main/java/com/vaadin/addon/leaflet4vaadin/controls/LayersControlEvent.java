@@ -6,6 +6,7 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 
 public class LayersControlEvent extends LeafletEvent {
 
+    private static final long serialVersionUID = -4047072025354646461L;
     private String name;
 
     public LayersControlEvent(Layer target, LayerControlEventType type, String name) {

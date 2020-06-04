@@ -117,7 +117,7 @@ public class HeatLayer extends Layer {
      */
     public void addLatLng(LatLng latLng) {
         this.latLngs.add(latLng);
-        execute("addLatLng", latLng);
+        executeJs("addLatLng", latLng);
     }
 
     /**
@@ -128,7 +128,7 @@ public class HeatLayer extends Layer {
      */
     public void setLatLngs(List<LatLng> laLngs) {
         this.latLngs = laLngs;
-        execute("setLatLngs", new ArrayList<>(laLngs));
+        executeJs("setLatLngs", new ArrayList<>(laLngs));
     }
 
     /**
@@ -138,14 +138,14 @@ public class HeatLayer extends Layer {
      */
     public void setOptions(HeatLayerOptions options) {
         this.options = options;
-        execute("setOptions", options);
+        executeJs("setOptions", options);
     }
 
     /**
      * Redraws the heatmap.
      */
     public void redraw() {
-        execute("redraw");
+        executeJs("redraw");
     }
 
     public List<LatLng> getLatLngs() {

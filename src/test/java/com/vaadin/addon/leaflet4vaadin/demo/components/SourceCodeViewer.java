@@ -20,6 +20,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Pre;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -73,7 +75,7 @@ public class SourceCodeViewer extends VerticalLayout {
 			code.getElement().setProperty("innerHTML", getSourceCode());
 		} catch (Exception e) {
 			getElement().setProperty("innerHTML", "Unable to get source code from GitHub. :(");
-			e.printStackTrace();
+			LoggerFactory.getLogger(getClass()).error(e.getMessage()); 
 		}
 		codeLayout.add(code);
 

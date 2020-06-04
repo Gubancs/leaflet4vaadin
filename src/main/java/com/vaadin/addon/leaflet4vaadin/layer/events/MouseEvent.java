@@ -21,6 +21,7 @@ import com.vaadin.addon.leaflet4vaadin.types.Point;
 
 public class MouseEvent extends LeafletEvent {
 
+    private static final long serialVersionUID = 833702270303187505L;
     private final Point containerPoint;
     private final Point layerPoint;
     private final LatLng latLng;

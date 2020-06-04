@@ -56,7 +56,7 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
    */
   ready() {
     super.ready();
-    console.log("LeafletMap - ready() leaflet map is ready.");
+    console.info("LeafletMap - ready() leaflet map is ready.");
     console.log("LeafletMap - ready() mapOptions: {}", this.mapOptions);
 
     this.leafletConverter = new LeafletTypeConverter();
@@ -77,126 +77,67 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
       this.map.whenReady(() => {
         console.log("LeafletMap - whenReady()");
         this.map.invalidateSize();
-        this.initMap();
         this.onMapReadyEventHandler();
       });
     } else {
       console.log("LeafletMap - afterServerUpdate() Leaflet Map already initialized");
     }
   }
-
-  initMap() {
-      console.log("LeafletMap - initMap() initial bounds", this.mapOptions.bounds);
-      if (this.mapOptions.bounds) {
-        this.fitBounds(this.mapOptions.bounds);
-      }
-      console.log("LeafletMap - initMap() initial layers", this.layers);
-      this.layers.forEach(layer => this.addLayerToMap(layer));
-      
-      console.log("LeafletMap - initMap() initial controls", this.controls);
-      this.controls.forEach(control => this.addControlToMap(control));
-      
-      this.mapInitialized = true;
-  }
-
-  addControlToMap(control) {
-      console.log("LeafletMap - addControlToMap(): {}", control);
-      let controlOptions = JSON.parse(control.json);
-      controlOptions.nodeId = control.nodeId;
-
-      console.log("LeafletMap - addControlToMap() controlOptions",  controlOptions);
-      let leafletControl = this.leafletConverter.toLeafletControl(controlOptions);
-      
-      leafletControl.addTo(this.map);
-      console.log("LeafletMap - '" + control.leafletType + "' control has been added to map", leafletControl);
-      
-      return leafletControl;
-  }
   
-  addLayerToMap(layer) {
-    console.log("LeafletMap - addLayerToMap()", layer);
-    let layerOptions = JSON.parse(layer.json);
-    layerOptions.nodeId = layer.nodeId;
-
-    console.log("LeafletMap - addLayerToMap() layerOptions",  layerOptions);
-    let leafletLayer = this.leafletConverter.toLeafletLayer(layerOptions);
-    
-    this.applyEventListeners(leafletLayer, layerOptions);
-    leafletLayer.addTo(this.map);
-    
-    console.log("LeafletMap - '" + layer.leafletType + "' layer has been added to map", leafletLayer);
-    return leafletLayer;
-  }
 
   callLeafletFunction(operation) {
-    console.log("LeafletMap - callLeafletFunction()");
+    console.info("LeafletMap - callLeafletFunction()", operation);
 
-    console.log("LeafletMap - callLeafletFunction() - layerID", { layerId: operation.layerId });
-    console.log("LeafletMap - callLeafletFunction() - functionName", { functionName: operation.functionName });
-    console.log("LeafletMap - callLeafletFunction() - arguments", { arguments: operation.arguments });
-
-    let layer = this.findLayer(this.map, operation.layerId);
+    let target = this._findTargetLayer(operation);
+    
     let leafletArgs = JSON.parse(operation.arguments);
+    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg, this));
+    //console.log("LeafletMap - callLeafletFunction() - leafletArgs", leafletArgs);
     
-    leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));
-    console.log("LeafletMap - callLeafletFunction() - leafletArgs", leafletArgs);
+    let leafletFn = target[operation.functionName];
+    //console.log("LeafletMap - callLeafletFunction() - leafletFn", leafletFn);
     
-    let leafletFn = layer[operation.functionName];
-    console.log("LeafletMap - callLeafletFunction() - leafletFn", leafletFn);
-    
-    let result = leafletFn.apply(layer, leafletArgs);
+    let result = leafletFn.apply(target, leafletArgs);
     console.log("LeafletMap - callLeafletFunction() - result", result);
     return result;
   }
-
-  findLayer(head, uuid) {
-    if (head.options && head.options.uuid === uuid) {
-      console.log("LeafletMap - findLayer() result", head);
-      return head;
+  
+  _findTargetLayer(operation) {
+	let target;
+    if(this.map.options.uuid === operation.layerId){
+    	target = this.map;
     } else {
-      if(head.eachLayer) {
-        let found;
-        head.eachLayer((child) => {
-          if(!found){
-            found = this.findLayer(child, uuid);
-          }
-        });
-        if (found) {
-          return found;
-        }
-      }
+		if(operation.controlOperation) {
+			target = this.getControl(operation.layerId);
+	    }
+	    else {
+	    	target = this.getLayer(operation.layerId);
+	    }
     }
+    return target;
+  }
+  
+  hasLayer(layerId) {
+	return this.map._layers && this.getLayer(layerId);
+  }
+  
+  getLayer(layerId) {
+	return this.map._layers[layerId];
   }
 
-  /**
-   * Sets a map view that contains the given geographical bounds with the maximum zoom level possible.
-   */
-  fitBounds(bounds) {
-    console.log("LeafletMap - fitBounds()", bounds);
-    if (this.map && bounds) {
-      let leafletBounds = this.leafletConverter.toLatLngBounds(bounds);
-      this.map.fitBounds(leafletBounds);
-    }
+  getControl(controlId) {
+	return this.map._controls[controlId];
   }
-
+  
   toLeafletMap(options) {
     console.log("LeafletMap - initialize map with options: {}", options);
     let mapElement = this.shadowRoot.getElementById("map");
     console.log("LeafletMap - using DOM element: {}", mapElement);
     let leafletMap = L.map(mapElement, options);
+    leafletMap._controls = [];
     this.events.slice().forEach(event => this.registerEventListener(leafletMap, event.leafletEvent));
     console.log("LeafletMap - map has been created with options", options);
     return leafletMap;
-  }
-
-  applyEventListeners(layer, options) {
-    console.log("LeafletMap - applyEventListeners()", layer, options);
-    if (options.events) {
-      options.events.forEach(event => this.registerEventListener(layer, event));
-    }
-    if (layer.eachLayer) {
-      layer.eachLayer(child => this.applyEventListeners(child, child.options));
-    }
   }
 
   registerEventListener(layer, event) {
@@ -207,8 +148,7 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
         eventListener = found.handler;
       }
     }
-
-    console.log("LeafletMap - registerEventListener() register listener for event", { event: event });
+    console.info("LeafletMap - registerEventListener() register listener for event", { event: event });
     layer.on(event, eventListener, this);
   }
 

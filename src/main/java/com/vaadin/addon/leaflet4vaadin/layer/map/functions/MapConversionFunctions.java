@@ -184,7 +184,7 @@ public interface MapConversionFunctions extends ExecutableFunctions {
      * @see LatLng
      */
     default CompletableFuture<Point> mouseEventToContainerPoint(MouseEvent mouseEvent) {
-        throw unsupportedOperation();
+        return call("latLngToContainerPoint", Point.class, mouseEvent);
     }
 
     /**
@@ -199,7 +199,7 @@ public interface MapConversionFunctions extends ExecutableFunctions {
      * @see LatLng
      */
     default CompletableFuture<Point> mouseEventToLayerPoint(MouseEvent mouseEvent) {
-        throw unsupportedOperation();
+        return call("mouseEventToLayerPoint", Point.class, mouseEvent);
     }
 
     /**
@@ -213,6 +213,6 @@ public interface MapConversionFunctions extends ExecutableFunctions {
      * @see LatLng
      */
     default CompletableFuture<LatLng> mouseEventToLatLng(MouseEvent mouseEvent) {
-        throw unsupportedOperation();
+        return call("mouseEventToLatLng", LatLng.class, mouseEvent);
     }
 }

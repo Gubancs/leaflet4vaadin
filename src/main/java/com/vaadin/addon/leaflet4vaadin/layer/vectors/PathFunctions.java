@@ -32,7 +32,7 @@ public interface PathFunctions extends ExecutableFunctions {
 	 * 
 	 */
 	default void redraw() {
-		execute("redraw");
+		executeJs("redraw");
 	}
 
 	/**
@@ -42,20 +42,20 @@ public interface PathFunctions extends ExecutableFunctions {
 	 * @param pathOptions the appearance to be use
 	 */
 	default void setStyle(PathOptions pathOptions) {
-		execute("setStyle", pathOptions);
+		executeJs("setStyle", pathOptions);
 	}
 
 	/**
 	 * Brings the layer to the top of all path layers.
 	 */
 	default void bringToFront() {
-		execute("bringToFront");
+		executeJs("bringToFront");
 	}
 
 	/**
 	 * Brings the layer to the bottom of all path layers.
 	 */
 	default void bringToBack() {
-		execute("bringToBack");
+		executeJs("bringToBack");
 	}
 }

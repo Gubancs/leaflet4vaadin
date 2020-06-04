@@ -34,7 +34,7 @@ public interface LayerGroupFunctions extends ExecutableFunctions {
      * @param layer the layer to be added to this layer group
      */
     default void addLayer(Layer layer) {
-        execute("addLayer", layer);
+        executeJs("addLayer", layer);
     }
 
     /**
@@ -43,7 +43,7 @@ public interface LayerGroupFunctions extends ExecutableFunctions {
      * @param layer the layer to be removed from this layer group
      */
     default void removeLayer(Layer layer) {
-        execute("removeLayer", layer);
+        executeJs("removeLayer", layer);
     }
 
     /**
@@ -52,7 +52,7 @@ public interface LayerGroupFunctions extends ExecutableFunctions {
      * @param layerId the internal ID of the layer should remove
      */
     default void removeLayer(String layerId) {
-        execute("removeLayer", layerId);
+        executeJs("removeLayer", layerId);
     }
 
     /**
@@ -75,6 +75,6 @@ public interface LayerGroupFunctions extends ExecutableFunctions {
      * Removes all the layers from the group.
      */
     default void clearLayers() {
-        execute("clearLayers");
+        executeJs("clearLayers");
     }
 }

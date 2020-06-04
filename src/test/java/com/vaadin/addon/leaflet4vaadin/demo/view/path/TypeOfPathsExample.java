@@ -39,6 +39,8 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/types", layout = LeafletDemoApp.class)
 public class TypeOfPathsExample extends ExampleContainer {
 
+    private Path currentPath;
+    
 	@Override
 	protected void initDemo() {
 		MapOptions options = new DefaultMapOptions();
@@ -47,24 +49,27 @@ public class TypeOfPathsExample extends ExampleContainer {
 		LeafletMap leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		addToSidebar(createButton(this::polyline, leafletMap));
-		addToSidebar(createButton(this::polygon, leafletMap));
-		addToSidebar(createButton(this::rectangle, leafletMap));
-		addToSidebar(createButton(this::circle, leafletMap));
-		addToSidebar(createButton(this::circleMarker, leafletMap));
+		addToSidebar(createButton(Polyline.class, this::polyline, leafletMap));
+		addToSidebar(createButton(Polygon.class, this::polygon, leafletMap));
+		addToSidebar(createButton(Rectangle.class, this::rectangle, leafletMap));
+		addToSidebar(createButton(Circle.class, this::circle, leafletMap));
+		addToSidebar(createButton(CircleMarker.class, this::circleMarker, leafletMap));
 
 		addToContent(leafletMap);
 	}
 
-	private Button createButton(Supplier<Path> suplier, LeafletMap leafletMap) {
-		Path path = suplier.get();
-		Button btn = new Button(path.getClass().getSimpleName());
-		btn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-		btn.addClickListener((event) -> {
-			path.bindTooltip("Hi, I'am a " + path.getClass().getSimpleName());
-			path.addTo(leafletMap);
-		});
-		return btn;
+    private <T extends Path> Button createButton(Class<T> type, Supplier<Path> suplier, LeafletMap leafletMap) {
+        Button btn = new Button(type.getSimpleName());
+        btn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        btn.addClickListener((event) -> {
+            if(currentPath != null) {
+                currentPath.remove();
+            }
+            currentPath = suplier.get();
+            currentPath.bindTooltip("Hi, I'am a " + currentPath.getClass().getSimpleName());
+            currentPath.addTo(leafletMap);
+        });
+        return btn;
 	}
 
 	public Polyline polyline() {

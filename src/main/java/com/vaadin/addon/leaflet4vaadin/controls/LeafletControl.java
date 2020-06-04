@@ -14,37 +14,27 @@
 
 package com.vaadin.addon.leaflet4vaadin.controls;
 
-import java.io.Serializable;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.LeafletObject;
-import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
-import com.vaadin.addon.leaflet4vaadin.layer.map.functions.ExecutableFunctions;
 import com.vaadin.flow.templatemodel.Encode;
 import com.vaadin.flow.templatemodel.ModelEncoder;
 
-public abstract class LeafletControl extends LeafletObject implements ExecutableFunctions {
+public abstract class LeafletControl extends LeafletObject {
+
+    private static final long serialVersionUID = -9057192899900276429L;
 
     public static enum ControlPosition {
         topleft, topright, bottomleft, bottomright;
     }
 
-    private final String uuid;
     private final String controlType;
     private ControlPosition position = ControlPosition.topright;
     protected LeafletMap leafletMap;
 
     public LeafletControl(String controlType) {
         this.controlType = controlType;
-        this.uuid = UUID.randomUUID().toString();
     }
 
-    @Override
-    public String getUuid() {
-        return uuid;
-    }
 
     public ControlPosition getPosition() {
         return position;
@@ -55,9 +45,14 @@ public abstract class LeafletControl extends LeafletObject implements Executable
         return controlType;
     }
 
+    /**
+     * Sets the position of the control.
+     * @param position the position of the control
+     */
     @Encode(value = ControlPositionModelEncoder.class)
     public void setPosition(ControlPosition position) {
         this.position = position;
+        executeJs(this, "setPosition", position);
     }
 
     /**
@@ -69,6 +64,14 @@ public abstract class LeafletControl extends LeafletObject implements Executable
     public void addTo(LeafletMap leafletMap) {
         this.leafletMap = leafletMap;
         leafletMap.addControl(this);
+        setParent(leafletMap);
+    }
+    
+    /**
+     * Removes the control from the map it is currently active on.
+     */
+    public void remove() {
+        executeJs(this, "remove");
     }
 
     public static class ControlPositionModelEncoder implements ModelEncoder<ControlPosition, String> {
@@ -88,24 +91,6 @@ public abstract class LeafletControl extends LeafletObject implements Executable
             return ControlPosition.valueOf(value);
         }
 
-    }
-
-    @Override
-    public void execute(Identifiable target, String functionName, Serializable... arguments) {
-        if (leafletMap != null) {
-            leafletMap.execute(target, functionName, arguments);
-        } else {
-            throw new RuntimeException("Unable to execute leaflet function " + functionName);
-        }
-    }
-
-    @Override
-    public <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType, Serializable... arguments) {
-        if (leafletMap != null) {
-            return leafletMap.call(target, functionName, resultType, arguments);
-        } else {
-            throw new RuntimeException("Unable to call leaflet function " + functionName);
-        }
     }
 
 }

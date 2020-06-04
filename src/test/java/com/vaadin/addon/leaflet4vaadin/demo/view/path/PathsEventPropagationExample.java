@@ -29,7 +29,9 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/events", layout = LeafletDemoApp.class)
 public class PathsEventPropagationExample extends ExampleContainer {
 
-	@Override
+    private static final long serialVersionUID = 5677974062708487480L;
+
+    @Override
 	protected void initDemo() {
 
 		MapOptions options = new DefaultMapOptions();

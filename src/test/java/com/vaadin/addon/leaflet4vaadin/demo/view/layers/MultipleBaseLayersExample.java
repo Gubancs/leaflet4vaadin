@@ -14,11 +14,13 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo.view.layers;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.controls.LayersControl;
+import com.vaadin.addon.leaflet4vaadin.controls.LayersControlOptions;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.Layer;
@@ -33,31 +35,31 @@ import com.vaadin.flow.router.Route;
 @Route(value = "layers/baselayers", layout = LeafletDemoApp.class)
 public class MultipleBaseLayersExample extends ExampleContainer {
 
-	@Override
-	protected void initDemo() {
+    @Override
+    protected void initDemo() {
 
-		final MapOptions options = new DefaultMapOptions();
-		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-		options.setZoom(7);
-		final LeafletMap leafletMap = new LeafletMap(options);
-		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+        final MapOptions options = new DefaultMapOptions();
+        options.setCenter(new LatLng(47.070121823, 19.204101562500004));
+        options.setZoom(7);
+        final LeafletMap leafletMap = new LeafletMap(options);
+        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		TileLayer openStreetmap = new TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
-		openStreetmap.setSubdomains("1");
+        TileLayer openStreetmap = new TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+        openStreetmap.setSubdomains("1");
 
-		TileLayer mapQuest = new TileLayer("http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png");
-		mapQuest.setAttribution("Tiles courtesy of MapQuest");
-		mapQuest.setSubdomains("1");
+        TileLayer mapQuest = new TileLayer("http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png");
+        mapQuest.setAttribution("Tiles courtesy of MapQuest");
+        mapQuest.setSubdomains("1");
 
-		TileLayer wikimedia = new TileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png");
-		wikimedia.setAttribution("Wikimedia Maps");
+        TileLayer wikimedia = new TileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png");
+        wikimedia.setAttribution("Wikimedia Maps");
 
-		TileLayer openCycleMap = new TileLayer("http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png");
-		openCycleMap.setAttribution("OpenCycleMap");
+        TileLayer openCycleMap = new TileLayer("http://tile.thunderforest.com/cycle/{z}/{x}/{y}.png");
+        openCycleMap.setAttribution("OpenCycleMap");
 
-		TileLayer grayscale = new TileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png");
-		grayscale.setAttribution("wmflabs OSM B&W mapnik map grayscale");
-		
+        TileLayer grayscale = new TileLayer("https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png");
+        grayscale.setAttribution("wmflabs OSM B&W mapnik map grayscale");
+
         Map<String, Layer> baseLayers = new HashMap<String, Layer>();
         baseLayers.put("OpenStreetmap default", openStreetmap);
         baseLayers.put("Mapquest layer", mapQuest);
@@ -65,10 +67,12 @@ public class MultipleBaseLayersExample extends ExampleContainer {
         baseLayers.put("OpenCycleMap", openCycleMap);
         baseLayers.put("Mapnik map grayscale", grayscale);
 
-        LayersControl layersControl = new LayersControl(baseLayers);
+        LayersControlOptions layerControlOptions = new LayersControlOptions();
+        layerControlOptions.setCollapsed(false);
+        LayersControl layersControl = new LayersControl(baseLayers, Collections.emptyMap(), layerControlOptions);
         layersControl.addTo(leafletMap);
 
-		addToContent(leafletMap);
-	}
+        addToContent(leafletMap);
+    }
 
 }

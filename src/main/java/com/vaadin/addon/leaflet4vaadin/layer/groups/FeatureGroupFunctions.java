@@ -38,21 +38,21 @@ public interface FeatureGroupFunctions extends ExecutableFunctions {
      * @param geoJsonObject
      */
     default void setStyle(PathOptions pathOptions) {
-        execute("setStyle", pathOptions);
+        executeJs("setStyle", pathOptions);
     }
 
     /**
      * Brings the layer group to the top of all other layers
      */
     default void bringToFront() {
-        execute("bringToFront");
+        executeJs("bringToFront");
     }
 
     /**
      * Brings the layer group to the back of all other layers
      */
     default void bringToBack() {
-        execute("bringToBack");
+        executeJs("bringToBack");
     }
 
     /**

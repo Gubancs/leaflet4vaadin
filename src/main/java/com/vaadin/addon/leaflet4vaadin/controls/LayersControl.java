@@ -14,7 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.controls;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.vaadin.addon.leaflet4vaadin.annotations.LeafletArgument;
@@ -46,11 +46,11 @@ public class LayersControl extends LeafletControl {
 
     private static final long serialVersionUID = -7779809624116362068L;
 
-    @LeafletArgument
-    private final Map<String ,Layer> baseLayers;
+    @LeafletArgument(index = 0)
+    private final Map<String, Layer> baseLayers;
 
-    @LeafletArgument
-    private final Map<String ,Layer> overlays;
+    @LeafletArgument(index = 1)
+    private final Map<String, Layer> overlays;
 
     private final LayersControlOptions options;
 
@@ -62,19 +62,18 @@ public class LayersControl extends LeafletControl {
         }
     }
 
-    
     public LayersControl() {
         this(new LayersControlOptions());
     }
 
     public LayersControl(LayersControlOptions options) {
-        this(Collections.emptyMap(), Collections.emptyMap(), options);
+        this(new HashMap<>(), new HashMap<>(), options);
     }
-    
+
     public LayersControl(Map<String, Layer> baseLayers) {
-        this(baseLayers, Collections.emptyMap(), new LayersControlOptions());
+        this(baseLayers, new HashMap<>(), new LayersControlOptions());
     }
-    
+
     public LayersControl(Map<String, Layer> baseLayers, Map<String, Layer> overlays) {
         this(baseLayers, overlays, new LayersControlOptions());
     }
@@ -141,14 +140,14 @@ public class LayersControl extends LeafletControl {
      * Expand the control container if collapsed.
      */
     public void expand() {
-        execute(this, "expand");
+        executeJs(this, "expand");
     }
 
     /**
      * Collapse the control container if expanded.
      */
     public void collapse() {
-        execute(this, "collapse");
+        executeJs(this, "collapse");
     }
 
     /**
@@ -157,7 +156,7 @@ public class LayersControl extends LeafletControl {
      */
     public void addBaseLayer(Layer layer, String name) {
         this.baseLayers.put(name, layer);
-        execute(this, "addBaseLayer", layer, name);
+        executeJs(this, "addBaseLayer", layer, name);
     }
 
     /**
@@ -165,15 +164,15 @@ public class LayersControl extends LeafletControl {
      */
     public void addOverlay(Layer layer, String name) {
         this.overlays.put(name, layer);
-        execute(this, "addOverlay", layer, name);
+        executeJs(this, "addOverlay", layer, name);
     }
 
     /**
      * Remove the given layer from the control.
      */
     public void removeLayer(Layer layer) {
-        //TODO remove layer from overlays or baselayers
-        execute(this, "removeLayer", layer);
+        // TODO remove layer from overlays or baselayers
+        executeJs(this, "removeLayer", layer);
     }
 
     public boolean isCollapsed() {
@@ -199,4 +198,5 @@ public class LayersControl extends LeafletControl {
     public Map<String, Layer> getOverlays() {
         return overlays;
     }
+
 }

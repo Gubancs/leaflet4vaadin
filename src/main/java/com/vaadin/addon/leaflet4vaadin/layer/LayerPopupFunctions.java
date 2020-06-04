@@ -36,7 +36,7 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
      * @param popupContent the new popup content
      */
     default void bindPopup(String popupContent) {
-        execute("bindPopup", popupContent);
+        executeJs("bindPopup", popupContent);
     }
 
     /**
@@ -45,21 +45,21 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
      * @param popup the new popup content
      */
     default void bindPopup(Popup popup) {
-        execute("bindPopup", popup);
+        executeJs("bindPopup", popup);
     }
 
     /**
      * Removes the popup previously bound with bindPopup.
      */
     default void unbindPopup() {
-        execute("unbindPopup");
+        executeJs("unbindPopup");
     }
 
     /**
      * Closes the popup bound to this layer if it is open.
      */
     default void closePopup() {
-        execute("closePopup");
+        executeJs("closePopup");
     }
 
     /**
@@ -68,7 +68,7 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
      * @param latLng the popup location
      */
     default void openPopup() {
-        execute("closePopup");
+        executeJs("closePopup");
     }
 
     /**
@@ -78,14 +78,14 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
      * @param latLng the popup location
      */
     default void openPopup(LatLng latLng) {
-        execute("closePopup", latLng);
+        executeJs("closePopup", latLng);
     }
 
     /**
      * Opens or closes the popup bound to this layer depending on its current state.
      */
     default void togglePopup() {
-        execute("togglePopup");
+        executeJs("togglePopup");
     }
 
     /**
@@ -94,7 +94,7 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
      * @param popupContent the new popup content
      */
     default void setPopupContent(String popupContent) {
-        execute("setPopupContent", popupContent);
+        executeJs("setPopupContent", popupContent);
     }
 
     /**
@@ -103,7 +103,7 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
      * @param popup the new popup content
      */
     default void setPopupContent(Popup popup) {
-        execute("setPopupContent", popup);
+        executeJs("setPopupContent", popup);
     }
 
     /**
