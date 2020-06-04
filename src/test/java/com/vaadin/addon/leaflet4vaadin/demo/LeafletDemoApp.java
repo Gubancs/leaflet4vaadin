@@ -17,6 +17,7 @@ package com.vaadin.addon.leaflet4vaadin.demo;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenu;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.controls.LayersControlExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.RemoveDefaultControlsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONEventsExample;
@@ -164,6 +165,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 
 		// Controls examples
 		AppMenuItem.create("Controls", new Icon(VaadinIcon.ARROWS)).addSubMenu(RemoveDefaultControlsExample.class)
+		        .addSubMenu(LayersControlExample.class)
 				.addSubMenu(ControlPositionExample.class).addSubMenu(ScaleControlExample.class).addTo(appMenu);
 
 		// Mixins examples
