@@ -47,6 +47,7 @@ public class MarkersGroupExample extends ExampleContainer {
 				defaultGroupLayer = createDefaultMarkerGroup();
 			} else {
                 layersControl.removeLayer(defaultGroupLayer);
+                leafletMap.removeLayer(defaultGroupLayer);
                 defaultGroupLayer = null;
 			}
 		});
@@ -57,6 +58,7 @@ public class MarkersGroupExample extends ExampleContainer {
 				customGroupLayer = createCustomMarkerGroup();
 			} else {
 				layersControl.removeLayer(customGroupLayer);
+				leafletMap.removeLayer(customGroupLayer);
 				customGroupLayer = null;
 			}
 		});
