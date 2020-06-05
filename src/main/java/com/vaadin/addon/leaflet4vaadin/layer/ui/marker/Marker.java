@@ -67,7 +67,6 @@ public class Marker extends InteractiveLayer implements SupportsDragEvents, Mark
 	}
 
 	public LatLng getLatLng() {
-		set(MarkerFunctions.super::callLatLng, this::setLatLng);
 		return latLng;
 	}
 

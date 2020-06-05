@@ -22,7 +22,7 @@ package com.vaadin.addon.leaflet4vaadin.types;
  * @since 2020-03-21
  * @version 1.0
  */
-public class Icon implements LeafletClass {
+public class Icon implements BasicType {
 
     private static final long serialVersionUID = -5884170824139869060L;
 

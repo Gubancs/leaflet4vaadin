@@ -19,6 +19,7 @@ import static com.vaadin.addon.leaflet4vaadin.types.LatLng.latlng;
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
+import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.CircleMarker;
@@ -37,6 +38,8 @@ public class MapPollListenerExample extends ExampleContainer {
 
 	private Integer radius;
 	private Integer circleCount;
+	
+	private LayerGroup layerGroup;
 
 	@Override
 	protected void initDemo() {
@@ -50,6 +53,7 @@ public class MapPollListenerExample extends ExampleContainer {
 
 		this.radius = 10;
 		this.circleCount = 50;
+        this.layerGroup = new LayerGroup();
 
 		refresh(leafletMap);
 		
@@ -62,7 +66,7 @@ public class MapPollListenerExample extends ExampleContainer {
 	}
 
 	private void refresh(LeafletMap leafletMap) {
-		leafletMap.removeAllLayers();
+	    this.layerGroup.clearLayers();
 		for (int i = 0; i < circleCount; i++) {
 			int radius = (int) (Math.random() * this.radius);
 			double lat = (Math.random() * 4) + 45;
@@ -70,8 +74,9 @@ public class MapPollListenerExample extends ExampleContainer {
 			CircleMarker circleMarker = new CircleMarker(latlng(lat, lon), radius);
 			circleMarker.setWeight(0);
 			circleMarker.setFillOpacity(Math.random());
-			circleMarker.addTo(leafletMap);
+			circleMarker.addTo(layerGroup);
 		}
+		layerGroup.addTo(leafletMap);
 	}
 
 	private void createFormControls() {

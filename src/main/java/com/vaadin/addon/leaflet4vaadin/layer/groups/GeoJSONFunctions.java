@@ -40,7 +40,7 @@ public interface GeoJSONFunctions extends ExecutableFunctions {
      * Resets the style of all features in the current layer is reset.
      */
     default void resetStyle() {
-        execute("resetStyle");
+        executeJs("resetStyle");
     }
 
 }

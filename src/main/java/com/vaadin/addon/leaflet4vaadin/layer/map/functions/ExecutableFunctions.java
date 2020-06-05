@@ -21,11 +21,11 @@ import com.vaadin.addon.leaflet4vaadin.layer.Identifiable;
 
 public interface ExecutableFunctions extends Identifiable {
 
-    default void execute(String functionName, Serializable... arguments) {
-        execute(this, functionName, arguments);
+    default void executeJs(String functionName, Serializable... arguments) {
+        executeJs(this, functionName, arguments);
     }
 
-    void execute(Identifiable target, String functionName, Serializable... arguments);
+    void executeJs(Identifiable target, String functionName, Serializable... arguments);
 
     default <T extends Serializable> CompletableFuture<T> call(String functionName, Class<T> resultType,
             Serializable... arguments) {
@@ -35,7 +35,4 @@ public interface ExecutableFunctions extends Identifiable {
     <T extends Serializable> CompletableFuture<T> call(Identifiable target, String functionName, Class<T> resultType,
             Serializable... arguments);
 
-    default UnsupportedOperationException unsupportedOperation() {
-        return new UnsupportedOperationException("Sorry, but this function is not supported yet!");
-    }
 }

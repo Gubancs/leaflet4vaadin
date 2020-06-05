@@ -47,7 +47,7 @@ public class MarkersRemoveOnClickExample extends ExampleContainer {
 			Marker marker = new Marker(latlng(lat, lon));
 			marker.bindTooltip("Click me to remove from map");
 			marker.onClick((e) -> {
-				leafletMap.removeLayer(e.getTarget());
+				e.getTarget().remove();
 				Notification.show("Marker removed successfully", 1000, Position.TOP_CENTER);
 			});
 			marker.addTo(leafletMap);

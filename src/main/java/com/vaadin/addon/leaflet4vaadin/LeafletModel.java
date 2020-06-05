@@ -17,8 +17,6 @@ package com.vaadin.addon.leaflet4vaadin;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.vaadin.addon.leaflet4vaadin.controls.LeafletControl;
-import com.vaadin.addon.leaflet4vaadin.layer.Layer;
 import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.flow.templatemodel.TemplateModel;
@@ -28,18 +26,6 @@ public interface LeafletModel extends TemplateModel {
 	MapOptions getMapOptions();
 
 	void setMapOptions(MapOptions mapOptions);
-
-	String getBaseUrl();
-
-	void setBaseUrl(String baseUrl);
-
-	default List<LeafletControl> getControls() {
-		return new ArrayList<>();
-	}
-
-	default List<Layer> getLayers() {
-		return new ArrayList<>();
-	}
 
 	default List<LeafletEventType> getEvents() {
 		return new ArrayList<>();

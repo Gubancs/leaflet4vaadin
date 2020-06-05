@@ -36,7 +36,7 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * @param tooltipContent the new tooltip content
      */
     default void bindTooltip(String tooltipContent) {
-        execute("bindTooltip", tooltipContent);
+        executeJs("bindTooltip", tooltipContent);
     }
 
     /**
@@ -45,21 +45,21 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * @param tooltip the new tooltip content
      */
     default void bindTooltip(Tooltip tooltip) {
-        execute("bindTooltip", tooltip);
+        executeJs("bindTooltip", tooltip);
     }
 
     /**
      * Removes the tooltip previously bound with bindTooltip.
      */
     default void unbindTooltip() {
-        execute("unbindTooltip");
+        executeJs("unbindTooltip");
     }
 
     /**
      * Closes the tooltip bound to this layer if it is open.
      */
     default void closeTooltip() {
-        execute("closeTooltip");
+        executeJs("closeTooltip");
     }
 
     /**
@@ -68,7 +68,7 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * @param latLng the tooltip location
      */
     default void openTooltip() {
-        execute("closeTooltip");
+        executeJs("closeTooltip");
     }
 
     /**
@@ -78,7 +78,7 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * @param latLng the tooltip location
      */
     default void openTooltip(LatLng latLng) {
-        execute("closeTooltip", latLng);
+        executeJs("closeTooltip", latLng);
     }
 
     /**
@@ -86,7 +86,7 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * state.
      */
     default void toggleTooltip() {
-        execute("toggleTooltip");
+        executeJs("toggleTooltip");
     }
 
     /**
@@ -95,7 +95,7 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * @param tooltipContent the new tooltip content
      */
     default void setTooltipContent(String tooltipContent) {
-        execute("setTooltipContent", tooltipContent);
+        executeJs("setTooltipContent", tooltipContent);
     }
 
     /**
@@ -104,7 +104,7 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
      * @param tooltip the new tooltip content
      */
     default void setTooltipContent(Tooltip tooltip) {
-        execute("setTooltipContent", tooltip);
+        executeJs("setTooltipContent", tooltip);
     }
 
     /**

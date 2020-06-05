@@ -17,6 +17,7 @@ package com.vaadin.addon.leaflet4vaadin.demo;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenu;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.controls.LayersControlExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.RemoveDefaultControlsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONEventsExample;
@@ -24,7 +25,6 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONFilterExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.TileLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapConversionMethodsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
@@ -155,7 +155,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addTo(appMenu);
 
 		// Layers examples
-		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL)).addSubMenu(TileLayerExample.class)
+		AppMenuItem.create("Layers", new Icon(VaadinIcon.GRID_SMALL))
 				.addSubMenu(MultipleBaseLayersExample.class).addSubMenu(GeoJSONLayerExample.class)
 				.addSubMenu(GeoJSONFilterExample.class).addSubMenu(GeoJSONStyleExample.class)
 				.addSubMenu(GeoJSONEventsExample.class).addTo(appMenu);
@@ -168,6 +168,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 
 		// Controls examples
 		AppMenuItem.create("Controls", new Icon(VaadinIcon.ARROWS)).addSubMenu(RemoveDefaultControlsExample.class)
+		        .addSubMenu(LayersControlExample.class)
 				.addSubMenu(ControlPositionExample.class).addSubMenu(ScaleControlExample.class).addTo(appMenu);
 
 		// Mixins examples

@@ -15,6 +15,8 @@
 package com.vaadin.addon.leaflet4vaadin.demo.view.marker;
 
 import com.vaadin.addon.leaflet4vaadin.LeafletMap;
+import com.vaadin.addon.leaflet4vaadin.controls.LayersControl;
+import com.vaadin.addon.leaflet4vaadin.controls.LayersControlOptions;
 import com.vaadin.addon.leaflet4vaadin.demo.LeafletDemoApp;
 import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.LayerGroup;
@@ -31,30 +33,31 @@ import com.vaadin.flow.router.Route;
 @Route(value = "marker/group", layout = LeafletDemoApp.class)
 public class MarkersGroupExample extends ExampleContainer {
 
-	private LeafletMap leafletMap;
-	private LayerGroup defaultGroup;
-	private LayerGroup customGroup;
+    private LeafletMap leafletMap;
+	private LayersControl layersControl;
+	private LayerGroup defaultGroupLayer;
+	private LayerGroup customGroupLayer;
 
 	@Override
 	protected void initDemo() {
 		Button defaultGroup = new Button("Default markers");
 		defaultGroup.addThemeVariants(ButtonVariant.LUMO_ERROR);
 		defaultGroup.addClickListener((event) -> {
-			if (this.defaultGroup == null) {
-				this.defaultGroup = createDefaultMarkerGroup();
+			if (defaultGroupLayer == null) {
+				defaultGroupLayer = createDefaultMarkerGroup();
 			} else {
-				this.leafletMap.removeLayer(this.defaultGroup);
-				this.defaultGroup = null;
+                layersControl.removeLayer(defaultGroupLayer);
+                defaultGroupLayer = null;
 			}
 		});
 		Button customGroup = new Button("Custom markers");
 		customGroup.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 		customGroup.addClickListener((event) -> {
-			if (this.customGroup == null) {
-				this.customGroup = createCustomMarkerGroup();
+			if (customGroupLayer == null) {
+				customGroupLayer = createCustomMarkerGroup();
 			} else {
-				this.leafletMap.removeLayer(this.customGroup);
-				this.customGroup = null;
+				layersControl.removeLayer(customGroupLayer);
+				customGroupLayer = null;
 			}
 		});
 		addToSidebar(defaultGroup, customGroup);
@@ -65,8 +68,16 @@ public class MarkersGroupExample extends ExampleContainer {
 		leafletMap = new LeafletMap(options);
 		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		this.customGroup = createCustomMarkerGroup();
-		this.defaultGroup = createDefaultMarkerGroup();
+		//Initialize layers control with customized options
+		LayersControlOptions layersControlOptions = new LayersControlOptions();
+		layersControlOptions.setCollapsed(false);
+		layersControl = new LayersControl(layersControlOptions);
+        layersControl.addTo(leafletMap);
+		
+        //Initialize layers and add them to the Map and the LayersControl
+		customGroupLayer = createCustomMarkerGroup();
+		defaultGroupLayer = createDefaultMarkerGroup();
+		
 
 		addToContent(leafletMap);
 	}
@@ -75,8 +86,8 @@ public class MarkersGroupExample extends ExampleContainer {
 		Marker m1 = new Marker(new LatLng(46.470121823, 18.3041015625));
 		Marker m2 = new Marker(new LatLng(46.320121823, 18.0041015625));
 		LayerGroup group = new LayerGroup(m1, m2);
-		group.setName("Default markers");
 		group.addTo(leafletMap);
+		layersControl.addOverlay(group, "Default markers");
 		return group;
 	}
 
@@ -88,8 +99,8 @@ public class MarkersGroupExample extends ExampleContainer {
 		Marker m4 = new Marker(new LatLng(46.320121823, 19.2041015625));
 		m4.setIcon(icon);
 		LayerGroup group = new LayerGroup(m3, m4);
-		group.setName("Custom markers");
-		group.addTo(leafletMap);
+        group.addTo(leafletMap);
+		layersControl.addOverlay(group, "Custom markers");
 		return group;
 	}
 

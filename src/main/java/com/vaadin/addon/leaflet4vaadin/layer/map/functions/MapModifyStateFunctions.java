@@ -37,7 +37,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param latlng the new center coordiantes
      */
     default void flyTo(LatLng latlng) {
-        execute("flyTo", latlng);
+        executeJs("flyTo", latlng);
     }
 
     /**
@@ -47,7 +47,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param zoom   the new zoom level
      */
     default void flyTo(LatLng latlng, int zoom) {
-        execute("flyTo", latlng, zoom);
+        executeJs("flyTo", latlng, zoom);
     }
 
     /**
@@ -59,7 +59,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan animation options
      */
     default void flyTo(LatLng latlng, int zoom, PanOptions options) {
-        execute("flyTo", latlng, zoom, options);
+        executeJs("flyTo", latlng, zoom, options);
     }
 
     /**
@@ -71,7 +71,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the zoom animation options
      */
     default void flyTo(LatLng latlng, int zoom, ZoomOptions options) {
-        execute("flyTo", latlng, zoom, options);
+        executeJs("flyTo", latlng, zoom, options);
     }
 
     /**
@@ -80,7 +80,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param latlng pans the map to a given latlng.
      */
     default void panTo(LatLng latlng) {
-        execute("panTo", latlng);
+        executeJs("panTo", latlng);
     }
 
     /**
@@ -90,7 +90,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan animation options
      */
     default void panTo(LatLng latlng, PanOptions options) {
-        execute("panTo", latlng, options);
+        executeJs("panTo", latlng, options);
     }
 
     /**
@@ -100,7 +100,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param zoom   the new zoom level
      */
     default void setView(LatLng center, int zoom) {
-        execute("setView", center, zoom);
+        executeJs("setView", center, zoom);
     }
 
     /**
@@ -112,7 +112,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the zoom animation options
      */
     default void setView(LatLng center, int zoom, ZoomOptions options) {
-        execute("setView", center, zoom, options);
+        executeJs("setView", center, zoom, options);
     }
 
     /**
@@ -124,7 +124,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan animation options
      */
     default void setView(LatLng center, int zoom, PanOptions options) {
-        execute("setView", center, zoom, options);
+        executeJs("setView", center, zoom, options);
     }
 
     /**
@@ -133,7 +133,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param zoom the new zoom level
      */
     default void setZoom(int zoom) {
-        execute("setZoom", zoom);
+        executeJs("setZoom", zoom);
     }
 
     /**
@@ -143,7 +143,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan animation options
      */
     default void setZoom(int zoom, PanOptions options) {
-        execute("setZoom", zoom, options);
+        executeJs("setZoom", zoom, options);
     }
 
     /**
@@ -152,7 +152,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param delta increases the zoom of the map by delta
      */
     default void zoomIn(int delta) {
-        execute("zoomIn", delta);
+        executeJs("zoomIn", delta);
     }
 
     /**
@@ -162,7 +162,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the zoom animation options
      */
     default void zoomIn(int delta, ZoomOptions options) {
-        execute("zoomIn", delta, options);
+        executeJs("zoomIn", delta, options);
     }
 
     /**
@@ -171,7 +171,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param delta decreases the zoom of the map by delta
      */
     default void zoomOut(int delta) {
-        execute("zoomOut", delta);
+        executeJs("zoomOut", delta);
     }
 
     /**
@@ -181,7 +181,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan animation options
      */
     default void zoomOut(int delta, ZoomOptions options) {
-        execute("zoomOut", delta, options);
+        executeJs("zoomOut", delta, options);
     }
 
     /**
@@ -192,7 +192,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param zoom   the zoom level
      */
     default void setZoomAround(LatLng latlng, int zoom) {
-        execute("setZoomAround", latlng, zoom);
+        executeJs("setZoomAround", latlng, zoom);
     }
 
     /**
@@ -205,7 +205,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * 
      */
     default void setZoomAround(Point offset, int zoom, ZoomOptions options) {
-        execute("setZoomAround", offset, zoom, options);
+        executeJs("setZoomAround", offset, zoom, options);
     }
 
     /**
@@ -215,7 +215,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param bounds the bounds
      */
     default void fitBounds(LatLngBounds bounds) {
-        execute("fitBounds", bounds);
+        executeJs("fitBounds", bounds);
     }
 
     /**
@@ -226,7 +226,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the fit bounds options
      */
     default void fitBounds(LatLngBounds bounds, FitBoundsOptions options) {
-        execute("fitBounds", bounds, options);
+        executeJs("fitBounds", bounds, options);
     }
 
     /**
@@ -235,7 +235,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * 
      */
     default void fitWorld() {
-        execute("fitWorld");
+        executeJs("fitWorld");
     }
 
     /**
@@ -245,7 +245,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the fit bounds options
      */
     default void fitWorld(FitBoundsOptions options) {
-        execute("fitWorld", options);
+        executeJs("fitWorld", options);
     }
 
     /**
@@ -254,7 +254,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param offset number of pixels
      */
     default void panBy(Point offset) {
-        execute("panBy", offset);
+        executeJs("panBy", offset);
     }
 
     /**
@@ -264,7 +264,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan options
      */
     default void panBy(Point offset, PanOptions options) {
-        execute("panBy", offset, options);
+        executeJs("panBy", offset, options);
     }
 
     /**
@@ -274,7 +274,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param bounds the bounds
      */
     default void flyToBounds(LatLngBounds bounds) {
-        execute("flyToBounds", bounds);
+        executeJs("flyToBounds", bounds);
     }
 
     /**
@@ -285,7 +285,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the fit bounds options
      */
     default void flyToBounds(LatLngBounds bounds, FitBoundsOptions options) {
-        execute("flyToBounds", bounds, options);
+        executeJs("flyToBounds", bounds, options);
     }
 
     /**
@@ -294,7 +294,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param bounds the bounds
      */
     default void setMaxBounds(LatLngBounds bounds) {
-        execute("setMaxBounds", bounds);
+        executeJs("setMaxBounds", bounds);
     }
 
     /**
@@ -303,7 +303,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param minZoom the lower limit for the available zoom levels
      */
     default void setMinZoom(int minZoom) {
-        execute("setMinZoom", minZoom);
+        executeJs("setMinZoom", minZoom);
     }
 
     /**
@@ -312,7 +312,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param maxZoom the upper limit for the available zoom levels
      */
     default void setMaxZoom(int maxZoom) {
-        execute("setMaxZoom", maxZoom);
+        executeJs("setMaxZoom", maxZoom);
     }
 
     /**
@@ -323,7 +323,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param bounds the bounds
      */
     default void panInsideBounds(LatLngBounds bounds) {
-        execute("panInsideBounds", bounds);
+        executeJs("panInsideBounds", bounds);
     }
 
     /**
@@ -335,7 +335,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan options
      */
     default void panInsideBounds(LatLngBounds bounds, PanOptions options) {
-        execute("panInsideBounds", bounds, options);
+        executeJs("panInsideBounds", bounds, options);
     }
 
     /**
@@ -347,7 +347,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param latlng the latlng
      */
     default void panInside(LatLng latlng) {
-        execute("panInside", latlng);
+        executeJs("panInside", latlng);
     }
 
     /**
@@ -360,7 +360,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan options
      */
     default void panInside(LatLng latlng, PanOptions options) {
-        execute("panInside", latlng, options);
+        executeJs("panInside", latlng, options);
     }
 
     /**
@@ -371,7 +371,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * the method is called many times in a row.
      */
     default void invalidateSize() {
-        execute("invalidateSize");
+        executeJs("invalidateSize");
     }
 
     /**
@@ -384,7 +384,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the pan options
      */
     default void invalidateSize(PanOptions options) {
-        execute("invalidateSize", options);
+        executeJs("invalidateSize", options);
     }
 
     /**
@@ -397,7 +397,7 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param options the zoom options
      */
     default void invalidateSize(ZoomOptions options) {
-        execute("invalidateSize", options);
+        executeJs("invalidateSize", options);
     }
 
     /**
@@ -407,13 +407,13 @@ public interface MapModifyStateFunctions extends ExecutableFunctions {
      * @param animate set true to animating
      */
     default void invalidateSize(boolean animate) {
-        execute("invalidateSize", animate);
+        executeJs("invalidateSize", animate);
     }
 
     /**
      * Stops the currently running panTo or flyTo animation, if any.
      */
     default void stop() {
-        execute("stop");
+        executeJs("stop");
     }
 }
