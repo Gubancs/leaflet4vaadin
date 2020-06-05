@@ -60,6 +60,7 @@ public class LayersControlExample extends ExampleContainer {
 
         TileLayer openStreetmap = new TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
         openStreetmap.setSubdomains("1");
+        openStreetmap.addTo(leafletMap);
         layersControl.addBaseLayer(openStreetmap, "OpenStreetmap default");
 
         TileLayer wikimedia = new TileLayer("https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png");
@@ -72,8 +73,7 @@ public class LayersControlExample extends ExampleContainer {
         layerGroup.addTo(leafletMap);
         layersControl.addOverlay(layerGroup, "Simple markers");
         
-        LayerGroup customGroup = createRandomMarkers(CUSTOM_ICON, 100);
-        customGroup.addTo(leafletMap);
+        LayerGroup customGroup = createRandomMarkers(CUSTOM_ICON, 20);
         layersControl.addOverlay(customGroup, "Custom markers");
 
         addToContent(leafletMap);

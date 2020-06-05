@@ -22,6 +22,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
@@ -30,8 +31,11 @@ import com.vaadin.flow.router.Route;
 public class AppMenuItem extends VerticalLayout {
 
     private static final long serialVersionUID = 6428270908323350266L;
+    public static final boolean NEW_FEATURE = true;
     private final String title;
     private final Icon icon;
+    private Icon badge;
+    private HorizontalLayout layout = new HorizontalLayout();
 
     public AppMenuItem(String title, Icon icon) {
         this.title = title;
@@ -42,20 +46,37 @@ public class AppMenuItem extends VerticalLayout {
     }
 
     public void addTo(AppMenu appMenu) {
-        HorizontalLayout summary = new HorizontalLayout();
-        summary.addClassName("app-menu-item-summary");
-        summary.add(icon);
-        summary.add(new Label(title));
-        appMenu.addMenuItem(summary, this);
+        layout.addClassName("app-menu-item-summary");
+        layout.add(icon);
+        layout.add(new Label(title));
+        if (badge != null) {
+            layout.addClassName("has-new-feature");
+            layout.add(badge);
+        }
+        appMenu.addMenuItem(layout, this);
     }
 
     public AppMenuItem addSubMenu(Class<? extends Component> navigationTarget) {
+        return addSubMenu(navigationTarget, false);
+    }
+
+    public AppMenuItem addSubMenu(Class<? extends Component> navigationTarget, boolean newFeature) {
         Button menuButton = new Button(navigationTarget.getAnnotation(PageTitle.class).value());
         menuButton.addClassName("app-submenu-item");
         menuButton.setWidthFull();
         menuButton.addThemeVariants(ButtonVariant.LUMO_SMALL);
         menuButton.addClickListener((event) -> UI.getCurrent().navigate(navigationTarget));
         menuButton.getElement().setAttribute("path", navigationTarget.getAnnotation(Route.class).value());
+
+        if (newFeature) {
+            menuButton.setIcon(new Icon(VaadinIcon.STAR));
+            menuButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        }
+
+        if (badge == null && newFeature) {
+            badge = new Icon(VaadinIcon.STAR);
+            badge.addClassName("badge-icon");
+        }
         add(menuButton);
         return this;
     }

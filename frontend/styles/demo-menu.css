@@ -6,8 +6,25 @@
   padding: 5px 0px;
 }
 
+.app-menu-item-summary {
+  padding: 5px 0px;
+}
+
+
+.app-menu-item-summary.has-new-feature {
+  color: var(--lumo-success-text-color);
+}
+
+.app-menu-item-summary .badge-icon {
+	width: 14px;
+}
+
 .app-menu-item-panel.active .app-menu-item-summary {
   color: var(--lumo-primary-text-color);
+}
+
+.app-menu-item-panel.active .app-menu-item-summary.has-new-feature {
+  color: var(--lumo-success-text-color);
 }
 
 .app-submenu-item {

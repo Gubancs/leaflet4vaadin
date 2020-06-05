@@ -14,6 +14,8 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo;
 
+import static com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem.NEW_FEATURE;
+
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenu;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
@@ -77,7 +79,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 	private static final long serialVersionUID = -9119767347112138141L;
 
 	private AppMenu appMenu = AppMenu.create();
-
+	
 	public LeafletDemoApp() {
 		DrawerToggle drawerToggle = new DrawerToggle();
 		drawerToggle.setIcon(new Icon(VaadinIcon.MENU));
@@ -151,7 +153,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addSubMenu(MarkersGroupExample.class).addSubMenu(MarkersAddAndRemoveExample.class)
 				.addSubMenu(MarkersChangingIconExample.class).addSubMenu(MarkersRemoveOnClickExample.class)
 				.addSubMenu(MarkerMethodCallExample.class)
-				.addSubMenu(MarkerDivIconExample.class)
+				.addSubMenu(MarkerDivIconExample.class, NEW_FEATURE)
 				.addTo(appMenu);
 
 		// Layers examples
@@ -168,16 +170,16 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 
 		// Controls examples
 		AppMenuItem.create("Controls", new Icon(VaadinIcon.ARROWS)).addSubMenu(RemoveDefaultControlsExample.class)
-		        .addSubMenu(LayersControlExample.class)
+		        .addSubMenu(LayersControlExample.class, NEW_FEATURE)
 				.addSubMenu(ControlPositionExample.class).addSubMenu(ScaleControlExample.class).addTo(appMenu);
 
 		// Mixins examples
 		AppMenuItem.create("Mixin", new Icon(VaadinIcon.SHIELD)).addSubMenu(WorldMapFlagsExample.class).addTo(appMenu);
 
 		// Plugins examples
-		AppMenuItem.create("Plugins", new Icon(VaadinIcon.PLUG)).addSubMenu(FullScreenPluginExample.class)
-		        .addSubMenu(HeatmapPluginExample.class)
-		        .addSubMenu(MarkerClusterPluginExample.class)
+		AppMenuItem.create("Plugins", new Icon(VaadinIcon.PLUG)).addSubMenu(FullScreenPluginExample.class, NEW_FEATURE)
+		        .addSubMenu(HeatmapPluginExample.class, NEW_FEATURE)
+		        .addSubMenu(MarkerClusterPluginExample.class, NEW_FEATURE)
 				.addTo(appMenu);
 
 		addToDrawer(appMenu);
