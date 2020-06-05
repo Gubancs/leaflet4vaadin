@@ -35,6 +35,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapGeolocationExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapMaxBoundsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapStateFuncionsExmple;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MultipleMapsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerDivIconExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerMethodCallExample;
@@ -149,7 +150,9 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addSubMenu(MapPollListenerExample.class).addSubMenu(MapGeolocationExample.class)
 				.addSubMenu(MapFunctionsExample.class).addSubMenu(MapConversionMethodsExample.class)
 				.addSubMenu(MapDialogExample.class, NEW)
-				.addSubMenu(MultipleMapsExample.class, NEW).addTo(appMenu);
+				.addSubMenu(MultipleMapsExample.class, NEW)
+                .addSubMenu(MapStateFuncionsExmple.class, NEW)
+				.addTo(appMenu);
 
 		// Marker examples
 		AppMenuItem.create("Markers", new Icon(VaadinIcon.MAP_MARKER)).addSubMenu(MarkersSimpleExample.class)

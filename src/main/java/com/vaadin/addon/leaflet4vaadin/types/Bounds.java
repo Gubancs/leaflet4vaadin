@@ -17,6 +17,8 @@ package com.vaadin.addon.leaflet4vaadin.types;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -42,6 +44,32 @@ public class Bounds implements BasicType {
     public Bounds(Point... point) {
         this();
         extend(point);
+    }
+
+    /**
+     * The top left corner of the rectangle.
+     * 
+     * @return the top left corner of the rectangle.
+     */
+    public Point getMin() {
+        return min;
+    }
+
+    public void setMin(Point min) {
+        this.min = min;
+    }
+
+    /**
+     * The bottom right corner of the rectangle.
+     * 
+     * @return return the bottom right corner of the rectangle.
+     */
+    public Point getMax() {
+        return max;
+    }
+
+    public void setMax(Point max) {
+        this.max = max;
     }
 
     /**
@@ -99,6 +127,11 @@ public class Bounds implements BasicType {
         double x = (this.min.getX() + this.max.getY()) / 2;
         double y = (this.min.getX() + this.max.getY()) / 2;
         return new Point(x, y);
+    }
+    
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
     }
 
 }

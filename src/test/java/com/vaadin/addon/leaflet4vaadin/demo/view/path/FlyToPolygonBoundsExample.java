@@ -22,6 +22,10 @@ import com.vaadin.addon.leaflet4vaadin.demo.components.ExampleContainer;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.DefaultMapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.map.options.MapOptions;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.Polygon;
+import com.vaadin.addon.leaflet4vaadin.options.FitBoundsOptions;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -29,24 +33,52 @@ import com.vaadin.flow.router.Route;
 @Route(value = "path/fly-to-bounds", layout = LeafletDemoApp.class)
 public class FlyToPolygonBoundsExample extends ExampleContainer {
 
-	private static final long serialVersionUID = -1011084083592421402L;
+    private static final long serialVersionUID = -1011084083592421402L;
 
-	@Override
-	protected void initDemo() {
+    private LeafletMap leafletMap;
+    private Polygon polygon;
 
-		MapOptions options = new DefaultMapOptions();
-		options.setCenter(latlng(47.070121823, 19.2041015625));
-		options.setZoom(7);
-		options.setPreferCanvas(true);
-		LeafletMap leafletMap = new LeafletMap(options);
-		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+    @Override
+    protected void initDemo() {
 
-		Polygon polygon = new Polygon(latlng(47.0, 17.3), latlng(47.3, 18.42), latlng(47.3, 18.82), latlng(47.5, 17.82),
-				latlng(47.0, 17.3));
-		polygon.onClick((event) -> leafletMap.flyToBounds(polygon.getBounds()));
-		polygon.addTo(leafletMap);
-		
-		addToContent(leafletMap);
-	}
+        MapOptions options = new DefaultMapOptions();
+        options.setCenter(latlng(47.070121823, 19.2041015625));
+        options.setZoom(7);
+        options.setPreferCanvas(true);
+        leafletMap = new LeafletMap(options);
+        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+
+        polygon = new Polygon(latlng(47.0, 17.3), latlng(47.3, 18.42), latlng(47.3, 18.82), latlng(47.5, 17.82), latlng(47.0, 17.3));
+        polygon.onClick((event) -> leafletMap.flyToBounds(polygon.getBounds()));
+        polygon.addTo(leafletMap);
+
+        addToContent(leafletMap);
+
+        createFormControls();
+    }
+
+    private void createFormControls() {
+        IntegerField maxZoom = new IntegerField("Max zoom:");
+        maxZoom.setHasControls(true);
+        maxZoom.setValue(6);
+        maxZoom.setWidthFull();
+
+        Button flyToBounds = new Button("Fly to bounds");
+        flyToBounds.addClickListener((event) -> {
+            FitBoundsOptions fitBoundsOptions = new FitBoundsOptions();
+            fitBoundsOptions.setMaxZoom(maxZoom.getValue());
+            leafletMap.flyToBounds(polygon.getBounds(), fitBoundsOptions);
+        });
+
+        Button fitToBounds = new Button("Fit to bounds");
+        fitToBounds.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
+        fitToBounds.addClickListener((event) -> {
+            FitBoundsOptions fitBoundsOptions = new FitBoundsOptions();
+            fitBoundsOptions.setMaxZoom(maxZoom.getValue());
+            leafletMap.fitBounds(polygon.getBounds(), fitBoundsOptions);
+        });
+
+        addToSidebar(maxZoom, flyToBounds, fitToBounds);
+    }
 
 }

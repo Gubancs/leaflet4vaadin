@@ -89,6 +89,8 @@ import com.vaadin.flow.component.polymertemplate.PolymerTemplate;
 import com.vaadin.flow.internal.JsonSerializer;
 import com.vaadin.flow.shared.Registration;
 
+import elemental.json.JsonType;
+
 @Tag("leaflet-map")
 @NpmPackage(value = "leaflet", version = "1.6.0")
 @JsModule("./leaflet-map.js")
@@ -527,7 +529,15 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
             javascriptResult.then(value -> {
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
-                    T result = objectMapper.readValue(value.toString(), resultType);
+                    T result;
+                    // Detect object type for value to be handled correctly (ex: getZoom)
+                    JsonType type = value.getType();
+                    if ( type.equals(JsonType.OBJECT)) {
+                        result = objectMapper.readValue(value.toString(), resultType);
+                    }
+                    else {
+                        result = objectMapper.readValue(value.asString(), resultType);
+                    }
                     completableFuture.complete(result);
                 } catch (IOException e) {
                     throw new RuntimeException("Failed to parse javascript result", e);
