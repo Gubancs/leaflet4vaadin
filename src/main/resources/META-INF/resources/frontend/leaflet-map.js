@@ -185,10 +185,14 @@ class LeafletMap extends ThemableMixin(PolymerElement) {
 
     let layer = this.findLayer(this.map, operation.layerId);
     let leafletArgs = JSON.parse(operation.arguments);
+    
     leafletArgs = leafletArgs.map(arg => this.leafletConverter.convert(arg));
     console.log("LeafletMap - callLeafletFunction() - leafletArgs", leafletArgs);
-    let result = layer[operation.functionName].apply(layer, leafletArgs);
-
+    
+    let leafletFn = layer[operation.functionName];
+    console.log("LeafletMap - callLeafletFunction() - leafletFn", leafletFn);
+    
+    let result = leafletFn.apply(layer, leafletArgs);
     console.log("LeafletMap - callLeafletFunction() - result", result);
     return result;
   }

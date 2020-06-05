@@ -15,9 +15,11 @@
 import * as L from "leaflet/dist/leaflet-src.js";
 
 export class LeafletTypeConverter {
-  /**
-   * Convert the given jsonObject to a Leaflet Object
-   */
+	
+	constructor(){
+		this.basicTypes = ["Point", "Bounds", "LatLng", "LatLngBounds", "Icon", "DivIcon"];
+	}
+	
   toLeafletLayer(layer) {
     console.log("LeafletTypeConverter - toLeafletLayer() leafletType", {leafletType: layer.leafletType});
     let leafletLayer;
@@ -33,7 +35,6 @@ export class LeafletTypeConverter {
       leafletLayer._layers = layer.layers;
     } else {
       let factoryFn = this.getFactoryFn(layer.leafletType);
-      console.log("LeafletTypeConverter - toLeafletLayer() factoryFn", factoryFn);
       if(layer.constructorArgumentNames){
         console.log("LeafletTypeConverter - toLeafletLayer() constructorArgumentNames", layer.constructorArgumentNames);
         let initArgs = layer.constructorArgumentNames.map(argName => layer[argName]);
@@ -53,45 +54,81 @@ export class LeafletTypeConverter {
   getFactoryFn(leafletType){
       return L[leafletType.charAt(0).toLowerCase() + leafletType.slice(1)];
   }
+  
+  getControlFactoryFn(leafletType){
+      return L.control[leafletType];
+  }
 
   toLeafletControl(control) {
-    let controlFn = L.control[control.leafletType];
-    if (!controlFn) {
-      throw "Unsupported control type : " + control.leafletType;
-    }
-    let leafletControl = controlFn(control);
-    console.log(
-      "LeafletTypeConverter --- toLeafletControl() result",
-      leafletControl
-    );
+	let leafletControl = control;
+	if(control){
+	    let controlFn = this.getControlFactoryFn(control.leafletType);
+	    if (!controlFn) {
+	      throw "Unsupported control type : " + control.leafletType;
+	    }
+	    leafletControl = controlFn(control);
+	    console.log("LeafletTypeConverter --- toLeafletControl() result", leafletControl);
+	}
     return leafletControl;
   }
 
   convert(object) {
-    console.log("LeafletTypeConverter --- convert()", object);
     let converted = object;
-    if (object) {
-      if (object.leafletType === "Point") {
-        converted = this.toPoint(object);
-      } else if (object.leafletType === "Bounds") {
-        converted = this.toBounds(object);
-      } else if (object.leafletType === "LatLng") {
-        converted = this.toLatLng(object);
-      } else if (object.leafletType === "LatLngBounds") {
-        converted = this.toLatLngBounds(object);
-      } else if (object.leafletType === "Icon") {
-        converted = this.toIcon(object);
-      } else if (object.leafletType === "DivIcon") {
-        converted = this.toDivIcon(object);
-      }
+    if(this.isLeafletType(object)){
+	    if (this.isBasicType(object.leafletType)) {
+	    	converted = this.convertBasicType(object);
+	    }
+	    else if(this.isLeafletLayer(object.leafletType)){
+	    	converted = this.toLeafletLayer(object);
+	    }
+	    else if(this.isLeafletControl(object.leafletType)){
+	    	converted = this.toLeafletControl(object);
+	    }
     }
     console.log("LeafletTypeConverter --- convert() result", converted);
     return converted;
   }
+  
+
+  convertBasicType(basicType) {
+    let converted = basicType;
+	  if (basicType.leafletType === "Point") {
+	    converted = this.toPoint(basicType);
+	  } else if (basicType.leafletType === "Bounds") {
+	    converted = this.toBounds(basicType);
+	  } else if (basicType.leafletType === "LatLng") {
+	    converted = this.toLatLng(basicType);
+	  } else if (basicType.leafletType === "LatLngBounds") {
+	    converted = this.toLatLngBounds(basicType);
+	  } else if (basicType.leafletType === "Icon") {
+	    converted = this.toIcon(basicType);
+	  } else if (basicType.leafletType === "DivIcon") {
+	    converted = this.toDivIcon(basicType);
+	  }
+	console.log("LeafletTypeConverter --- convertBasicType() result", converted);
+    return converted;
+  }
+  
+
+  isLeafletType(object) {
+	  return object && typeof(object.leafletType) !== "undefined"; 
+  }
+  
+  isBasicType(object) {
+	  return this.basicTypes.indexOf(object) >= 0;
+  }
+  
+  isLeafletControl(object) {
+	  return this.getControlFactoryFn(object) != null;
+  }
+  
+  isLeafletLayer(object) {
+	  return this.getFactoryFn(object) != null;
+  }
 
   /**
-   * Convert the given JsonObject to Leaflet Icon
-   */
+	 * Convert the given JsonObject to Leaflet Icon
+	 */
   toIcon(iconOptions) {
     let icon = L.icon(iconOptions);
     icon.popupAnchor = this.convert(iconOptions.popupAnchor);
@@ -111,22 +148,22 @@ export class LeafletTypeConverter {
   }
 
   /**
-   * Convert the given JsonObject to Leaflet Point
-   */
+	 * Convert the given JsonObject to Leaflet Point
+	 */
   toPoint(point) {
     return point ? L.point(point.x, point.y) : point;
   }
 
   /**
-   * Convert the given JsonObject to Leaflet LatLng
-   */
+	 * Convert the given JsonObject to Leaflet LatLng
+	 */
   toLatLng(latLng) {
     return latLng ? L.latLng(latLng.lat, latLng.lng, latLng.altitude) : latLng;
   }
 
   /**
-   * Convert the given JsonObject to Leaflet Bounds
-   */
+	 * Convert the given JsonObject to Leaflet Bounds
+	 */
   toBounds(bounds) {
     let corner1 = L.point(bounds.topLeft.x, bounds.topLeft.y);
     let corner2 = L.point(bounds.bottomRight.x, bounds.bottomRight.y);
@@ -134,8 +171,8 @@ export class LeafletTypeConverter {
   }
 
   /**
-   * Convert the given JsonObject to Leaflet LatLngBounds
-   */
+	 * Convert the given JsonObject to Leaflet LatLngBounds
+	 */
   toLatLngBounds(bounds) {
     let corner1 = L.latLng(bounds._northEast);
     let corner2 = L.latLng(bounds._southWest);
