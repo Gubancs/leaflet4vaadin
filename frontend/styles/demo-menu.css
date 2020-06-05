@@ -2,14 +2,22 @@
   background: #e5f1fd;
 }
 
-.app-menu-item-summary {
-  padding: 5px 0px;
+.app-menu-item-panel:hover {
+	cursor: pointer;
 }
 
 .app-menu-item-summary {
   padding: 5px 0px;
+  font-weight: 300;
 }
 
+.app-menu-item-summary label {
+	line-height: 24px;
+}
+
+.app-menu-item-summary iron-icon {
+	width: 20px;
+}
 
 .app-menu-item-summary.has-new-feature {
   color: var(--lumo-success-text-color);

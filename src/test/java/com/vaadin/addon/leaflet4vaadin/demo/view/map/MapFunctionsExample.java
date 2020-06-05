@@ -29,26 +29,26 @@ import com.vaadin.flow.router.Route;
 @Route(value = "map/functions", layout = LeafletDemoApp.class)
 public class MapFunctionsExample extends ExampleContainer {
 
-	@Override
-	protected void initDemo() {
+    @Override
+    protected void initDemo() {
 
-		Label eventLabel = new Label("Click on map to fly to a coordinate or right-click to fit World");
-		eventLabel.getStyle().set("font-weight", "bold");
+        Label eventLabel = new Label("Click on map to fly to a coordinate or right-click to fit World");
+        eventLabel.getStyle().set("font-weight", "bold");
 
-		final MapOptions options = new DefaultMapOptions();
-		options.setCenter(new LatLng(47.070121823, 19.204101562500004));
-		options.setZoom(7);
-		final LeafletMap leafletMap = new LeafletMap(options);
-		leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+        final MapOptions options = new DefaultMapOptions();
+        options.setCenter(new LatLng(47.070121823, 19.204101562500004));
+        options.setZoom(7);
+        final LeafletMap leafletMap = new LeafletMap(options);
+        leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
 
-		leafletMap.onClick((event) -> {
-			leafletMap.flyTo(event.getLatLng(), options.getZoom(), new ZoomOptions());
-		});
-		leafletMap.onContextMenuOpened((event) -> {
-			leafletMap.fitWorld();
-		});
+        leafletMap.onClick((event) -> {
+            leafletMap.flyTo(event.getLatLng(), options.getZoom(), new ZoomOptions());
+        });
+        leafletMap.onContextMenuOpened((event) -> {
+            leafletMap.fitWorld();
+        });
 
-		addToContent(eventLabel, leafletMap);
-	}
+        addToContent(eventLabel, leafletMap);
+    }
 
 }

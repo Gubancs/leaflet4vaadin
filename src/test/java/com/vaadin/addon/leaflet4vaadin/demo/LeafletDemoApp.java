@@ -14,7 +14,7 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo;
 
-import static com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem.NEW_FEATURE;
+import static com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem.NEW;
 
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenu;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
@@ -29,11 +29,13 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONStyleExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapConversionMethodsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDialogExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapGeolocationExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapMaxBoundsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.MultipleMapsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerDivIconExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerMethodCallExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersAddAndRemoveExample;
@@ -145,7 +147,9 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 		AppMenuItem.create("Map", new Icon(VaadinIcon.GLOBE)).addSubMenu(MapEventsExample.class)
 				.addSubMenu(MapMaxBoundsExample.class).addSubMenu(MapDarkThemeExample.class)
 				.addSubMenu(MapPollListenerExample.class).addSubMenu(MapGeolocationExample.class)
-				.addSubMenu(MapFunctionsExample.class).addSubMenu(MapConversionMethodsExample.class).addTo(appMenu);
+				.addSubMenu(MapFunctionsExample.class).addSubMenu(MapConversionMethodsExample.class)
+				.addSubMenu(MapDialogExample.class, NEW)
+				.addSubMenu(MultipleMapsExample.class, NEW).addTo(appMenu);
 
 		// Marker examples
 		AppMenuItem.create("Markers", new Icon(VaadinIcon.MAP_MARKER)).addSubMenu(MarkersSimpleExample.class)
@@ -153,7 +157,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addSubMenu(MarkersGroupExample.class).addSubMenu(MarkersAddAndRemoveExample.class)
 				.addSubMenu(MarkersChangingIconExample.class).addSubMenu(MarkersRemoveOnClickExample.class)
 				.addSubMenu(MarkerMethodCallExample.class)
-				.addSubMenu(MarkerDivIconExample.class, NEW_FEATURE)
+				.addSubMenu(MarkerDivIconExample.class, NEW)
 				.addTo(appMenu);
 
 		// Layers examples
@@ -170,16 +174,16 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 
 		// Controls examples
 		AppMenuItem.create("Controls", new Icon(VaadinIcon.ARROWS)).addSubMenu(RemoveDefaultControlsExample.class)
-		        .addSubMenu(LayersControlExample.class, NEW_FEATURE)
+		        .addSubMenu(LayersControlExample.class, NEW)
 				.addSubMenu(ControlPositionExample.class).addSubMenu(ScaleControlExample.class).addTo(appMenu);
 
 		// Mixins examples
 		AppMenuItem.create("Mixin", new Icon(VaadinIcon.SHIELD)).addSubMenu(WorldMapFlagsExample.class).addTo(appMenu);
 
 		// Plugins examples
-		AppMenuItem.create("Plugins", new Icon(VaadinIcon.PLUG)).addSubMenu(FullScreenPluginExample.class, NEW_FEATURE)
-		        .addSubMenu(HeatmapPluginExample.class, NEW_FEATURE)
-		        .addSubMenu(MarkerClusterPluginExample.class, NEW_FEATURE)
+		AppMenuItem.create("Plugins", new Icon(VaadinIcon.PLUG)).addSubMenu(FullScreenPluginExample.class, NEW)
+		        .addSubMenu(HeatmapPluginExample.class, NEW)
+		        .addSubMenu(MarkerClusterPluginExample.class, NEW)
 				.addTo(appMenu);
 
 		addToDrawer(appMenu);

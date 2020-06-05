@@ -31,7 +31,7 @@ import com.vaadin.flow.router.Route;
 public class AppMenuItem extends VerticalLayout {
 
     private static final long serialVersionUID = 6428270908323350266L;
-    public static final boolean NEW_FEATURE = true;
+    public static final boolean NEW = true;
     private final String title;
     private final Icon icon;
     private Icon badge;

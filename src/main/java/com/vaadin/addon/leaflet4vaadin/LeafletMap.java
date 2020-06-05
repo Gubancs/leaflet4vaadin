@@ -556,13 +556,13 @@ public final class LeafletMap extends PolymerTemplate<LeafletModel> implements M
     @Override
     public void removeEventListener(LeafletEventType eventType) {
         this.mapLayer.removeEventListener(eventType);
-        this.getModel().getEvents().remove(eventType);
+        executeJs("removeEventListener", eventType.getLeafletEvent());
     }
 
     @Override
     public void clearAllEventListeners() {
         this.mapLayer.clearAllEventListeners();
-        this.getModel().getEvents().clear();
+        executeJs("clearAllEventListeners");
     }
 
     @Override
