@@ -22,19 +22,23 @@ public class MapDialogExample extends ExampleContainer {
         Button openDialog = new Button("Open dialog");
         openDialog.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         openDialog.addClickListener((event) -> {
-            Dialog dialog = new Dialog();
-            dialog.setWidth("600px");
-            dialog.setHeight("400px");
-
-            //Initialize map
             
             MapOptions options = new DefaultMapOptions();
             options.setCenter(latlng(47.070121823, 19.2041015625));
             options.setZoom(7);
             options.setPreferCanvas(true);
-            
             LeafletMap leafletMap = new LeafletMap(options);
             leafletMap.setBaseUrl("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png");
+            
+            Dialog dialog = new Dialog();
+            dialog.setResizable(true);
+            dialog.setDraggable(true);
+            dialog.setWidth("600px");
+            dialog.setHeight("400px");
+            dialog.addResizeListener((dialogResizeEvent)-> {
+               leafletMap.invalidateSize();
+            });
+
             dialog.add(leafletMap);
             
             dialog.open();
