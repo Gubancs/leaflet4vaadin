@@ -40,6 +40,14 @@ public class DivIcon extends Icon {
         setClassName(className);
     }
 
+    public DivIcon(String className, int size) {
+        super();
+        setClassName(className);
+        setIconSize(Point.of(size, size));
+        setIconAnchor(Point.of(size / 2, size / 2));
+    }
+
+
     public String getHtml() {
         return html;
     }

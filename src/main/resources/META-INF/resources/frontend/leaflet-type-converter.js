@@ -51,20 +51,12 @@ export class LeafletTypeConverter {
       return map.getLayer(layer.uuid);
     }
 
-    if (layer.icon) {
-      layer.icon = this.convert(layer.icon);
-    } else if (layer.layers) {
-      layer.layers = layer.layers
-        .slice()
-        .map((childLayer) => this.toLeafletLayer(childLayer, map));
-    }
-
     if (layer.leafletType === "GeoJSON") {
       leafletLayer = L.geoJSON(null, layer);
       leafletLayer._layers = layer.layers;
     } else {
       let factoryFn = this.getLayerFactoryFn(layer.leafletType);
-      if (layer.constructorArgumentNames) {
+      if (layer.constructorArgumentNames.length > 0) {
         //console.log("LeafletTypeConverter - toLeafletLayer() constructorArgumentNames", layer.constructorArgumentNames);
         let initArgs = layer.constructorArgumentNames.map((argName) =>
           this.convert(layer[argName], map)
@@ -73,7 +65,7 @@ export class LeafletTypeConverter {
         //console.log("LeafletTypeConverter - toLeafletLayer() initArgs", initArgs);
         leafletLayer = factoryFn.apply(null, initArgs);
       } else {
-        leafletLayer = factoryFn.call(layer);
+        leafletLayer = factoryFn.apply(null, [layer]);
       }
     }
 
@@ -81,9 +73,7 @@ export class LeafletTypeConverter {
 
     //apply layer event listeners
     if (layer.events) {
-      layer.events.forEach((event) =>
-        map.registerEventListener(leafletLayer, event)
-      );
+      layer.events.forEach((event) => map.registerEventListener(leafletLayer, event));
     }
     console.log("LeafletTypeConverter - toLeafletLayer() result", leafletLayer);
     return leafletLayer;
@@ -93,8 +83,16 @@ export class LeafletTypeConverter {
     return L[leafletType.charAt(0).toLowerCase() + leafletType.slice(1)];
   }
 
-  getControlFactoryFn(leafletType) {
-    return L.control[leafletType];
+  getControlFactoryFn(controlType) {
+    let factoryFn =  this.getProperty(L.control, controlType);
+    if(!factoryFn) {
+    	factoryFn =  this.getProperty(L.Control, controlType);
+    }
+    return factoryFn;
+  }
+  
+  getProperty(target, propertyName) {
+	 return target[propertyName];
   }
 
   toLeafletControl(control, mapTemplate) {
@@ -104,7 +102,7 @@ export class LeafletTypeConverter {
       if (!controlFn) {
         throw "Unsupported control type : " + control.leafletType;
       }
-      if (control.constructorArgumentNames) {
+      if (control.constructorArgumentNames.length > 0) {
         //console.log("LeafletTypeConverter - toLeafletControl() constructorArgumentNames", control.constructorArgumentNames);
         let initArgs = control.constructorArgumentNames.map((argName) =>
           this.convert(control[argName], mapTemplate)
@@ -113,7 +111,7 @@ export class LeafletTypeConverter {
         //console.log("LeafletTypeConverter - toLeafletControl() initArgs", initArgs);
         leafletControl = controlFn.apply(null, initArgs);
       } else {
-        leafletControl = controlFn(control);
+        leafletControl = new controlFn(control);
       }
       mapTemplate.map._controls[control.uuid] = leafletControl;
       console.log(
@@ -126,29 +124,64 @@ export class LeafletTypeConverter {
 
   convert(object, map) {
     let converted = object;
+    
+    if(object == null || typeof object === "undefined" || object.alreadyConverted) {
+    	return converted;
+    }
+    
+    if(object instanceof Array){
+       object.forEach((item, index) => {
+    	   converted[index] = this.convert(object[index], map);
+       });
+    }
+    if(object instanceof Object) {
+        Object.keys(object).forEach((key, index) => {
+        	converted[key] = this.convert(object[key], map);
+        });
+    }
     if (this.isLeafletType(object)) {
       if (this.isBasicType(object.leafletType)) {
         converted = this.convertBasicType(object);
-      } else if (this.isLeafletLayer(object.leafletType)) {
+      } 
+      else if (this.isLeafletLayer(object.leafletType)) {
         converted = this.toLeafletLayer(object, map);
-      } else if (this.isLeafletControl(object.leafletType)) {
+      } 
+      else if (this.isLeafletControl(object.leafletType)) {
         converted = this.toLeafletControl(object, map);
       }
+      
       //Override the internal leaflet id
-      if (object.uuid) {
-        converted._leaflet_id = object.uuid;
-      }
-    } else if (object instanceof Object) {
-      Object.keys(object).forEach((key, index) => {
-        if (this.isLeafletType(object[key])) {
-          converted[key] = this.convert(object[key], map);
-        }
-      });
+      converted._leaflet_id = object.uuid;
+      converted.alreadyConverted = true;
     }
 
     //console.log("LeafletTypeConverter - convert() result", converted);
     return converted;
   }
+
+//  convert(object, map) {
+//	     let converted = object;
+//	    if (this.isLeafletType(object)) {
+//	       if (this.isBasicType(object.leafletType)) {
+//	         converted = this.convertBasicType(object);
+//	      } else if (this.isLeafletLayer(object.leafletType)) {
+//	         converted = this.toLeafletLayer(object, map);
+//	      } else if (this.isLeafletControl(object.leafletType)) {
+//	         converted = this.toLeafletControl(object, map);
+//	       }
+//	       //Override the internal leaflet id
+//	      if (object.uuid) {
+//	        converted._leaflet_id = object.uuid;
+//	      }
+//	    } else if (object instanceof Object) {
+//	      Object.keys(object).forEach((key, index) => {
+//	        if (this.isLeafletType(object[key])) {
+//	          converted[key] = this.convert(object[key], map);
+//	        }
+//	      });
+//	     }
+//	    return converted;
+//  }
 
   convertBasicType(basicType) {
     let converted = basicType;
@@ -170,15 +203,15 @@ export class LeafletTypeConverter {
   }
 
   isLeafletType(object) {
-    return object && typeof object.leafletType !== "undefined";
+    return object instanceof Object && typeof object.leafletType !== "undefined";
   }
 
   isBasicType(object) {
     return this.basicTypes.indexOf(object) >= 0;
   }
 
-  isLeafletControl(object) {
-    return this.getControlFactoryFn(object) != null;
+  isLeafletControl(controlType) {
+    return this.getControlFactoryFn(controlType) != null;
   }
 
   isLeafletLayer(object) {
