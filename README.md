@@ -11,7 +11,7 @@
 
 # leaflet4vaadin
 
-- FRAMEWORK SUPPORT: **Polymer 3.0+Vaadin platform 10+**
+- FRAMEWORK SUPPORT: **Polymer 3.0+Vaadin platform 14+**
 - Leaflet: https://leafletjs.com/
 - Vaadin Add-on directory:
 https://vaadin.com/directory/component/leaflet4vaadin/
@@ -22,29 +22,34 @@ https://vaadin.com/directory/component/leaflet4vaadin/
 <img src="https://raw.githubusercontent.com/Gubancs/leaflet4vaadin/master/demo.png" alt="Lichess homepage" title="Lichess comes with light and dark theme, this screenshot shows both." />
 
 **Leaflet4Vaadin** provides a Java API for **Leaflet**, which is a popular map implementation, similar to Google Maps.  Leaflet is lightweight and shines on mobile devices. Also it has an extensive set of add-ons, of which many are available for Vaadin too.
-With this Vaadin add-on you can use LeafletJS with the server side Java you know best.
+With this Vaadin add-on you can use LeafletJS with the server side Java you know best, and you can easily extend it or just implement your custom plugins and integrate them.
 
 ## Core Features:
 - map configuration
 - interactive layers
 - map and layer events
-- GeoJSON supports
 - markers
 - tooltip and popup binding
 - layer groups
 - vector layers
 - dark theme
-- map controls
+- map controls (zoom, layers, scale)
+- map state functions
 - tile layers
-- supports layer methods
+- GeoJSON support
+- supports Leaflet plugins (eg.: fullscreen, heatmap, markercluster)
 
 
 ## Future improvements
-- i18n supports
-- supports leaflet plugins (for example: fullscreen plugin)
-- leaflet editable plugin integration
+- i18n support
+- leaflet draw integration
 - design and performance improvements
+- use Typescript on client-side instead of JS
+- supports parameters in custom events
+- selenium ui tests
+- more examples
 - bugfixes
+- documentation
 
 # Using with maven
 
@@ -52,7 +57,7 @@ With this Vaadin add-on you can use LeafletJS with the server side Java you know
 <dependency>
    <groupId>com.vaadin</groupId>
    <artifactId>leafletf4vaadin</artifactId>
-   <version>0.2.4-beta</version>
+   <version>0.3.0-beta</version>
 </dependency>
 
 <repository>
