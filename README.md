@@ -56,7 +56,7 @@ With this Vaadin add-on you can use LeafletJS with the server side Java you know
 ```xml
 <dependency>
    <groupId>com.vaadin</groupId>
-   <artifactId>leafletf4vaadin</artifactId>
+   <artifactId>leaflet4vaadin</artifactId>
    <version>0.3.0-beta</version>
 </dependency>
 
