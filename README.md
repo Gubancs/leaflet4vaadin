@@ -8,6 +8,8 @@
 [![Rating count on vaadin.com/directory](https://img.shields.io/vaadin-directory/rc/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
 [![Latest version on vaadin.com/directory](https://img.shields.io/vaadin-directory/v/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
 [![Latest release date on vaadin.com/directory](https://img.shields.io/vaadin-directory/rd/leaflet4vaadin.svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Code Quality Score](https://www.code-inspector.com/project/10683/score/svg)](https://vaadin.com/directory/component/leaflet4vaadin)
+[![Code Grade](https://www.code-inspector.com/project/10683/status/svg)](https://vaadin.com/directory/component/leaflet4vaadin)
 
 # leaflet4vaadin
 
