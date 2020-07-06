@@ -89,7 +89,7 @@ public class HeatLayer extends Layer {
      * Constructs a heatmap layer with custom layer options
      * 
      * @param options the custom options to be used
-     * @see @HeatLayerOptions
+     * @see HeatLayerOptions
      */
     public HeatLayer(HeatLayerOptions options) {
         this(new ArrayList<>(), options);
@@ -101,8 +101,8 @@ public class HeatLayer extends Layer {
      * 
      * @param latLngs the initial points to be added
      * @param options the custom options to be used
-     * @see @HeatLayerOptions
-     * @see @LatLng
+     * @see HeatLayerOptions
+     * @see LatLng
      */
     public HeatLayer(List<LatLng> latLngs, HeatLayerOptions options) {
         this.latLngs = latLngs;
@@ -113,7 +113,7 @@ public class HeatLayer extends Layer {
      * Adds a new point to the heatmap and redraws it.
      * 
      * @param latLng a new point to be added
-     * @see @LatLng
+     * @see LatLng
      */
     public void addLatLng(LatLng latLng) {
         this.latLngs.add(latLng);
@@ -124,7 +124,7 @@ public class HeatLayer extends Layer {
      * Resets heatmap data and redraws it.
      * 
      * @param laLngs the list of the new points to be added
-     * @see @LatLng
+     * @see LatLng
      */
     public void setLatLngs(List<LatLng> laLngs) {
         this.latLngs = laLngs;

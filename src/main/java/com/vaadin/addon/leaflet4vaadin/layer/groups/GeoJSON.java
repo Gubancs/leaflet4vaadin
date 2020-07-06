@@ -114,7 +114,9 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
     /**
      * Normalize GeoJSON geometries/features into GeoJSON features.
      * 
-     * @param the geoJson to be converted to Feature
+     * @param geoJson the
+     *            {@link GeoJSON} to be converted as a {@link Feature}
+     * @return return a {@link Feature} object which wraps the given {@link GeoJSON}
      */
     public static Feature asFeature(GeoJsonObject geoJson) {
         if (geoJson instanceof Feature) {
@@ -129,16 +131,20 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
      * Creates a Layer from a given GeoJsonObject object. Can use a custom
      * pointToLayer and/or coordsToLatLng functions if provided as options.
      * 
-     * @param geoJsonObject the geojson to convert
-     * @param options       a custom options
+     * @param geoJsonObject
+     *            the geojson to convert
+     * @param options
+     *            a custom options
      * 
      * @see GeoJSONOptions
+     * @return return a {@link Layer} which has been added to this
+     *         {@link GeoJSON} layer, the type of the added layer depends on
+     *         type of the given {@link GeoJSON}
      */
     public static Layer geometryToLayer(GeoJsonObject geoJsonObject, GeoJSONOptions options) {
         Layer layer = null;
 
-        CoordsToLatLngHandler coordsToLatLng = options.coordsToLatLngHandler() != null ? options.coordsToLatLngHandler()
-                : GeoJSON::coordinateToLatLng;
+        CoordsToLatLngHandler coordsToLatLng = options.coordsToLatLngHandler() != null ? options.coordsToLatLngHandler() : GeoJSON::coordinateToLatLng;
 
         if (geoJsonObject instanceof Feature) {
             Feature feature = (Feature) geoJsonObject;
@@ -150,15 +156,12 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
             layer = pointToLayer(options.pointToLayer(), point, latLng);
         } else if (geoJsonObject instanceof LineString) {
             LineString lineString = (LineString) geoJsonObject;
-            List<LatLng> latLngs = lineString.getCoordinates().stream().map(coordsToLatLng::convert)
-                    .collect(Collectors.toList());
+            List<LatLng> latLngs = lineString.getCoordinates().stream().map(coordsToLatLng::convert).collect(Collectors.toList());
             layer = new Polyline(latLngs);
         } else if (geoJsonObject instanceof MultiPoint) {
             MultiPoint multiPoint = (MultiPoint) geoJsonObject;
             FeatureGroup featureGroup = new FeatureGroup();
-            multiPoint.getCoordinates().stream().map(coordsToLatLng::convert)
-                    .map((latLng) -> pointToLayer(options.pointToLayer(), multiPoint, latLng))
-                    .forEach((l) -> l.addTo(featureGroup));
+            multiPoint.getCoordinates().stream().map(coordsToLatLng::convert).map((latLng) -> pointToLayer(options.pointToLayer(), multiPoint, latLng)).forEach((l) -> l.addTo(featureGroup));
             layer = featureGroup;
         } else if (geoJsonObject instanceof MultiLineString) {
             MultiLineString multiLineString = (MultiLineString) geoJsonObject;
@@ -166,8 +169,7 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
             layer = new MultiPolyline(latLngs);
         } else if (geoJsonObject instanceof org.geojson.Polygon) {
             org.geojson.Polygon polygon = (org.geojson.Polygon) geoJsonObject;
-            List<LatLng> exteriorLatlngs = polygon.getExteriorRing().stream().map(coordsToLatLng::convert)
-                    .collect(Collectors.toList());
+            List<LatLng> exteriorLatlngs = polygon.getExteriorRing().stream().map(coordsToLatLng::convert).collect(Collectors.toList());
             MultiLatLngArray interiorLatLngs = multiCoordinateToLatLng(polygon.getInteriorRings(), coordsToLatLng);
             layer = new Polygon(exteriorLatlngs, interiorLatLngs);
         } else if (geoJsonObject instanceof MultiPolygon) {
@@ -181,16 +183,14 @@ public class GeoJSON extends FeatureGroup implements GeoJSONFunctions {
         } else if (geoJsonObject instanceof GeometryCollection) {
             FeatureGroup geometryFeatureGroup = new FeatureGroup();
             GeometryCollection geometryCollection = (GeometryCollection) geoJsonObject;
-            geometryCollection.getGeometries().stream().map((geometry) -> geometryToLayer(geometry, options))
-                    .forEach(geometryLayer -> geometryLayer.addTo(geometryFeatureGroup));
+            geometryCollection.getGeometries().stream().map((geometry) -> geometryToLayer(geometry, options)).forEach(geometryLayer -> geometryLayer.addTo(geometryFeatureGroup));
             layer = geometryFeatureGroup;
         }
 
         return layer;
     }
 
-    private static MultiLatLngArray multiCoordinateToLatLng(List<List<LngLatAlt>> multiLngLatAlts,
-            CoordsToLatLngHandler coordsToLatLng) {
+    private static MultiLatLngArray multiCoordinateToLatLng(List<List<LngLatAlt>> multiLngLatAlts, CoordsToLatLngHandler coordsToLatLng) {
         MultiLatLngArray multiLatLngArray = new MultiLatLngArray();
         for (List<LngLatAlt> coords : multiLngLatAlts) {
             List<LatLng> latLngs = coords.stream().map(coordsToLatLng::convert).collect(Collectors.toList());

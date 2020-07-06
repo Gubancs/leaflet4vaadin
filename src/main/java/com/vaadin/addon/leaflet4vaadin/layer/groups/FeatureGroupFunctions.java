@@ -35,7 +35,7 @@ public interface FeatureGroupFunctions extends ExecutableFunctions {
      * Sets the given path options to each layer of the group that has a setStyle
      * method.
      * 
-     * @param geoJsonObject
+     * @param pathOptions the options to each layer of the group
      */
     default void setStyle(PathOptions pathOptions) {
         executeJs("setStyle", pathOptions);

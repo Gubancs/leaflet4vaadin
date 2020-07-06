@@ -64,8 +64,6 @@ public interface LayerTooltipFunctions extends ExecutableFunctions {
 
     /**
      * Opens the bound tooltip
-     * 
-     * @param latLng the tooltip location
      */
     default void openTooltip() {
         executeJs("closeTooltip");

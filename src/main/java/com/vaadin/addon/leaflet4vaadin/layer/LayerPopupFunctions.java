@@ -64,8 +64,6 @@ public interface LayerPopupFunctions extends ExecutableFunctions {
 
     /**
      * Opens the bound popup
-     * 
-     * @param latLng the popup location
      */
     default void openPopup() {
         executeJs("closePopup");

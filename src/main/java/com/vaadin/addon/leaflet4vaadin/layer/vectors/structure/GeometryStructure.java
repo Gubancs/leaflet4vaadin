@@ -26,15 +26,18 @@ import com.vaadin.addon.leaflet4vaadin.types.LatLngBounds;
  */
 public interface GeometryStructure {
 
-	/**
-	 * Returns true if the geometry structure has no LatLngs.
-	 */
-	boolean isEmpty();
+    /**
+     * Returns true if the geometry structure has no LatLngs.
+     * 
+     * @return return true if this geometry structure has no coordinates
+     *         otherwise return false.
+     */
+    boolean isEmpty();
 
-	/**
-	 * Calculate the boundary of this geometry structure
-	 * 
-	 * @return
-	 */
-	LatLngBounds getBounds();
+    /**
+     * Calculate the boundary of this geometry structure
+     * 
+     * @return the {@link LatLngBounds} of the geometry
+     */
+    LatLngBounds getBounds();
 }

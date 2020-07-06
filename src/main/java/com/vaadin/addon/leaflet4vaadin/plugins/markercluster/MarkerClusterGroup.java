@@ -6,7 +6,6 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.events.LeafletEventListener;
-import com.vaadin.addon.leaflet4vaadin.layer.events.MouseEvent;
 import com.vaadin.addon.leaflet4vaadin.layer.groups.FeatureGroup;
 import com.vaadin.addon.leaflet4vaadin.layer.vectors.PathOptions;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -17,12 +16,12 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  * <h3>Leaflet.markercluster</h3>
  * 
  * Web component: <a href=
- * "https://www.npmjs.com/package/leaflet.markercluster">https://www.npmjs.com/package/leaflet.markercluster</a></br>
- * </br>
+ * "https://www.npmjs.com/package/leaflet.markercluster">https://www.npmjs.com/package/leaflet.markercluster</a><br>
+ * <br>
  * 
  * Provides Beautiful Animated Marker Clustering functionality for
- * LeafletMap.</br>
- * </br>
+ * LeafletMap.<br>
+ * <br>
  * 
  * 
  * @author <strong>Gabor Kokeny</strong> Email:

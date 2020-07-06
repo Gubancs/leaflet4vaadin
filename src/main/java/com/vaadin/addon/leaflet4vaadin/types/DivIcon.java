@@ -1,10 +1,10 @@
 package com.vaadin.addon.leaflet4vaadin.types;
 
 /**
- * Represents a lightweight icon for markers that uses a simple <div> element
+ * Represents a lightweight icon for markers that uses a simple element
  * instead of an image. Inherits from Icon but ignores the iconUrl and shadow
- * options. </br>
- * </br>
+ * options. <br>
+ * <br>
  * By default, it has a 'leaflet-div-icon' CSS class and is styled as a little
  * white square with a shadow.
  * 

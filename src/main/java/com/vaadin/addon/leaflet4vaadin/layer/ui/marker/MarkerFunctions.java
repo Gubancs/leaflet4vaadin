@@ -56,7 +56,7 @@ public interface MarkerFunctions extends ExecutableFunctions {
     /**
      * Returns the current icon used by the marker
      * 
-     * @param icon the current icon used by the marker
+     * @return the current icon used by the marker
      */
     Icon getIcon();
 
@@ -73,7 +73,7 @@ public interface MarkerFunctions extends ExecutableFunctions {
      * Changes the opacity of the marker.
      * 
      * 
-     * @param icon the new opacity of the marker
+     * @param opacity the new opacity of the marker
      */
     default void setOpacity(double opacity) {
         executeJs("setOpacity", opacity);

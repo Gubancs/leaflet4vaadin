@@ -26,11 +26,11 @@ import com.vaadin.addon.leaflet4vaadin.layer.events.types.LeafletEventType;
 /**
  * The layers control gives users the ability to switch between different base
  * layers and switch overlays on/off (check out the detailed example). Extends
- * Control. </br>
- * </br>
+ * Control. <br>
+ * <br>
  * The baseLayers and overlays parameters are object literals with layer names
- * as keys and Layer objects as values. </br>
- * </br>
+ * as keys and Layer objects as values. <br>
+ * <br>
  * The layer names can contain HTML, which allows you to add additional styling
  * to the items.
  * 
@@ -153,6 +153,11 @@ public class LayersControl extends LeafletControl {
     /**
      * Adds a base layer (radio button entry) with the given name to the
      * control.
+     * 
+     * @param layer
+     *            the layer to be added to map as a base layer
+     * @param name
+     *            the name of the base layer
      */
     public void addBaseLayer(Layer layer, String name) {
         this.baseLayers.put(name, layer);
@@ -160,7 +165,12 @@ public class LayersControl extends LeafletControl {
     }
 
     /**
-     * Adds an overlay (checkbox entry) with the given name to the control.
+     * Adds an overlay (checkbox entry) with the given name to the control. *
+     * 
+     * @param layer
+     *            the layer to be added to map as an overlay
+     * @param name
+     *            the name of the overlay
      */
     public void addOverlay(Layer layer, String name) {
         this.overlays.put(name, layer);
@@ -169,6 +179,7 @@ public class LayersControl extends LeafletControl {
 
     /**
      * Remove the given layer from the control.
+     * @param layer the layer which should be removed from the {@link LayersControl}
      */
     public void removeLayer(Layer layer) {
         // TODO remove layer from overlays or baselayers

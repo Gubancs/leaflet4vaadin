@@ -12,24 +12,24 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  * <h3>Leaflet.Control.FullScreen</h3>
  * 
  * Web component: <a href=
- * "https://www.npmjs.com/package/leaflet.fullscreen">https://www.npmjs.com/package/leaflet.fullscreen</a></br>
- * </br>
+ * "https://www.npmjs.com/package/leaflet.fullscreen">https://www.npmjs.com/package/leaflet.fullscreen</a><br>
+ * <br>
  * 
- * Simple plugin for Leaflet that adds fullscreen button to your maps.</br>
- * </br>
+ * Simple plugin for Leaflet that adds fullscreen button to your maps.<br>
+ * <br>
  * 
  * 
  * If your map have a zoomControl the fullscreen button will be added at the
- * bottom of this one.</br>
- * </br>
+ * bottom of this one.<br>
+ * <br>
  * 
  * If your map doesn't have a zoomContron the fullscreen button will be added to
- * topleft corner of the map (same as the zoomcontrol).</br>
- * </br>
+ * topleft corner of the map (same as the zoomcontrol).<br>
+ * <br>
  * 
  * If you want to use the plugin on a map embedded in an iframe, don't forget to
- * set allowfullscreen attribute on your iframe.</br>
- * </br>
+ * set allowfullscreen attribute on your iframe.<br>
+ * <br>
  * 
  * <h3>FullScreen options</h3>
  * <ul>
