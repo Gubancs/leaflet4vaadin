@@ -40,7 +40,6 @@ public class Icon implements BasicType {
     private Point shadowSize = Point.of(41, 41);
     private Point shadowAnchor;
     private String className = "";
-    
 
     protected Icon() {
     }
@@ -50,12 +49,16 @@ public class Icon implements BasicType {
     }
 
     public Icon(String iconUrl, int size) {
+        this(iconUrl, size, size);
+    }
+
+    public Icon(String iconUrl, int width, int height) {
         this(iconUrl, iconUrl, SHADOW_URL);
-        this.iconSize = Point.of(size, size);
-        this.iconAnchor = Point.of(size / 2, size);
-        this.popupAnchor = Point.of(1, -size);
-        this.tooltipAnchor = Point.of(size / 2, -size / 2);
-        this.shadowSize = Point.of(1, size);
+        setIconSize(Point.of(width, height));
+        setIconAnchor(Point.of(width / 2, height / 2));
+        setPopupAnchor(Point.of(1, -height / 2));
+        setTooltipAnchor(Point.of(width / 2, 0));
+        setShadowSize(Point.of(1, width));
     }
 
     public Icon(String iconUrl, String retinaUrl, String shadowUrl) {

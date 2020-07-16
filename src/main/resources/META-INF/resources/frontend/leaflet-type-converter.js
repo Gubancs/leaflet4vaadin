@@ -189,14 +189,13 @@ export class LeafletTypeConverter {
    * Convert the given JsonObject to Leaflet Icon
    */
   toIcon(iconOptions) {
-    let icon = L.icon(iconOptions);
-    icon.popupAnchor = this.convert(iconOptions.popupAnchor);
-    icon.tooltipAnchor = this.convert(iconOptions.tooltipAnchor);
-    icon.shadowAnchor = this.convert(iconOptions.shadowAnchor);
-    icon.iconAnchor = this.convert(iconOptions.iconAnchor);
-    icon.iconSize = this.convert(iconOptions.iconSize);
-    icon.shadowSize = this.convert(iconOptions.shadowSize);
-    return icon;
+    iconOptions.popupAnchor = iconOptions.popupAnchor ? [iconOptions.popupAnchor.x, iconOptions.popupAnchor.y] : null;
+    iconOptions.tooltipAnchor = iconOptions.tooltipAnchor ? [iconOptions.tooltipAnchor.x, iconOptions.tooltipAnchor.y] : null;
+    iconOptions.shadowAnchor = iconOptions.shadowAnchor ?[iconOptions.shadowAnchor.x, iconOptions.shadowAnchor.y] : null;
+    iconOptions.iconAnchor = iconOptions.iconAnchor ? [iconOptions.iconAnchor.x, iconOptions.iconAnchor.y] : null;
+    iconOptions.iconSize = iconOptions.iconSize ? [iconOptions.iconSize.x, iconOptions.iconSize.y] : null;
+    iconOptions.shadowSize = iconOptions.shadowSize ? [iconOptions.shadowSize.x, iconOptions.shadowSize.y] : null;
+    return L.icon(iconOptions);
   }
 
   /**
