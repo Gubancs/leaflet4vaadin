@@ -31,7 +31,7 @@ import com.vaadin.flow.component.dependency.NpmPackage;
  * 
  * <pre>
  * CanvasIconLayer canvasIconLayer = new CanvasIconLayer();
- * canvasIconLayer.onAdd((event) -> {
+ * canvasIconLayer.onAdd((event) -&gt; {
  *     canvasIconLayer.addMarkers(randomMarkers());
  * });
  * canvasIconLayer.addTo(leafletMap);
