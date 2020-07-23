@@ -56,6 +56,7 @@ import com.vaadin.addon.leaflet4vaadin.demo.view.path.TypeOfPathsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.CanvasIconLayerExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.HeatmapPluginExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.KmzLayerPluginExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.MarkerClusterPluginExample;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.UI;
@@ -189,6 +190,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 		        .addSubMenu(HeatmapPluginExample.class)
 		        .addSubMenu(MarkerClusterPluginExample.class)
 		        .addSubMenu(CanvasIconLayerExample.class, NEW)
+                .addSubMenu(KmzLayerPluginExample.class, NEW)
 				.addTo(appMenu);
 
 		addToDrawer(appMenu);
