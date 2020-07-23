@@ -38,6 +38,9 @@ public class LatLngBounds implements BasicType {
     @JsonProperty("_northEast")
     private LatLng northEast;
 
+    public LatLngBounds() {
+    }
+    
     public LatLngBounds(LatLng... latlngs) {
         this(Arrays.asList(latlngs));
     }
