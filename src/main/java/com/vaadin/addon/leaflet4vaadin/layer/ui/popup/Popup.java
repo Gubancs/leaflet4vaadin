@@ -26,7 +26,7 @@ public class Popup implements Serializable {
 	private static final long serialVersionUID = 4544720725678791374L;
 	private String content;
 	private Integer maxWidth = 300;
-	private Integer minWidht = 50;
+	private Integer minWidth = 50;
 	private Integer maxHeight;
 	private boolean autoPan = true;
 	private Point autoPanPaddingTopLeft;
@@ -51,12 +51,12 @@ public class Popup implements Serializable {
 		this.maxWidth = maxWidth;
 	}
 
-	public Integer getMinWidht() {
-		return minWidht;
+	public Integer getMinWidth() {
+		return minWidth;
 	}
 
-	public void setMinWidht(Integer minWidht) {
-		this.minWidht = minWidht;
+	public void setMinWidth(Integer minWidth) {
+		this.minWidth = minWidth;
 	}
 
 	public Integer getMaxHeight() {
@@ -161,8 +161,8 @@ public class Popup implements Serializable {
 				+ ", autoPanPaddingBottomRight=" + autoPanPaddingBottomRight + ", autoPanPaddingTopLeft="
 				+ autoPanPaddingTopLeft + ", className=" + className + ", closeButton=" + closeButton
 				+ ", closeOnClick=" + closeOnClick + ", closeOnEscapeKey=" + closeOnEscapeKey + ", content=" + content
-				+ ", keepInView=" + keepInView + ", maxHeight=" + maxHeight + ", maxWidth=" + maxWidth + ", minWidht="
-				+ minWidht + "]";
+				+ ", keepInView=" + keepInView + ", maxHeight=" + maxHeight + ", maxWidth=" + maxWidth + ", minWidth="
+				+ minWidth + "]";
 	}
 
 }
