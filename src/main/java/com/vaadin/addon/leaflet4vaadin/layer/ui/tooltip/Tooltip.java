@@ -14,98 +14,59 @@
 
 package com.vaadin.addon.leaflet4vaadin.layer.ui.tooltip;
 
-import java.io.Serializable;
+import com.vaadin.addon.leaflet4vaadin.layer.ui.DivOverlay;
 
-import com.vaadin.addon.leaflet4vaadin.types.Point;
+public class Tooltip extends DivOverlay {
 
-public class Tooltip implements Serializable {
+    private static final long serialVersionUID = 8082088105777353049L;
+    private String direction = "auto";
+    private boolean permanent;
+    private boolean sticky;
+    private boolean interactive;
+    private double opacity = 0.9;
 
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 8082088105777353049L;
-	private String content;
-	private String pane = "tooltipPane";
-	private Point offset = Point.of(0, 0);
-	private String direction = "auto";
-	private boolean permanent;
-	private boolean sticky;
-	private boolean interactive;
-	private double opacity = 0.9;
+    public Tooltip(String content) {
+        super(content);
+        setPane("tooltipPane");
+    }
 
-	public Tooltip(String content) {
-		this.content = content;
-	}
+    public String getDirection() {
+        return direction;
+    }
 
-	public String getPane() {
-		return pane;
-	}
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
 
-	public void setPane(String pane) {
-		this.pane = pane;
-	}
+    public boolean isPermanent() {
+        return permanent;
+    }
 
-	public Point getOffset() {
-		return offset;
-	}
+    public void setPermanent(boolean permanent) {
+        this.permanent = permanent;
+    }
 
-	public void setOffset(Point offset) {
-		this.offset = offset;
-	}
+    public boolean isSticky() {
+        return sticky;
+    }
 
-	public String getDirection() {
-		return direction;
-	}
+    public void setSticky(boolean sticky) {
+        this.sticky = sticky;
+    }
 
-	public void setDirection(String direction) {
-		this.direction = direction;
-	}
+    public boolean isInteractive() {
+        return interactive;
+    }
 
-	public boolean isPermanent() {
-		return permanent;
-	}
+    public void setInteractive(boolean interactive) {
+        this.interactive = interactive;
+    }
 
-	public void setPermanent(boolean permanent) {
-		this.permanent = permanent;
-	}
+    public double getOpacity() {
+        return opacity;
+    }
 
-	public boolean isSticky() {
-		return sticky;
-	}
-
-	public void setSticky(boolean sticky) {
-		this.sticky = sticky;
-	}
-
-	public boolean isInteractive() {
-		return interactive;
-	}
-
-	public void setInteractive(boolean interactive) {
-		this.interactive = interactive;
-	}
-
-	public double getOpacity() {
-		return opacity;
-	}
-
-	public void setOpacity(double opacity) {
-		this.opacity = opacity;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	@Override
-	public String toString() {
-		return "Tooltip [content=" + content + ", direction=" + direction + ", interactive=" + interactive + ", offset="
-				+ offset + ", opacity=" + opacity + ", pane=" + pane + ", permanent=" + permanent + ", sticky=" + sticky
-				+ "]";
-	}
-
+    public void setOpacity(double opacity) {
+        this.opacity = opacity;
+    }
 }

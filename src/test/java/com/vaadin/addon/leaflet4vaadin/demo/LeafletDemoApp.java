@@ -14,50 +14,18 @@
 
 package com.vaadin.addon.leaflet4vaadin.demo;
 
-import static com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem.NEW;
-
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenu;
 import com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ControlPositionExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.LayersControlExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.RemoveDefaultControlsExample;
 import com.vaadin.addon.leaflet4vaadin.demo.view.controls.ScaleControlExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONEventsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONFilterExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONLayerExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.GeoJSONStyleExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.layers.MultipleBaseLayersExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapConversionMethodsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDarkThemeExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapDialogExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapEventsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapFunctionsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapGeolocationExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapMaxBoundsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapPollListenerExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MapStateFuncionsExmple;
-import com.vaadin.addon.leaflet4vaadin.demo.view.map.MultipleMapsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerDivIconExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkerMethodCallExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersAddAndRemoveExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersChangingIconExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersEventsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersGroupExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersRemoveOnClickExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersSimpleExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.marker.MarkersWithEventsExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.layers.*;
+import com.vaadin.addon.leaflet4vaadin.demo.view.map.*;
+import com.vaadin.addon.leaflet4vaadin.demo.view.marker.*;
 import com.vaadin.addon.leaflet4vaadin.demo.view.mixed.WorldMapFlagsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.path.FlyToPolygonBoundsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathSimpleExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.path.Paths3000Example;
-import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsEventPropagationExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.path.PathsStyleExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.path.TypeOfPathsExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.CanvasIconLayerExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.FullScreenPluginExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.HeatmapPluginExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.KmzLayerPluginExample;
-import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.MarkerClusterPluginExample;
+import com.vaadin.addon.leaflet4vaadin.demo.view.path.*;
+import com.vaadin.addon.leaflet4vaadin.demo.view.plugins.*;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -76,6 +44,8 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
+
+import static com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem.NEW;
 
 @CssImport(value = "styles/demo-applayout.css", themeFor = "vaadin-app-layout")
 @Theme(value = Lumo.class, variant = Lumo.LIGHT)
@@ -163,6 +133,7 @@ public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver
 				.addSubMenu(MarkersChangingIconExample.class).addSubMenu(MarkersRemoveOnClickExample.class)
 				.addSubMenu(MarkerMethodCallExample.class)
 				.addSubMenu(MarkerDivIconExample.class)
+				.addSubMenu(DivOverlayStyleExample.class)
 				.addTo(appMenu);
 
 		// Layers examples
