@@ -199,8 +199,9 @@ public abstract class Layer extends LeafletObject implements Evented, LayerPopup
         bindPopup(new Popup(popupContent));
     }
 
-    public void bindPopup(Popup popupOptions) {
-        this.popup = popupOptions;
+    public void bindPopup(Popup popup) {
+        popup.setParent(this);
+        this.popup = popup;
     }
 
     public Tooltip getTooltip() {
@@ -211,8 +212,9 @@ public abstract class Layer extends LeafletObject implements Evented, LayerPopup
         bindTooltip(new Tooltip(tooltipContent));
     }
 
-    public void bindTooltip(Tooltip tooltipOptions) {
-        this.tooltip = tooltipOptions;
+    public void bindTooltip(Tooltip tooltip) {
+        tooltip.setParent(this);
+        this.tooltip = tooltip;
     }
 
     public <T> void set(Supplier<CompletableFuture<T>> futureResult, Consumer<T> handler) {
