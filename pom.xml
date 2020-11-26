@@ -4,7 +4,7 @@
 
 	<groupId>com.vaadin</groupId>
 	<artifactId>leaflet4vaadin</artifactId>
-	<version>0.5.0</version>
+	<version>0.5.1-SNAPSHOT</version>
 	<name>Leaflet4Vaadin</name>
 	<description>Integration of Leaflet map for Vaadin platform LTS 14</description>
 	<scm>
