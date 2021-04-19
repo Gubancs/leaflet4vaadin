@@ -13,7 +13,7 @@
 		<developerConnection>scm:git:git@https://github.com/Gubancs/leaflet4vaadin.git</developerConnection>
 	</scm>
 	<properties>
-		<vaadin.version>14.2.0</vaadin.version>
+		<vaadin.version>19.0.5</vaadin.version>
 
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
