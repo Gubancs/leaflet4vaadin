@@ -19,3 +19,6 @@ package*.json
 webpack.config.js
 webpack.generated.js
 pnpm-lock.yaml
+node
+frontend/generated
+frontend/index.html

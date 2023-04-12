@@ -6,7 +6,7 @@
 	<artifactId>leaflet4vaadin</artifactId>
 	<version>0.5.1-SNAPSHOT</version>
 	<name>Leaflet4Vaadin</name>
-	<description>Integration of Leaflet map for Vaadin platform 24</description>
+	<description>Integration of Leaflet map for Vaadin platform LTS 14</description>
 	<scm>
 		<url>https://github.com/Gubancs/leaflet4vaadin</url>
 		<connection>scm:git:git://https://github.com/Gubancs/leaflet4vaadin.git</connection>
@@ -14,7 +14,7 @@
 	</scm>
 	<properties>
 		<vaadin.version>24.0.3</vaadin.version>
-	   <java.version>17</java.version>
+		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -100,16 +100,27 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<!-- Replace artifactId with vaadin-core to use only free components -->
-			<artifactId>vaadin-core</artifactId>
+			<artifactId>vaadin</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>flow-polymer-template</artifactId>
+			<version>${vaadin.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>de.grundid.opendatalab</groupId>
 			<artifactId>geojson-jackson</artifactId>
-			<version>1.14</version>
+			<version>1.13</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.13.2</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
@@ -131,7 +142,6 @@
 		<defaultGoal>jetty:run</defaultGoal>
 		<plugins>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.1.0</version>
 				<configuration>
@@ -208,7 +218,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-assembly-plugin</artifactId>
-						<version>3.5.0</version>
+						<version>3.1.0</version>
 						<configuration>
 							<appendAssemblyId>false</appendAssemblyId>
 							<descriptors>
@@ -227,7 +237,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.2.1</version>
+						<version>3.0.1</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -241,7 +251,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.5.0</version>
+						<version>3.0.1</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -259,7 +269,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
-						<version>3.3.0</version>
+						<version>3.1.2</version>
 						<configuration>
 							<!-- Generated file that shouldn't be included in add-ons -->
 							<excludes>
@@ -342,8 +352,9 @@
 
 					<plugin>
 						<groupId>com.lazerycode.selenium</groupId>
-						<artifactId>driver-binary-downloader-maven-plugin</artifactId>
-						<version>1.0.18</version>
+						<artifactId>driver-binary-downloader-maven-plugin
+						</artifactId>
+						<version>1.0.17</version>
 						<configuration>
 							<onlyGetDriversForHostOperatingSystem>
 								true
@@ -370,7 +381,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>3.0.0</version>
+						<version>2.22.2</version>
 						<executions>
 							<execution>
 								<goals>
@@ -392,10 +403,10 @@
 					</plugin>
 					<plugin>
 						<artifactId>maven-resources-plugin</artifactId>
-						<version>3.3.1</version>
+						<version>3.1.0</version>
 						<executions>
 							<execution>
-								<!-- Since the view class is defined in test, after compilation copy 
+								<!-- Since the view class is defined in test, after compilation copy
 									it to the runtime classpath to ensure it gets visited by vaadin-maven-plugin -->
 								<id>copy-test-to-classes</id>
 								<phase>process-test-classes</phase>
@@ -426,7 +437,6 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-dependency-plugin</artifactId>
-						<version>3.5.0</version>
 						<executions>
 							<execution>
 								<id>copy-test-libs</id>
@@ -507,7 +517,7 @@
 							</execution>
 						</executions>
 						<configuration>
-							<nodeVersion>v12.16.1</nodeVersion>
+							<nodeVersion>v18.14.1</nodeVersion>
 						</configuration>
 					</plugin>
 					<plugin>
