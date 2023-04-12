@@ -92,7 +92,7 @@ import com.vaadin.flow.shared.Registration;
 import elemental.json.JsonType;
 
 @Tag("leaflet-map")
-@NpmPackage(value = "leaflet", version = "1.6.0")
+@NpmPackage(value = "leaflet", version = "1.8.0")
 @JsModule("./leaflet-map.js")
 @JsModule("leaflet/dist/leaflet-src.js")
 @CssImport(value = "leaflet/dist/leaflet.css", themeFor = "leaflet-map")
