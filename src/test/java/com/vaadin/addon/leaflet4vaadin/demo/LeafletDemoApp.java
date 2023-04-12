@@ -48,7 +48,7 @@ import com.vaadin.flow.theme.lumo.Lumo;
 import static com.vaadin.addon.leaflet4vaadin.demo.components.AppMenuItem.NEW;
 
 @CssImport(value = "styles/demo-applayout.css", themeFor = "vaadin-app-layout")
-@Theme(value = Lumo.class, variant = Lumo.LIGHT)
+//@Theme(value = Lumo.class, variant = Lumo.LIGHT) TODO Reintroduce theme
 public class LeafletDemoApp extends AppLayout implements AfterNavigationObserver {
 
 	private static final long serialVersionUID = -9119767347112138141L;

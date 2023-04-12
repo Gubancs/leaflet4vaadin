@@ -94,7 +94,7 @@ public class MapPollListenerExample extends ExampleContainer {
 
 		NumberField weight = new NumberField();
 		weight.setValue(DEFAULT_POLL_INTERVAL.doubleValue());
-		weight.setHasControls(true);
+		weight.setStepButtonsVisible(true);
 		weight.setMin(300);
 		weight.setMax(5000);
 		weight.setWidthFull();
@@ -103,7 +103,7 @@ public class MapPollListenerExample extends ExampleContainer {
 
 		NumberField radius = new NumberField();
 		radius.setValue(this.radius.doubleValue());
-		radius.setHasControls(true);
+		radius.setStepButtonsVisible(true);
 		radius.setMin(1);
 		radius.setMax(100);
 		radius.setWidthFull();
@@ -112,7 +112,7 @@ public class MapPollListenerExample extends ExampleContainer {
 
 		NumberField circleCount = new NumberField();
 		circleCount.setValue(this.circleCount.doubleValue());
-		circleCount.setHasControls(true);
+		circleCount.setStepButtonsVisible(true);
 		circleCount.setMin(2);
 		circleCount.setMax(300);
 		circleCount.setWidthFull();

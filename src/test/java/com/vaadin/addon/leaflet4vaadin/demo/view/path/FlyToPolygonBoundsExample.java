@@ -59,7 +59,7 @@ public class FlyToPolygonBoundsExample extends ExampleContainer {
 
     private void createFormControls() {
         IntegerField maxZoom = new IntegerField("Max zoom:");
-        maxZoom.setHasControls(true);
+        maxZoom.setStepButtonsVisible(true);
         maxZoom.setValue(6);
         maxZoom.setWidthFull();
 

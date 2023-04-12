@@ -68,14 +68,15 @@ public class PathsStyleExample extends ExampleContainer {
 		form.addFormItem(checkbox, "Stroke");
 		binder.forField(checkbox).bind("stroke");
 
-		Select<String> strokeColor = new Select<>("red", "blue", "white", "green", "yellow", "gray", "black");
+		// TODO Fix value change listener
+		Select<String> strokeColor = new Select<>("stroke_color", null, "red", "blue", "white", "green", "yellow", "gray", "black");
 		strokeColor.setWidthFull();
 		form.addFormItem(strokeColor, "Stroke color");
 		binder.forField(strokeColor).bind("color");
 
 		// Weight control
 		NumberField weight = new NumberField();
-		weight.setHasControls(true);
+		weight.setStepButtonsVisible(true);
 		weight.setMin(0);
 		weight.setMax(20);
 		weight.setWidthFull();
@@ -87,14 +88,15 @@ public class PathsStyleExample extends ExampleContainer {
 		form.addFormItem(fill, "Fill");
 		binder.forField(fill).bind("fill");
 
-		Select<String> fillColor = new Select<>("red", "blue", "white", "green", "yellow", "gray", "black");
+		// TODO Fixe value change listener
+		Select<String> fillColor = new Select<>("fill_color", null, "red", "blue", "white", "green", "yellow", "gray", "black");
 		fillColor.setWidthFull();
 		form.addFormItem(fillColor, "Fill color");
 		binder.forField(fillColor).bind("fillColor");
 
 		// Fill opacity control
 		NumberField fillOpacity = new NumberField();
-		fillOpacity.setHasControls(true);
+		fillOpacity.setStepButtonsVisible(true);
 		fillOpacity.setMin(0);
 		fillOpacity.setMax(100);
 		fillOpacity.setWidthFull();

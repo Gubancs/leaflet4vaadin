@@ -92,10 +92,13 @@ import com.vaadin.flow.shared.Registration;
 import elemental.json.JsonType;
 
 @Tag("leaflet-map")
-@NpmPackage(value = "leaflet", version = "1.8.0")
+@NpmPackage(value = "leaflet", version = "1.6.0")
 @JsModule("./leaflet-map.js")
 @JsModule("leaflet/dist/leaflet-src.js")
 @CssImport(value = "leaflet/dist/leaflet.css", themeFor = "leaflet-map")
+//@JsModule("leaflet/dist/leaflet.js")
+//@CssImport("leaflet/dist/leaflet.css")
+//@CssImport("./leaflet/leaflet-custom.css")
 @CssImport(value = "./styles/leaflet-lumo-theme.css", themeFor = "leaflet-map")
 public final class LeafletMap extends PolymerTemplate<LeafletModel> implements MapModifyStateFunctions, MapGetStateFunctions, GeolocationFunctions, MapConversionFunctions, SupportsMouseEvents,
         SupportsMapEvents, SupportsLocationEvents, SupportsKeyboardEvents, SupportsLayerEvents, HasSize, HasTheme, HasStyle {

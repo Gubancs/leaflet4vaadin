@@ -22,11 +22,11 @@
 
 		<drivers.dir>${project.basedir}/drivers</drivers.dir>
 
-		<jetty.version>9.4.15.v20190215</jetty.version>
-		<webapp-runner.version>9.0.31.0</webapp-runner.version>
+		<jetty.version>11.0.14</jetty.version>
+		<webapp-runner.version>9.0.73.0</webapp-runner.version>
 
-		<maven-war-plugin.version>3.2.3</maven-war-plugin.version>
-		<heroku-maven-plugin>3.0.1</heroku-maven-plugin>
+		<maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+		<heroku-maven-plugin>3.0.7</heroku-maven-plugin>
 	</properties>
 	<organization>
 		<name>Vaadin Visitor</name>
@@ -165,7 +165,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
+				<version>3.3.0</version>
 				<configuration>
 					<archive>
 						<index>true</index>
@@ -237,7 +237,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-source-plugin</artifactId>
-						<version>3.0.1</version>
+						<version>3.2.1</version>
 						<executions>
 							<execution>
 								<id>attach-sources</id>
@@ -251,7 +251,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.0.1</version>
+						<version>3.5.0</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -269,7 +269,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-jar-plugin</artifactId>
-						<version>3.1.2</version>
+						<version>3.3.0</version>
 						<configuration>
 							<!-- Generated file that shouldn't be included in add-ons -->
 							<excludes>

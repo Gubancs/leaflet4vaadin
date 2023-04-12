@@ -82,7 +82,7 @@ public class HeatmapPluginExample extends ExampleContainer {
 
      //  the minimum opacity the heat will start at
         NumberField minOpacity = new NumberField();
-        minOpacity.setHasControls(true);
+        minOpacity.setStepButtonsVisible(true);
         minOpacity.setMin(0);
         minOpacity.setMax(1);
         minOpacity.setStep(0.1);
@@ -93,7 +93,7 @@ public class HeatmapPluginExample extends ExampleContainer {
         
         // maximum point intensity,
         NumberField max = new NumberField();
-        max.setHasControls(true);
+        max.setStepButtonsVisible(true);
         max.setMin(0);
         max.setMax(1);
         max.setStep(0.1);
@@ -104,7 +104,7 @@ public class HeatmapPluginExample extends ExampleContainer {
 
         // zoom level where the points reach maximum intensity
         IntegerField maxZoom = new IntegerField();
-        maxZoom.setHasControls(true);
+        maxZoom.setStepButtonsVisible(true);
         maxZoom.setMin(1);
         maxZoom.setMax(18);
         maxZoom.setStep(1);
@@ -115,7 +115,7 @@ public class HeatmapPluginExample extends ExampleContainer {
         
      // radius of each "point" of the heatmap,
         NumberField radius = new NumberField();
-        radius.setHasControls(true);
+        radius.setStepButtonsVisible(true);
         radius.setMin(1);
         radius.setMax(100);
         radius.setStep(5);
@@ -126,7 +126,7 @@ public class HeatmapPluginExample extends ExampleContainer {
         
         // amount of blur
         NumberField blur = new NumberField();
-        blur.setHasControls(true);
+        blur.setStepButtonsVisible(true);
         blur.setMin(0);
         blur.setMax(100);
         blur.setStep(5);

@@ -49,7 +49,7 @@ public class CanvasIconLayerExample extends ExampleContainer {
         IntegerField count = new IntegerField();
         count.setValue(10);
         count.setWidthFull();
-        count.setHasControls(true);
+        count.setStepButtonsVisible(true);
 
         Button refreshButton = new Button("Refresh markers");
         refreshButton.addThemeVariants(ButtonVariant.LUMO_ERROR);
